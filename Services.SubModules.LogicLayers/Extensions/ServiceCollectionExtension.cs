@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
@@ -62,6 +63,17 @@ namespace Services.SubModules.LogicLayers.Extensions
                     }
                 });
             }
+            return serviceCollection;
+        }
+        public static IServiceCollection AddDbContext<T>(this IServiceCollection serviceCollection) where T : DbContext
+        {
+            serviceCollection.AddDbContext<T>(options =>
+            {
+                options.UseSqlServer(EntityFrameworkConfiguration<EntityFrameworkRoot>
+                    .Instance
+                    .Root
+                    .ConnectionEntityFramework);
+            });
             return serviceCollection;
         }
     }
