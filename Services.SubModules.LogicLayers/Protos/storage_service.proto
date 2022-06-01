@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "Services.SubModules.Protos";
+
+service StorageGrpc {
+  rpc SendFile (StorageFileGrpcRequest) returns (StorageFileGrpcResponse);
+  rpc SendFiles (StorageFilesGrpcRequest) returns (StorageFilesGrpcResponse);
+}
+
+message StorageFileGrpcRequest
+{
+    string name = 1;
+    bytes content = 2;
+}
+
+message StorageFileGrpcResponse
+{
+    bool isSuccess = 1;
+    string name = 2;
+}
+
+message StorageFilesGrpcRequest
+{
+    repeated StorageFileGrpcRequest files = 1;
+}
+
+message StorageFilesGrpcResponse {
+    repeated StorageFileGrpcResponse files = 1;
+}

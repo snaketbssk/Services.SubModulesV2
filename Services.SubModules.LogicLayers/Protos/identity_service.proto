@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "Services.SubModules.Protos";
+
+service IdentityGrpc {
+	rpc GetUser (UserIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
+}
+
+message UserIdentityGrpcRequest
+{
+	bytes id = 1;
+}
+
+message UserIdentityGrpcResponse
+{
+	bool isSuccess = 1;
+	bytes id = 2;
+	string login = 3;
+	string email = 4;
+	bool confirmedEmail = 5;
+	bool ConfirmedPhone = 6;
+    bool ConfirmedTwoFactorAuthentication = 7;
+	repeated RoleIdentityGrpcResponse roles = 8;
+}
+
+message RoleIdentityGrpcResponse {
+    string name = 1;
+}

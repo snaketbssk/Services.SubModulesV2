@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Services.SubModules.DataLayers\Services.SubModules.DataLayers.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Protobuf Include="Protos\identity_service.proto" />
+	<Protobuf Include="Protos\mailer_service.proto" />
+	<Protobuf Include="Protos\storage_service.proto" />
+	<Protobuf Include="Protos\telegram_service.proto" />
+  </ItemGroup>
+	
+</Project>
