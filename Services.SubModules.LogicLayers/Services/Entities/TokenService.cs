@@ -64,7 +64,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 },
                 out var validateToken);
             var jwtSecurityToken = (JwtSecurityToken)validateToken;
-            return jwtSecurityToken.Claims;
+            var result = GetClaims(jwtSecurityToken.Claims);
+            return result;
         }
         private IEnumerable<Claim> GetClaims(IEnumerable<Claim> claims)
         {
