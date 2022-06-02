@@ -8,5 +8,7 @@ namespace Services.SubModules.LogicLayers.Constants
         public const string NAME = ClaimTypes.Name;
         public const string EMAIL = ClaimTypes.Email;
         public const string ROLE = ClaimTypes.Role;
+        public const string LANGUAGE = "language";
+        public const string ACCESS_TOKEN = "access_token";
     }
 }
