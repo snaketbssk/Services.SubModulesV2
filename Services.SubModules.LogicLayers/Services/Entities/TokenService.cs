@@ -5,6 +5,10 @@ using Services.SubModules.Configurations.Models.Roots.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Services.SubModules.LogicLayers.Models.Authentication;
+using Services.SubModules.LogicLayers.Extensions;
+using Services.SubModules.LogicLayers.Attributes.Entities;
+using Services.SubModules.LogicLayers.Constants;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -61,6 +65,34 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 out var validateToken);
             var jwtSecurityToken = (JwtSecurityToken)validateToken;
             return jwtSecurityToken.Claims;
+        }
+        private IEnumerable<Claim> GetClaims(IEnumerable<Claim> claims)
+        {
+            var result = new List<Claim>();
+            foreach (var claim in claims)
+            {
+                switch (claim.Type)
+                {
+                    case JwtClaimConstant.ID:
+                        result.Add(new Claim(ClaimConstant.ID, claim.Value));
+                        break;
+                    case JwtClaimConstant.NAME:
+                        result.Add(new Claim(ClaimConstant.NAME, claim.Value));
+                        break;
+                    case JwtClaimConstant.EMAIL:
+                        result.Add(new Claim(ClaimConstant.EMAIL, claim.Value));
+                        break;
+                    case JwtClaimConstant.ROLE:
+                        result.Add(new Claim(ClaimConstant.ROLE, claim.Value));
+                        break;
+                    case JwtClaimConstant.LANGUAGE:
+                        break;
+                    case JwtClaimConstant.ACCESS_TOKEN:
+                        break;
+                    default: throw new ArgumentException(nameof(claim.Type));
+                }
+            }
+            return result;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
                 }
             }
         }
-        public IEnumerable<Claim> GetClaims()
+        public IEnumerable<Claim> ToClaims()
         {
             var result = new List<Claim>();
             foreach (ClaimAuthentication claimUser in Enum.GetValues(typeof(ClaimAuthentication)))
@@ -61,6 +61,27 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
                         result.AddRange(roles); break;
                     case ClaimAuthentication.Language: break;
                     case ClaimAuthentication.AccessToken: break;
+                    default: throw new ArgumentException(nameof(claimUser));
+                }
+            }
+            return result;
+        }
+        public IEnumerable<Claim> ToJwtClaims()
+        {
+            var result = new List<Claim>();
+            foreach (JwtClaimAuthentication claimUser in Enum.GetValues(typeof(JwtClaimAuthentication)))
+            {
+                var claimAttribute = claimUser.GetAttribute<JwtClaimAttribute>();
+                switch (claimUser)
+                {
+                    case JwtClaimAuthentication.Id: result.Add(new Claim(claimAttribute.Name, Id.ToString())); break;
+                    case JwtClaimAuthentication.Name: result.Add(new Claim(claimAttribute.Name, Name)); break;
+                    case JwtClaimAuthentication.Email: result.Add(new Claim(claimAttribute.Name, Email)); break;
+                    case JwtClaimAuthentication.Role:
+                        var roles = Roles.Select(v => new Claim(claimAttribute.Name, v));
+                        result.AddRange(roles); break;
+                    case JwtClaimAuthentication.Language: break;
+                    case JwtClaimAuthentication.AccessToken: break;
                     default: throw new ArgumentException(nameof(claimUser));
                 }
             }
