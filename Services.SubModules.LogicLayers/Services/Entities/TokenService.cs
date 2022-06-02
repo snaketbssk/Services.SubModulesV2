@@ -2,13 +2,10 @@
 using Microsoft.IdentityModel.Tokens;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.LogicLayers.Constants;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Services.SubModules.LogicLayers.Models.Authentication;
-using Services.SubModules.LogicLayers.Extensions;
-using Services.SubModules.LogicLayers.Attributes.Entities;
-using Services.SubModules.LogicLayers.Constants;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -90,7 +87,6 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                         break;
                     case JwtClaimConstant.ACCESS_TOKEN:
                         break;
-                    default: throw new ArgumentException(nameof(claim.Type));
                 }
             }
             return result;
