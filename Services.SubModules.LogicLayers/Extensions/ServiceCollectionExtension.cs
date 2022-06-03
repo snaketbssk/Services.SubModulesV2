@@ -21,6 +21,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSwagger();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
+            serviceCollection.AddSingleton<ILogService, LogService>();
             // Transient services
             serviceCollection.AddTransient<IIdentityGrpcService, IdentityGrpcService>();
             serviceCollection.AddTransient<IMailerGrpcService, MailerGrpcService>();

@@ -2,6 +2,7 @@
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Constants;
+using Services.SubModules.LogicLayers.Middlewares.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -39,7 +40,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         }
         public static IApplicationBuilder AddMiddlewares(this IApplicationBuilder applicationBuilder)
         {
-            //applicationBuilder.UseMiddleware<ExceptionMiddleware>();
+            applicationBuilder.UseMiddleware<ExceptionMiddleware>();
             return applicationBuilder;
         }
     }
