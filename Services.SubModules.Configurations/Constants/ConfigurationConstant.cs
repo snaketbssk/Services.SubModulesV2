@@ -6,7 +6,7 @@
         public const string APPSETTINGS_DIRECTORY = "appsettings";
         public const string LOGS_DIRECTORY = "logs";
         // Files
-        public const string EXCEPTION_FILE = "exception.txt";
+        public const string EXCEPTION_FILE = "exceptions.txt";
         public const string CORS_FILE = "appsettings.Cors.json";
         public const string GRPC_FILE = "appsettings.Grpc.json";
         public const string ENTITY_FRAMEFORK_FILE = "appsettings.EntityFramework.json";
