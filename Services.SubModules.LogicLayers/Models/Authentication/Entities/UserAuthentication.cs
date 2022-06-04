@@ -1,15 +1,12 @@
 ﻿using Services.SubModules.LogicLayers.Attributes.Entities;
 using Services.SubModules.LogicLayers.Extensions;
 using System.Security.Claims;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
 {
-    public class UserAuthentication : IUserAuthentication
+    public class UserAuthentication : UserResponse, IUserAuthentication
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public List<string> Roles { get; set; }
         public string AccessToken { get; set; }
         public string Language { get; set; }
         public UserAuthentication(

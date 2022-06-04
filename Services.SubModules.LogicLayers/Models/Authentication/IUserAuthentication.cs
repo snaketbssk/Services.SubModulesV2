@@ -1,13 +1,10 @@
 ﻿using System.Security.Claims;
+using Services.SubModules.LogicLayers.Models.Responses;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication
 {
-    public interface IUserAuthentication
+    public interface IUserAuthentication : IUserResponse
     {
-        Guid Id { get; set; }
-        string Name { get; set; }
-        string Email { get; set; }
-        List<string> Roles { get; set; }
         string AccessToken { get; set; }
         string Language { get; set; }
 
