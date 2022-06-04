@@ -1,4 +1,6 @@
-﻿namespace Services.SubModules.LogicLayers.Models.Authentication
+﻿using System.Security.Claims;
+
+namespace Services.SubModules.LogicLayers.Models.Authentication
 {
     public interface IUserAuthentication
     {
@@ -8,5 +10,8 @@
         List<string> Roles { get; set; }
         string AccessToken { get; set; }
         string Language { get; set; }
+
+        IEnumerable<Claim> ToClaims();
+        IEnumerable<Claim> ToJwtClaims();
     }
 }
