@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
+using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
@@ -30,24 +32,35 @@ namespace Services.SubModules.LogicLayers.Extensions
             //
             return serviceCollection;
         }
+        public static IServiceCollection AddConfigurationAuthentication(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddAuthentication(x =>
+                {
+                    x.DefaultScheme = SchemeConstant.DEFAULT;
+                })
+                .AddScheme<
+                    IdentityAuthenticationSchemeOptions,
+                    IdentityAuthenticationHandler>(SchemeConstant.DEFAULT, options => { });
+            return serviceCollection;
+        }
         private static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
         {
             if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsActiveSwagger)
             {
-                serviceCollection.AddSwaggerGen(c =>
+                serviceCollection.AddSwaggerGen(x =>
                 {
                     var fileSwagger = SwaggerConfiguration<SwaggerRoot>.Instance.Root.NameFile;
-                    c.IncludeXmlComments(fileSwagger);
+                    x.IncludeXmlComments(fileSwagger);
                     if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsAuthenticationSwagger)
                     {
-                        c.AddSecurityDefinition(HeaderConstant.AUTHORIZATION, new OpenApiSecurityScheme
+                        x.AddSecurityDefinition(HeaderConstant.AUTHORIZATION, new OpenApiSecurityScheme
                         {
                             In = ParameterLocation.Header,
                             Description = $"Please insert {HeaderConstant.AUTHORIZATION} into field",
                             Name = HeaderConstant.AUTHORIZATION,
                             Type = SecuritySchemeType.ApiKey
                         });
-                        c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                        x.AddSecurityRequirement(new OpenApiSecurityRequirement
                         {
                             {
                                 new OpenApiSecurityScheme
