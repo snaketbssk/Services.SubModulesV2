@@ -1,7 +1,7 @@
 ﻿using Services.SubModules.LogicLayers.Attributes.Entities;
 using Services.SubModules.LogicLayers.Extensions;
-using System.Security.Claims;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
+using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
 {

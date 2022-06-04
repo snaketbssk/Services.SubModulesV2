@@ -1,5 +1,5 @@
-﻿using System.Security.Claims;
-using Services.SubModules.LogicLayers.Models.Responses;
+﻿using Services.SubModules.LogicLayers.Models.Responses;
+using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication
 {
