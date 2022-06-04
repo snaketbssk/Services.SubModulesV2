@@ -3,5 +3,7 @@
     public interface IBaseIdRequest<T>
     {
         T Id { get; set; }
+
+        string ToIdString();
     }
 }

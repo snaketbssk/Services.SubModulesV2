@@ -1,6 +1,6 @@
 ﻿namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 {
-    public abstract class BaseIdRequest<T>
+    public abstract class BaseIdRequest<T> : IBaseIdRequest<T>
     {
         /// <summary>
         /// 
@@ -23,5 +23,7 @@
         {
             Id = id;
         }
+
+        public abstract string ToIdString();
     }
 }
