@@ -4,10 +4,10 @@ namespace Services.SubModules.DataLayers.Services.Entities
 {
     public abstract class ContextService<T> where T : DbContext
     {
-        public readonly T Context;
+        protected readonly T _context;
         public ContextService(T context)
         {
-            Context = context;
+            _context = context;
         }
     }
 }
