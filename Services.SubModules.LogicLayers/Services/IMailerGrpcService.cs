@@ -1,6 +1,10 @@
-﻿namespace Services.SubModules.LogicLayers.Services
+﻿using Services.SubModules.LogicLayers.Models.Mappings;
+using Services.SubModules.Protos;
+
+namespace Services.SubModules.LogicLayers.Services
 {
     public interface IMailerGrpcService
     {
+        Task<MessageMailerGrpcResponse> ExecuteAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }
