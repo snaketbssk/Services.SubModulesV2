@@ -1,10 +1,21 @@
 ﻿namespace Services.SubModules.LogicLayers.Patterns.States.Entities
 {
-    public abstract class BaseState<T> : IState where T : IContextState
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public abstract class BaseState<T> : IState<T>
     {
-        protected IContextState _context;
+        /// <summary>
+        /// 
+        /// </summary>
+        protected T _context;
 
-        public void SetContext(IContextState context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        public void SetContext(T context)
         {
             _context = context;
         }

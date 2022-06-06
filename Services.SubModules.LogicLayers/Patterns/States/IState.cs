@@ -1,7 +1,15 @@
 ﻿namespace Services.SubModules.LogicLayers.Patterns.States
 {
-    public interface IState
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IState<T>
     {
-        void SetContext(IContextState context);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        void SetContext(T context);
     }
 }

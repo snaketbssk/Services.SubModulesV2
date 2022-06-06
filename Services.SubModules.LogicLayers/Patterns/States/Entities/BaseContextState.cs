@@ -4,18 +4,18 @@
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class BaseContextState<T> : IContextState where T : IState
+    public abstract class BaseContextState<T> where T : IState<BaseContextState<T>>
     {
         /// <summary>
         /// 
         /// </summary>
-        protected IState _state;
+        protected T _state;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="state"></param>
-        public BaseContextState(IState state)
+        public BaseContextState(T state)
         {
             TransitionTo(state);
         }
@@ -24,7 +24,7 @@
         /// 
         /// </summary>
         /// <param name="state"></param>
-        public void TransitionTo(IState state)
+        public void TransitionTo(T state)
         {
             _state = state;
             _state.SetContext(this);
