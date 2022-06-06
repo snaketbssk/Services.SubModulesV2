@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.SubModules.LogicLayers.Patterns.States.Entities
+﻿namespace Services.SubModules.LogicLayers.Patterns.States.Entities
 {
     /// <summary>
     /// 
@@ -15,7 +9,7 @@ namespace Services.SubModules.LogicLayers.Patterns.States.Entities
         /// <summary>
         /// 
         /// </summary>
-        private IState _state;
+        protected IState _state;
 
         /// <summary>
         /// 

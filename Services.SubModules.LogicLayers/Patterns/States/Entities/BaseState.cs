@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.SubModules.LogicLayers.Patterns.States.Entities
+﻿namespace Services.SubModules.LogicLayers.Patterns.States.Entities
 {
-    public abstract class BaseState : IState
+    public abstract class BaseState<T> : IState where T : IContextState
     {
         protected IContextState _context;
 
