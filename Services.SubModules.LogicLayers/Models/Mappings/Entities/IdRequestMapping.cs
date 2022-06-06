@@ -3,25 +3,25 @@ using Services.SubModules.LogicLayers.Models.Requests.Entities;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
-    public class TokenRequestMapping : Mapping<ITokenRequest>
+    public class IdRequestMapping : Mapping<IIdRequest>
     {
-        public string Token { get; set; }
+        public Guid Id { get; set; }
 
-        public TokenRequestMapping(string token)
+        public IdRequestMapping(Guid id)
         {
-            Token = token;
+            Id = id;
         }
 
-        public override ITokenRequest Map()
+        public override IIdRequest Map()
         {
-            var result = new TokenRequest
+            var result = new IdRequest
             {
-                Token = Token
+                Id = Id
             };
             return result;
         }
 
-        public override ITokenRequest Update(ITokenRequest result)
+        public override IIdRequest Update(IIdRequest result)
         {
             throw new NotImplementedException();
         }
