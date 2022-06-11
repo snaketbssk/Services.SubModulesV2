@@ -11,9 +11,28 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public bool? ConfirmedphoneNumber { get; set; }
         public bool? TwoFactorEnabled { get; set; }
         public List<string> Roles { get; set; }
+
         public UserResponse()
         {
 
+        }
+
+        public UserResponse(
+            string? name, 
+            string? email, 
+            bool? confirmedEmail, 
+            string? phoneNumber, 
+            bool? confirmedphoneNumber, 
+            bool? twoFactorEnabled, 
+            List<string> roles)
+        {
+            Name = name;
+            Email = email;
+            ConfirmedEmail = confirmedEmail;
+            PhoneNumber = phoneNumber;
+            ConfirmedphoneNumber = confirmedphoneNumber;
+            TwoFactorEnabled = twoFactorEnabled;
+            Roles = roles;
         }
     }
 }
