@@ -1,4 +1,5 @@
-﻿using Services.SubModules.Configurations.Entities;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using System.Security.Cryptography;
 using System.Text;
@@ -49,7 +50,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public string DecryptFromBase64(string value)
         {
-            var bytes = Convert.FromBase64String(value);
+            var bytes = WebEncoders.Base64UrlDecode(value);
             var result = DecryptToBytes(bytes);
             return result;
         }
@@ -70,7 +71,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public string EncryptToBase64(string value)
         {
             var bytes = EncryptToBytes(value);
-            var result = Convert.ToBase64String(bytes);
+            var result = WebEncoders.Base64UrlEncode(bytes);
             return result;
         }
 
