@@ -7,7 +7,7 @@ namespace Services.SubModules.Configurations.Entities
     /// Cryptography класс конфигурации
     /// </summary>
     /// <typeparam name="T">Json класс конфигурации</typeparam>
-    public class CryptographyConfiguration<T> : SingletonConfiguration<TokenConfiguration<T>>
+    public class CryptographyConfiguration<T> : SingletonConfiguration<CryptographyConfiguration<T>>
         where T : class, new()
     {
         /// <summary>
