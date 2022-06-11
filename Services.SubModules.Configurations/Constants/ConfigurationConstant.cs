@@ -13,5 +13,6 @@
         public const string SWAGGER_FILE = "appsettings.Swagger.json";
         public const string SERVICE_FILE = "appsettings.Service.json";
         public const string TOKEN_FILE = "appsettings.Token.json";
+        public const string CRYPTOGRAPHY_FILE = "appsettings.Cryptography.json";
     }
 }
