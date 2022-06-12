@@ -1,10 +1,5 @@
 ﻿using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
@@ -18,12 +13,12 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public bool? TwoFactorEnabled { get; set; }
         public List<string> Roles { get; set; }
         public UserResponseMapping(
-            string? name, 
-            string? email, 
-            bool? confirmedEmail, 
-            string? phoneNumber, 
-            bool? confirmedphoneNumber, 
-            bool? twoFactorEnabled, 
+            string? name,
+            string? email,
+            bool? confirmedEmail,
+            string? phoneNumber,
+            bool? confirmedphoneNumber,
+            bool? twoFactorEnabled,
             List<string> roles)
         {
             Name = name;
