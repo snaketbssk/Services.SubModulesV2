@@ -10,6 +10,17 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public string Path { get; set; }
         public string Method { get; set; }
         public string StackTrace { get; set; }
+
+        public LogResponse(DateTime timestamp, Guid guid, string messageException, string path, string method, string stackTrace)
+        {
+            Timestamp = Timestamp.ToString();
+            Guid = Guid.ToString();
+            MessageException = MessageException;
+            Path = Path;
+            Method = Method;
+            StackTrace = StackTrace;
+        }
+
         public override string ToString()
         {
             var result = new StringBuilder();
