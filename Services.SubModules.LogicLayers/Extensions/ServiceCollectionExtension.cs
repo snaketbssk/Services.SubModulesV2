@@ -8,6 +8,8 @@ using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
+using AutoMapper.Extensions.Microsoft.DependencyInjection;
+using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -21,6 +23,8 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddMemoryCache();
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
+            serviceCollection.AddAutoMapper(x => x.AddProfile(new AutoMapping()));
+            //serviceCollection.AddAutoMapper(c => c.AddProfile<AutoMapping>(), typeof(Startup));
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<ILogService, LogService>();
