@@ -13,12 +13,12 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 
         public LogResponse(DateTime timestamp, Guid guid, string messageException, string path, string method, string stackTrace)
         {
-            Timestamp = Timestamp.ToString();
-            Guid = Guid.ToString();
-            MessageException = MessageException;
-            Path = Path;
-            Method = Method;
-            StackTrace = StackTrace;
+            Timestamp = timestamp.ToString();
+            Guid = guid.ToString();
+            MessageException = messageException;
+            Path = path;
+            Method = method;
+            StackTrace = stackTrace;
         }
 
         public override string ToString()
