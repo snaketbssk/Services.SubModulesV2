@@ -5,6 +5,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
     public class UserIdentityGrpcResponseMapping : Mapping<UserIdentityGrpcResponse>
     {
+        public bool IsSuccess { get; set; }
         public Guid Id { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
@@ -13,6 +14,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public bool ConfirmedTwoFactorAuthentication { get; set; }
         public IEnumerable<RoleIdentityGrpcResponseMapping> Roles { get; set; }
         public UserIdentityGrpcResponseMapping(
+            bool isSuccess,
             Guid id,
             string login,
             string email,
@@ -21,6 +23,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             bool confirmedTwoFactorAuthentication,
             IEnumerable<RoleIdentityGrpcResponseMapping> roles)
         {
+            IsSuccess = isSuccess;
             Id = id;
             Login = login;
             Email = email;
@@ -33,6 +36,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             var result = new UserIdentityGrpcResponse
             {
+                IsSuccess = IsSuccess,
                 Id = ByteString.CopyFrom(Id.ToByteArray()),
                 Login = Login,
                 Email = Email,

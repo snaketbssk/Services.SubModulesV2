@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using Services.SubModules.LogicLayers.Services;
 using System.Net;
 
@@ -50,22 +51,20 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
                 var httpResponse = GetHttpResponse(context);
                 var guid = Guid.NewGuid();
                 //
-                var logResponseMapping = new LogResponseMapping(
+                var logsResponse = new LogResponse(
                     timestamp: timestamp,
                     guid: guid,
                     messageException: exception.Message,
                     path: context.Request.Path,
                     method: context.Request.Method,
-                    stackTrace: exception.StackTrace);
-                var logsResponse = logResponseMapping.Map();
+                    stackTrace: exception?.StackTrace ?? string.Empty);
                 var textLogs = logsResponse.ToString();
                 _logger.LogError(textLogs);
                 _logService.Write(timestamp, textLogs);
                 //
-                var httpResponseMapping = new HttpResponseMapping(contentType, statusCode);
-                httpResponse = httpResponseMapping.Update(httpResponse);
-                var exceptionResponseMapping = new ExceptionResponseMapping(timestamp, guid);
-                var exceptionResponse = exceptionResponseMapping.Map();
+                httpResponse.ContentType = contentType;
+                httpResponse.StatusCode = statusCode;
+                var exceptionResponse = new ExceptionResponse(timestamp, guid);
                 var response = exceptionResponse.ToString();
                 await httpResponse.WriteAsync(response);
             }

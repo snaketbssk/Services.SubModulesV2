@@ -5,7 +5,7 @@
         /// <summary>
         /// 
         /// </summary>
-        public T Id { get; set; }
+        public T? Id { get; set; }
 
         /// <summary>
         /// 
@@ -21,7 +21,7 @@
         /// <param name="id"></param>
         public BaseIdRequest(T id)
         {
-            Id = id;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
         }
 
         public abstract string ToIdString();

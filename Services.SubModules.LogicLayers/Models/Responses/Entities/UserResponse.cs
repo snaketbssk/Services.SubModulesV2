@@ -18,12 +18,12 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         }
 
         public UserResponse(
-            string? name, 
-            string? email, 
-            bool? confirmedEmail, 
-            string? phoneNumber, 
-            bool? confirmedphoneNumber, 
-            bool? twoFactorEnabled, 
+            string? name,
+            string? email,
+            bool? confirmedEmail,
+            string? phoneNumber,
+            bool? confirmedphoneNumber,
+            bool? twoFactorEnabled,
             List<string> roles)
         {
             Name = name;

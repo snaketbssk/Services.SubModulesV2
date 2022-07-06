@@ -2,6 +2,6 @@
 {
     public interface IEmailRequest
     {
-        string Email { get; set; }
+        string? Email { get; set; }
     }
 }

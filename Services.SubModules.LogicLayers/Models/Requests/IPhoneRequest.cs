@@ -2,6 +2,6 @@
 {
     public interface IPhoneRequest
     {
-        string Phone { get; set; }
+        string? Phone { get; set; }
     }
 }

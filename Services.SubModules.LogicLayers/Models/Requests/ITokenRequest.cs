@@ -2,6 +2,6 @@
 {
     public interface ITokenRequest
     {
-        string Token { get; set; }
+        string? Token { get; set; }
     }
 }
