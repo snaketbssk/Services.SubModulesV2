@@ -15,6 +15,10 @@ namespace Services.SubModules.LogicLayers.Attributes.Entities
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var formFileCollection = value as IFormFileCollection;
+            if (formFileCollection is null)
+            {
+                return ValidationResult.Success;
+            }
             foreach (var file in formFileCollection)
             {
                 var extension = Path.GetExtension(file.FileName);
