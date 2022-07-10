@@ -4,7 +4,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 {
     public class TokenRequest : ITokenRequest
     {
-        [StringLength(1024, MinimumLength = 1)]
+        [StringLength(1024)]
         public string? Token { get; set; }
 
         /// <summary>
@@ -17,7 +17,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 
         public TokenRequest(string token)
         {
-            Token = token ?? throw new ArgumentNullException(nameof(token));
+            Token = token;
         }
     }
 }
