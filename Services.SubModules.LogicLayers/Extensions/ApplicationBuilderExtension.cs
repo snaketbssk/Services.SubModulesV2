@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Prometheus;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Constants;
@@ -17,6 +18,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseAuthentication();
             applicationBuilder.UseAuthorization();
+            applicationBuilder.AddPrometheus();
             return applicationBuilder;
         }
         public static IApplicationBuilder AddSwagger(this IApplicationBuilder applicationBuilder)
@@ -41,6 +43,12 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IApplicationBuilder AddMiddlewares(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseMiddleware<ExceptionMiddleware>();
+            return applicationBuilder;
+        }
+        private static IApplicationBuilder AddPrometheus(this IApplicationBuilder applicationBuilder)
+        {
+            applicationBuilder.UseHttpMetrics();
+            applicationBuilder.UseGrpcMetrics();
             return applicationBuilder;
         }
     }
