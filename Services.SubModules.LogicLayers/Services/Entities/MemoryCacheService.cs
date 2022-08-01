@@ -4,7 +4,7 @@ using Services.SubModules.DataLayers.Services.Entities;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
-    public abstract class MemoryCacheService<TValue, TContext> : ContextService<TContext> where TContext : DbContext
+    public abstract class MemoryCacheService<TValue>
     {
         private readonly string _nameCache;
         private readonly IMemoryCache _memoryCache;
@@ -12,8 +12,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         protected MemoryCacheService(
             IMemoryCache memoryCache,
             string nameCache,
-            MemoryCacheEntryOptions memoryCacheEntryOptions,
-            TContext context) : base(context)
+            MemoryCacheEntryOptions memoryCacheEntryOptions)
         {
             _nameCache = nameCache;
             _memoryCache = memoryCache;
