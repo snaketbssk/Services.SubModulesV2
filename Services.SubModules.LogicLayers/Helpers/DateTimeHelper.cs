@@ -37,5 +37,12 @@ namespace Services.SubModules.LogicLayers.Helpers
             var result = value.Day.ToString(DatetimeConstant.DAY);
             return result;
         }
+
+        // var dt1 = RoundUp(DateTime.Parse("2011-08-11 16:59"), TimeSpan.FromMinutes(15));
+        // dt1 == {11/08/2011 17:00:00}
+        public static DateTime ToSnap(DateTime value, TimeSpan snap)
+        {
+            return new DateTime((value.Ticks + snap.Ticks - 1) / snap.Ticks * snap.Ticks, value.Kind);
+        }
     }
 }
