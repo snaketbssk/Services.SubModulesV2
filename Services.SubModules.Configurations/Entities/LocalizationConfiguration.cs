@@ -5,16 +5,16 @@ using Services.SubModules.Configurations.Helpers;
 namespace Services.SubModules.Configurations.Entities
 {
     /// <summary>
-    /// Swagger класс конфигурации
+    /// Localization класс конфигурации
     /// </summary>
     /// <typeparam name="T">Json класс конфигурации</typeparam>
-    public class SwaggerConfiguration<T> : SingletonConfiguration<SwaggerConfiguration<T>>
+    public class LocalizationConfiguration<T> : SingletonConfiguration<LocalizationConfiguration<T>>
         where T : class, new()
     {
         /// <summary>
         /// Название файла конфигурации
         /// </summary>
-        protected override string _nameFile => ConfigurationConstant.SWAGGER_FILE;
+        protected override string _nameFile => ConfigurationConstant.LOCALIZATION_FILE;
 
         /// <summary>
         /// Json класс конфигурации

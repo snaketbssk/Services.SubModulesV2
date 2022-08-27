@@ -14,5 +14,6 @@
         public const string SERVICE_FILE = "appsettings.Service.json";
         public const string TOKEN_FILE = "appsettings.Token.json";
         public const string CRYPTOGRAPHY_FILE = "appsettings.Cryptography.json";
+        public const string LOCALIZATION_FILE = "appsettings.Localization.json";
     }
 }

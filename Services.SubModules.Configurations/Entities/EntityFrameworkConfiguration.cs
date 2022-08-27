@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Services.SubModules.Configurations.Constants;
+using Services.SubModules.Configurations.Helpers;
 
 namespace Services.SubModules.Configurations.Entities
 {
@@ -14,10 +15,12 @@ namespace Services.SubModules.Configurations.Entities
         /// Название файла конфигурации
         /// </summary>
         protected override string _nameFile => ConfigurationConstant.ENTITY_FRAMEFORK_FILE;
+
         /// <summary>
         /// Json класс конфигурации
         /// </summary>
         public T Root { get; private set; }
+
         /// <summary>
         /// Загрузка файла конфигурации
         /// </summary>
@@ -26,6 +29,17 @@ namespace Services.SubModules.Configurations.Entities
         {
             Root = new T();
             root.Bind(Root);
+        }
+
+        /// <summary>
+        /// Получить путь к файлу
+        /// </summary>
+        /// <param name="nameFile"></param>
+        /// <returns></returns>
+        protected override string GetPath(string nameFile)
+        {
+            var result = ConfigurationHelper.GetPath(_nameFile);
+            return result;
         }
     }
 }

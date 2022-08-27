@@ -27,6 +27,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<ILogService, LogService>();
             serviceCollection.AddSingleton<ICryptoService, CryptoService>();
+            serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
             // Transient services
             serviceCollection.AddTransient<IIdentityGrpcService, IdentityGrpcService>();
             serviceCollection.AddTransient<IMailerGrpcService, MailerGrpcService>();

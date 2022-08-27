@@ -1,12 +1,12 @@
 ﻿namespace Services.SubModules.Configurations.Models.Roots.Entities
 {
-    public class OriginsCor
+    public class OriginsCors
     {
         public string UrlCors { get; set; }
     }
 
     public class CorsRoot
     {
-        public List<OriginsCor> OriginsCors { get; set; }
+        public List<OriginsCors> OriginsCors { get; set; }
     }
 }
