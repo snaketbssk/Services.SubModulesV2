@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Services.SubModules.LogicLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Repositories.Entities
 {
@@ -28,7 +23,7 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         public abstract Task RemoveAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task<bool> ContainsAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
         public abstract Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest,IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
+        public abstract Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var result = await _context.SaveChangesAsync(cancellationToken);

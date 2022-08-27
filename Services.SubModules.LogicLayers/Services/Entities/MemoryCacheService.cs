@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using Services.SubModules.DataLayers.Services.Entities;
+﻿using Microsoft.Extensions.Caching.Memory;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {

@@ -1,10 +1,5 @@
 ﻿using Services.SubModules.LogicLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Repositories
 {
