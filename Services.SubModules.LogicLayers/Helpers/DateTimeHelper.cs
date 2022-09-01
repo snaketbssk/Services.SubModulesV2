@@ -44,5 +44,24 @@ namespace Services.SubModules.LogicLayers.Helpers
         {
             return new DateTime((value.Ticks + snap.Ticks - 1) / snap.Ticks * snap.Ticks, value.Kind);
         }
+
+        public static Dictionary<int, int> ToCountDays(DateTime[] values)
+        {
+            var result = new Dictionary<int, int>();
+            var nowAt = DateTime.UtcNow;
+            foreach (var value in values)
+            {
+                var day = (int)Math.Floor((nowAt - value).TotalDays);
+                if (result.ContainsKey(day))
+                {
+                    result[day]++;
+                }
+                else
+                {
+                    result.Add(day, 1);
+                }
+            }
+            return result;
+        }
     }
 }
