@@ -6,5 +6,6 @@ namespace Services.SubModules.LogicLayers.Services
     public interface ITelegramGrpcService
     {
         Task<MessageTelegramGrpcResponse> ExecuteAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<MediaFilesGrpcResponse> ExecuteAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }
