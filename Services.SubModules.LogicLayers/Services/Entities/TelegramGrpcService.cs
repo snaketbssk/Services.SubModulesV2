@@ -39,5 +39,28 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return result;
             }
         }
+        public async Task<MediaFilesGrpcResponse> ExecuteAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new TelegramGrpc.TelegramGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.SendMediaAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken: cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.StackTrace);
+                var result = new MediaFilesGrpcResponse
+                {
+                    IsSuccess = false
+                };
+                return result;
+            }
+        }
     }
 }
