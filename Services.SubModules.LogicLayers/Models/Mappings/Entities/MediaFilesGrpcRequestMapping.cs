@@ -29,7 +29,16 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         }
         public override MediaFilesGrpcRequest Map()
         {
-            throw new NotImplementedException();
+            var data = JsonSerializer.Serialize(Data);
+            var result = new MessageMailerGrpcRequest
+            {
+                Type = Type ?? "",
+                Address = Address ?? "",
+                Data = data ?? "",
+                Date = Date.Ticks,
+                Language = Language ?? ""
+            };
+            return result;
         }
 
         public override MediaFilesGrpcRequest Update(MediaFilesGrpcRequest result)
