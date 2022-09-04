@@ -5,6 +5,8 @@ option csharp_namespace = "Services.SubModules.Protos";
 service StorageGrpc {
   rpc SendFile (StorageFileGrpcRequest) returns (StorageFileGrpcResponse);
   rpc SendFiles (StorageFilesGrpcRequest) returns (StorageFilesGrpcResponse);
+  rpc GetFile (StorageReadFileGrpcRequest) returns (StorageReadFileGrpcResponse);
+  rpc GetFiles (StorageReadFilesGrpcRequest) returns (StorageReadFilesGrpcResponse);
 }
 
 message StorageFileGrpcRequest
@@ -26,4 +28,23 @@ message StorageFilesGrpcRequest
 
 message StorageFilesGrpcResponse {
     repeated StorageFileGrpcResponse files = 1;
+}
+
+message StorageReadFileGrpcRequest {
+    string name = 1;
+}
+
+message StorageReadFileGrpcResponse {
+    bool isSuccess = 1;
+    string name = 2;
+    bytes content = 3;
+}
+
+message StorageReadFilesGrpcRequest
+{
+    repeated StorageReadFileGrpcRequest files = 1;
+}
+
+message StorageReadFilesGrpcResponse {
+    repeated StorageReadFileGrpcResponse files = 1;
 }

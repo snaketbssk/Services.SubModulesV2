@@ -59,5 +59,50 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return result;
             }
         }
+
+        public async Task<StorageReadFileGrpcResponse> ExecuteAsync(IMapping<StorageReadFileGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.GetFileAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.StackTrace);
+                var result = new StorageReadFileGrpcResponse
+                {
+                    IsSuccess = false
+                };
+                return result;
+            }
+        }
+
+        public async Task<StorageReadFilesGrpcResponse> ExecuteAsync(IMapping<StorageReadFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.GetFilesAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.StackTrace);
+                var result = new StorageReadFilesGrpcResponse();
+                return result;
+            }
+        }
     }
 }
