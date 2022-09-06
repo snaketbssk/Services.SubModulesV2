@@ -25,7 +25,8 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddAutoMapper(x => x.AddProfile(new AutoMapping()));
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
-            serviceCollection.AddSingleton<ILogService, LogService>();
+            serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
+            serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
             serviceCollection.AddSingleton<ICryptoService, CryptoService>();
             serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
             // Transient services

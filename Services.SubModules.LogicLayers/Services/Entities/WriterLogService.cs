@@ -3,7 +3,7 @@ using Services.SubModules.LogicLayers.Helpers;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
-    public class LogService : ILogService
+    public class WriterLogService : IWriterLogService
     {
         private string GetPathDirectory(DateTime timestamp, string text)
         {
@@ -31,22 +31,22 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 Directory.CreateDirectory(path);
             }
         }
-        private void CreateFile(string path)
+        private async Task CreateLogFileAsync(string path, CancellationToken cancellationToken = default)
         {
             if (!File.Exists(path))
             {
-                File.WriteAllText(path, string.Empty);
+                await File.WriteAllTextAsync(path, string.Empty, cancellationToken);
             }
         }
-        public bool Write(DateTime timestamp, string text)
+        public async Task<bool> WriteLogFileAsync(DateTime timestamp, string text, CancellationToken cancellationToken = default)
         {
             try
             {
                 var directory = GetPathDirectory(timestamp, text);
                 CreateDirectory(directory);
                 var file = GetPathFile(directory);
-                CreateFile(file);
-                File.AppendAllText(file, text);
+                await CreateLogFileAsync(file, cancellationToken);
+                await File.AppendAllTextAsync(file, text, cancellationToken);
                 return true;
             }
             catch (Exception)

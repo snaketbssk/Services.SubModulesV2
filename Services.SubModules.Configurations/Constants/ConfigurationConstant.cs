@@ -5,6 +5,7 @@
         // Directories
         public const string APPSETTINGS_DIRECTORY = "appsettings";
         public const string LOGS_DIRECTORY = "logs";
+        public const string LOCALIZATIONS_DIRECTORY = "localizations";
         // Files
         public const string EXCEPTION_FILE = "exceptions.txt";
         public const string CORS_FILE = "appsettings.Cors.json";

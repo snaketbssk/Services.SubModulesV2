@@ -13,14 +13,12 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
         /// 
         /// </summary>
         private readonly RequestDelegate _requestDelegate;
+
         /// <summary>
         /// 
         /// </summary>
-        private readonly ILogger<ExceptionMiddleware> _logger;
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly ILogService _logService;
+        private readonly IExceptionService _exceptionService;
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,15 +26,14 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
         /// <param name="requestDelegate"></param>
         /// <param name="loggerFactory"></param>
         public ExceptionMiddleware(
-            ILogService logService,
+            IExceptionService exceptionService,
             RequestDelegate requestDelegate,
             ILoggerFactory loggerFactory)
         {
             _requestDelegate = requestDelegate;
-            _logger = loggerFactory.CreateLogger<ExceptionMiddleware>();
-            _logService = logService;
+            _exceptionService = exceptionService;
         }
-        public async Task Invoke(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
@@ -44,27 +41,14 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
             }
             catch (Exception exception)
             {
-                var timestamp = DateTime.UtcNow;
                 var contentType = GetContentType();
                 var statusCode = GetStatusCode(exception);
                 var httpResponse = GetHttpResponse(context);
-                var guid = Guid.NewGuid();
-                //
-                var logsResponse = new LogResponse(
-                    timestamp: timestamp,
-                    guid: guid,
-                    messageException: exception.Message,
-                    path: context.Request.Path,
-                    method: context.Request.Method,
-                    stackTrace: exception?.StackTrace ?? string.Empty);
-                var textLogs = logsResponse.ToString();
-                _logger.LogError(textLogs);
-                _logService.Write(timestamp, textLogs);
+                var exceptionResponse = _exceptionService.ExecuteAsync(context, exception);
+                var response = exceptionResponse.ToString();
                 //
                 httpResponse.ContentType = contentType;
                 httpResponse.StatusCode = statusCode;
-                var exceptionResponse = new ExceptionResponse(timestamp, guid);
-                var response = exceptionResponse.ToString();
                 await httpResponse.WriteAsync(response);
             }
         }

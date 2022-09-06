@@ -2,6 +2,8 @@
 {
     public interface ILocalizationService
     {
-        string GetString(string path);
+        string GetCulture();
+        string GetText(string path);
+        string SetCulture(string rawCulture);
     }
 }

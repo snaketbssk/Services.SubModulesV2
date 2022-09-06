@@ -42,6 +42,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         }
         public static IApplicationBuilder AddMiddlewares(this IApplicationBuilder applicationBuilder)
         {
+            applicationBuilder.UseMiddleware<LocalizationMiddleware>();
             applicationBuilder.UseMiddleware<ExceptionMiddleware>();
             return applicationBuilder;
         }
