@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Services.SubModules.LogicLayers.Services
 {
     public interface IExceptionService
     {
-        Task<ExceptionResponse> ExecuteAsync(HttpContext context, Exception exception, CancellationToken cancellationToken = default);
+        Task<IExceptionResponse> ExecuteAsync(HttpContext context, Exception exception, CancellationToken cancellationToken = default);
     }
 }

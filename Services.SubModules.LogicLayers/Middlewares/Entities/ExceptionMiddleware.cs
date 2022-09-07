@@ -44,7 +44,7 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
                 var contentType = GetContentType();
                 var statusCode = GetStatusCode(exception);
                 var httpResponse = GetHttpResponse(context);
-                var exceptionResponse = _exceptionService.ExecuteAsync(context, exception);
+                var exceptionResponse = await _exceptionService.ExecuteAsync(context, exception);
                 var response = exceptionResponse.ToString();
                 //
                 httpResponse.ContentType = contentType;
