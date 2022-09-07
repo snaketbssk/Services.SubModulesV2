@@ -27,8 +27,7 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
         /// <param name="loggerFactory"></param>
         public ExceptionMiddleware(
             IExceptionService exceptionService,
-            RequestDelegate requestDelegate,
-            ILoggerFactory loggerFactory)
+            RequestDelegate requestDelegate)
         {
             _requestDelegate = requestDelegate;
             _exceptionService = exceptionService;

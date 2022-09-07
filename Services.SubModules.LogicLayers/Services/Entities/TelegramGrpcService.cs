@@ -8,13 +8,24 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class TelegramGrpcService : GrpcService, ITelegramGrpcService
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ILogger<TelegramGrpcService> _logger;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IExceptionService _exceptionService;
+
         public TelegramGrpcService(
+            IExceptionService exceptionService,
             ITokenService tokenService,
             ILogger<TelegramGrpcService> logger)
             : base(GrpcConfiguration<GrpcRoot>.Instance.Root.TelegramUrlGrpc, tokenService)
         {
             _logger = logger;
+            _exceptionService = exceptionService;
         }
         public async Task<MessageTelegramGrpcResponse> ExecuteAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
@@ -31,7 +42,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.StackTrace);
+                await _exceptionService.ExecuteAsync(
+                    method: "TelegramGrpcService",
+                    path: "SendMessageAsync",
+                    exception: exception,
+                    cancellationToken);
                 var result = new MessageTelegramGrpcResponse
                 {
                     IsSuccess = false
@@ -54,7 +69,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.StackTrace);
+                await _exceptionService.ExecuteAsync(
+                    method: "TelegramGrpcService",
+                    path: "SendMediaAsync",
+                    exception: exception,
+                    cancellationToken);
                 var result = new MediaFilesGrpcResponse
                 {
                     IsSuccess = false

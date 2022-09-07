@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Grpc.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 using Services.SubModules.LogicLayers.Constants;
@@ -42,11 +43,23 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public async Task<IExceptionResponse> ExecuteAsync(HttpContext context, Exception exception, CancellationToken cancellationToken = default)
         {
+            var result = await ExecuteAsync(context.Request.Method, context.Request.Path, exception);
+            return result;
+        }
+
+        public async Task<IExceptionResponse> ExecuteAsync(ServerCallContext context, Exception exception, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteAsync(context.Method, context.Peer, exception);
+            return result;
+        }
+
+        public async Task<IExceptionResponse> ExecuteAsync(string method, string path, Exception exception, CancellationToken cancellationToken = default)
+        {
             var statusCode = GetStatusCode(exception);
             REQUEST_COUNT_BY_METHOD.WithLabels(
-                statusCode.ToString(), 
-                context.Request.Method, 
-                context.Request.Path)
+                statusCode.ToString(),
+                method,
+                path)
                 .Inc();
             var timestamp = DateTime.UtcNow;
             var guid = Guid.NewGuid();
@@ -55,8 +68,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 timestamp: timestamp,
                 guid: guid,
                 messageException: exception.Message,
-                path: context.Request.Path,
-                method: context.Request.Method,
+                path: path,
+                method: method,
                 stackTrace: exception?.StackTrace ?? string.Empty);
             var textLogs = logResponse.ToString();
             _logger.LogError(textLogs);

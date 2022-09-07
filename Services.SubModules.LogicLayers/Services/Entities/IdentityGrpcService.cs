@@ -8,13 +8,24 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class IdentityGrpcService : GrpcService, IIdentityGrpcService
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ILogger<IdentityGrpcService> _logger;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IExceptionService _exceptionService;
+
         public IdentityGrpcService(
+            IExceptionService exceptionService,
             ITokenService tokenService,
             ILogger<IdentityGrpcService> logger)
             : base(GrpcConfiguration<GrpcRoot>.Instance.Root.IdentityUrlGrpc, tokenService)
         {
             _logger = logger;
+            _exceptionService = exceptionService;
         }
         public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
@@ -31,7 +42,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception.StackTrace);
+                await _exceptionService.ExecuteAsync(
+                    method: "IdentityGrpcService",
+                    path: "GetUserAsync",
+                    exception: exception, 
+                    cancellationToken);
                 var result = new UserIdentityGrpcResponse
                 {
                     IsSuccess = false
