@@ -31,15 +31,15 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             // Guid
             result.Append("Guid: ");
             result.AppendLine(Guid);
-            // Message
-            result.Append("Message: ");
-            result.AppendLine(MessageException);
-            // Path
-            result.Append("Path: ");
-            result.AppendLine(Path);
             // Method
             result.Append("Method: ");
             result.AppendLine(Method);
+            // Path
+            result.Append("Path: ");
+            result.AppendLine(Path);
+            // Message
+            result.Append("Message: ");
+            result.AppendLine(MessageException);
             // StackTrace
             result.Append("StackTrace: ");
             result.AppendLine(StackTrace);
