@@ -8,5 +8,6 @@
     public class CorsRoot
     {
         public List<OriginsCors> OriginsCors { get; set; }
+        public string BaseAddressCors { get; set; }
     }
 }
