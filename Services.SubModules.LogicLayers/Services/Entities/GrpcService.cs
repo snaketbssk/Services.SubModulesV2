@@ -30,10 +30,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         protected virtual Metadata GetHeaders()
         {
             var result = new Metadata();
-            var claims = new List<Claim>()
+            var claims = new List<Claim>();
+
+            var serviceTypeClaim = nameof(TypeClaim.Service);
+            foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
             {
-                new Claim(ClaimConstant.ROLE, RoleConstant.SERVICE),
-            };
+                var claim = new Claim(serviceTypeClaim, valueClaim);
+                claims.Add(claim);
+            }
+
             var token = _tokenService.GenerateToken(claims);
             result.Add(HeaderConstant.AUTHORIZATION, token);
             return result;
