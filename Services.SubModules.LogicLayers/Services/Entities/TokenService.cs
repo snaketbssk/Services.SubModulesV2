@@ -87,6 +87,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                         break;
                     case JwtClaimConstant.ACCESS_TOKEN:
                         break;
+                    default:
+                        result.Add(claim);
+                        break;
                 }
             }
             return result;

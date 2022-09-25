@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
@@ -37,8 +38,21 @@ namespace Services.SubModules.LogicLayers.Extensions
             //
             return serviceCollection;
         }
+
         public static IServiceCollection AddConfigurationAuthentication(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddAuthorization(x =>
+            {
+                foreach (var typeClaim in Enum.GetNames(typeof(TypeClaim)))
+                {
+                    foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
+                    {
+                        var namePolicy = $"{typeClaim}{valueClaim}";
+                        x.AddPolicy(namePolicy, policy => policy.RequireClaim(typeClaim, valueClaim));
+                    }
+                }
+            });
+
             serviceCollection.AddAuthentication(x =>
                 {
                     x.DefaultScheme = SchemeConstant.DEFAULT;
@@ -48,6 +62,7 @@ namespace Services.SubModules.LogicLayers.Extensions
                     IdentityAuthenticationHandler>(SchemeConstant.DEFAULT, options => { });
             return serviceCollection;
         }
+
         private static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
         {
             if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsActiveSwagger)

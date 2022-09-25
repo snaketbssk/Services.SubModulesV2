@@ -21,7 +21,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         private void Load()
         {
             var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationConstant.LOCALIZATIONS_DIRECTORY);
-            
+
             if (!Directory.Exists(folderPath))
             {
                 return;

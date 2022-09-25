@@ -1,12 +1,6 @@
 ﻿using Grpc.Core;
 using Microsoft.AspNetCore.Http;
 using Services.SubModules.LogicLayers.Models.Responses;
-using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Services
 {

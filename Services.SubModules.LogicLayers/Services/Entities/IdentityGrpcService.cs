@@ -45,7 +45,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 await _exceptionService.ExecuteAsync(
                     method: "IdentityGrpcService",
                     path: "GetUserAsync",
-                    exception: exception, 
+                    exception: exception,
                     cancellationToken);
                 var result = new UserIdentityGrpcResponse
                 {

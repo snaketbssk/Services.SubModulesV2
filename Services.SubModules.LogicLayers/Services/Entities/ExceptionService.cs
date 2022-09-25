@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Prometheus;
-using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using Services.SubModules.LogicLayers.Services;
 using System.Net;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
@@ -34,7 +32,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         private readonly ILogger<ExceptionService> _logger;
 
         public ExceptionService(
-            IWriterLogService logService, 
+            IWriterLogService logService,
             ILogger<ExceptionService> logger)
         {
             _logger = logger;

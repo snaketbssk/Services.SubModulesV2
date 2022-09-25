@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Services.SubModules.LogicLayers.Constants;
-using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using Services.SubModules.LogicLayers.Services;
 using System.Net;
 
