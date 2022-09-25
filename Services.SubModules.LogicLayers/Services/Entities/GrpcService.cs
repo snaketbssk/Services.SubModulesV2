@@ -4,6 +4,7 @@ using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using System.Security.Claims;
+using Services.SubModules.LogicLayers.Authentications.Claims;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -31,7 +32,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             var result = new Metadata();
             var claims = new List<Claim>()
             {
-                new Claim(ClaimConstant.ROLE, RoleConstant.SERVICE)
+                new Claim(ClaimConstant.ROLE, RoleConstant.SERVICE),
             };
             var token = _tokenService.GenerateToken(claims);
             result.Add(HeaderConstant.AUTHORIZATION, token);

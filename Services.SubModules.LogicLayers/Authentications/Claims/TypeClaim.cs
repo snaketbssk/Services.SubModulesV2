@@ -16,6 +16,7 @@
         CompanyApplications,
         Telegram,
         Mailer,
-        Storage
+        Storage,
+        Service
     }
 }
