@@ -2,21 +2,24 @@
 {
     public enum TypeClaim
     {
+        // Common
         User,
-        Users,
+        ManageUser,
         Role,
-        Roles,
+        ManageRole,
         RealEstate,
-        RealEstates,
+        ManageRealEstate,
         Referral,
-        Referrals,
-        RealtorApplication,
-        RealtorApplications,
-        CompanyApplication,
-        CompanyApplications,
+        ManageReferral,
+        // Services
+        Service,
         Telegram,
         Mailer,
         Storage,
-        Service
+        // Other Services
+        RealtorApplication,
+        ManageRealtorApplication,
+        CompanyApplication,
+        ManageCompanyApplication
     }
 }

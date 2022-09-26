@@ -2,7 +2,9 @@
 {
     public enum ValueClaim
     {
-        Read,
-        Write
+        Create,
+        Update,
+        Delete,
+        Read
     }
 }
