@@ -2,9 +2,9 @@
 using Grpc.Net.Client;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Constants;
 using System.Security.Claims;
-using Services.SubModules.LogicLayers.Authentications.Claims;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {

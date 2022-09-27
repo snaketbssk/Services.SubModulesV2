@@ -54,5 +54,30 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return result;
             }
         }
+
+        public async Task<EmptyIdentityGrpcResponse> ExecuteAsync(IMapping<AddRolesUserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.AddRolesToUserAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(
+                    method: "IdentityGrpcService",
+                    path: "AddRolesToUser",
+                    exception: exception,
+                    cancellationToken);
+                var result = new EmptyIdentityGrpcResponse() { IsSuccess = false };
+                return result;
+            }
+        }
     }
 }
