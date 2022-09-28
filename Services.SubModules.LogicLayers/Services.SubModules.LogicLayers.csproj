@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\notifications_service.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Services.SubModules.DataLayers\Services.SubModules.DataLayers.csproj" />
   </ItemGroup>
 
@@ -23,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Protobuf Include="Protos\notifications_service.proto" />
 	<Protobuf Include="Protos\identity_service.proto" />
 	<Protobuf Include="Protos\mailer_service.proto" />
 	<Protobuf Include="Protos\storage_service.proto" />
