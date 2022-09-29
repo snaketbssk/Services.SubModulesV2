@@ -10,5 +10,6 @@
         public string TelegramUrlGrpc { get; set; }
         public string RealtorsUrlGrpc { get; set; }
         public string MailerUrlGrpc { get; set; }
+        public string NotificationsUrlGrpc { get; set; }
     }
 }

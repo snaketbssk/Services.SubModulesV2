@@ -16,6 +16,7 @@
         Telegram,
         Mailer,
         Storage,
+        Notifications,
         // Other Services
         RealtorApplication,
         ManageRealtorApplication,
