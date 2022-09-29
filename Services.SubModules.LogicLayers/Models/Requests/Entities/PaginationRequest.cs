@@ -8,9 +8,11 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
         public int From { get; set; }
+
         [DefaultValue(100)]
         [Range(0, int.MaxValue)]
         public int To { get; set; }
+
         public int Take(int max = 100)
         {
             var result = Math.Abs(To - From);
@@ -24,5 +26,11 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
             }
             return result;
         }
+
+        public bool FirstRequest { get; set; }
+
+        public bool OrderByDescending { get; set; }
+
+        public string PropertyOrderBy { get; set; }
     }
 }
