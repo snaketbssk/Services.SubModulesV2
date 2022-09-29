@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Services.SubModules.Configurations.Entities;
+﻿using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;

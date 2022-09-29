@@ -12,10 +12,10 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         {
             Values = new List<T>();
         }
-        public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, 
-                                                                    int skip, 
-                                                                    int take, 
-                                                                    bool firstRequest, 
+        public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable,
+                                                                    int skip,
+                                                                    int take,
+                                                                    bool firstRequest,
                                                                     string propertyOrderBy,
                                                                     bool orderByDescending,
                                                                     CancellationToken cancellationToken = default)
@@ -36,11 +36,11 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, IPaginationRequest paginationRequest, CancellationToken cancellationToken = default)
         {
             var take = paginationRequest.Take();
-            var result = await CreateAsync(queryable, 
-                                           paginationRequest.From, 
-                                           take, 
-                                           paginationRequest.FirstRequest, 
-                                           paginationRequest.PropertyOrderBy, 
+            var result = await CreateAsync(queryable,
+                                           paginationRequest.From,
+                                           take,
+                                           paginationRequest.FirstRequest,
+                                           paginationRequest.PropertyOrderBy,
                                            paginationRequest.OrderByDescending,
                                            cancellationToken);
             return result;
