@@ -11,10 +11,28 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         {
             Values = new List<T>();
         }
-        public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, int skip, int take, CancellationToken cancellationToken = default)
+        public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, 
+                                                                    int skip, 
+                                                                    int take, 
+                                                                    bool orderByDescending,
+                                                                    bool firstRequest,
+                                                                    CancellationToken cancellationToken = default)
         {
             var result = new PaginationResponse<T>();
-            result.TotalCount = await queryable.CountAsync(cancellationToken);
+
+            if (orderByDescending)
+            {
+            }
+            else
+            {
+
+            }
+
+            if (firstRequest)
+            {
+                result.TotalCount = await queryable.CountAsync(cancellationToken);
+            }
+            
             result.Values.AddRange(await queryable
                 .Skip(skip)
                 .Take(take)
@@ -24,7 +42,12 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, IPaginationRequest paginationRequest, CancellationToken cancellationToken = default)
         {
             var take = paginationRequest.Take();
-            var result = await CreateAsync(queryable, paginationRequest.From, take, cancellationToken);
+            var result = await CreateAsync(queryable, 
+                                           paginationRequest.From, 
+                                           take, 
+                                           paginationRequest.OrderByDescending, 
+                                           paginationRequest.FirstRequest, 
+                                           cancellationToken);
             return result;
         }
         public static PaginationResponse<T> Create(IEnumerable<T> values, int skip, int take)

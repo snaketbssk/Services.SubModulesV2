@@ -11,6 +11,8 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
         [DefaultValue(100)]
         [Range(0, int.MaxValue)]
         public int To { get; set; }
+        public bool OrderByDescending { get; set; }
+        public bool FirstRequest { get; set; }
         public int Take(int max = 100)
         {
             var result = Math.Abs(To - From);
