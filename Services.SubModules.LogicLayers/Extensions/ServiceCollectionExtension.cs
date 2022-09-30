@@ -35,6 +35,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddTransient<IMailerGrpcService, MailerGrpcService>();
             serviceCollection.AddTransient<IStorageGrpcService, StorageGrpcService>();
             serviceCollection.AddTransient<ITelegramGrpcService, TelegramGrpcService>();
+            serviceCollection.AddTransient<INotificationsGrpcService, NotificationsGrpcService>();
             //
             return serviceCollection;
         }
