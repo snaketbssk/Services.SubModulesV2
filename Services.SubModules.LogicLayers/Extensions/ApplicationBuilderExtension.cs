@@ -37,7 +37,9 @@ namespace Services.SubModules.LogicLayers.Extensions
         }
         public static IApplicationBuilder AddCors(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseCors(CorsConstant.POLICY);
+            applicationBuilder.UseCors(x => x.AllowAnyOrigin()
+                                             .AllowAnyMethod()
+                                             .AllowAnyHeader());
             return applicationBuilder;
         }
         public static IApplicationBuilder AddMiddlewares(this IApplicationBuilder applicationBuilder)

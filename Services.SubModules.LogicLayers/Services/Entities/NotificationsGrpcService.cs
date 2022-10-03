@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public NotificationsGrpcService(IExceptionService exceptionService,
                                         ITokenService tokenService)
-                                        : base(GrpcConfiguration<GrpcRoot>.Instance.Root.IdentityUrlGrpc, tokenService)
+                                        : base(GrpcConfiguration<GrpcRoot>.Instance.Root.NotificationsUrlGrpc, tokenService)
         {
             _exceptionService = exceptionService;
         }
