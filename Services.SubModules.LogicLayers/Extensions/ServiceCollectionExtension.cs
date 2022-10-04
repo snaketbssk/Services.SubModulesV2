@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Services.SubModules.Configurations.Entities;
@@ -44,6 +46,9 @@ namespace Services.SubModules.LogicLayers.Extensions
         {
             serviceCollection.AddAuthorization(x =>
             {
+                x.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
                 foreach (var typeClaim in Enum.GetNames(typeof(TypeClaim)))
                 {
                     foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
@@ -57,6 +62,8 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddAuthentication(x =>
                 {
                     x.DefaultScheme = SchemeConstant.DEFAULT;
+                    x.DefaultAuthenticateScheme = SchemeConstant.DEFAULT;
+                    x.DefaultChallengeScheme = SchemeConstant.DEFAULT;
                 })
                 .AddScheme<
                     IdentityAuthenticationSchemeOptions,
