@@ -1,5 +1,6 @@
 ﻿using Services.SubModules.LogicLayers.Attributes.Entities;
 using Services.SubModules.LogicLayers.Constants;
+using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication
 {

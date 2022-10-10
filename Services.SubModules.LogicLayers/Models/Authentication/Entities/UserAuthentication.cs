@@ -26,15 +26,17 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
         }
         public UserAuthentication(ClaimsPrincipal claimsPrincipal)
         {
-            foreach (ClaimAuthentication claimUser in Enum.GetValues(typeof(ClaimAuthentication)))
+            var values = Enum.GetValues(typeof(ClaimAuthentication));
+            foreach (ClaimAuthentication claimUser in values)
             {
                 var claimAttribute = claimUser.GetAttribute<ClaimAttribute>();
+
                 var claims = claimsPrincipal.FindAll(claimAttribute.Name) ?? throw new ArgumentNullException(nameof(claimUser));
                 switch (claimUser)
                 {
                     case ClaimAuthentication.Id: Id = Guid.Parse(claims.First().Value); break;
-                    case ClaimAuthentication.Name: Name = claims.First().Value; break;
-                    case ClaimAuthentication.Email: Email = claims.First().Value; break;
+                    case ClaimAuthentication.Name: Name = claims.FirstOrDefault().Value; break;
+                    case ClaimAuthentication.Email: Email = claims.FirstOrDefault().Value; break;
                     case ClaimAuthentication.Role: Roles = claims.Select(v => v.Value).ToList(); break;
                     case ClaimAuthentication.Language: break;
                     case ClaimAuthentication.AccessToken: break;
