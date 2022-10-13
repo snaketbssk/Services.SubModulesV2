@@ -49,9 +49,11 @@ namespace Services.SubModules.LogicLayers.Extensions
                 x.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-                foreach (var typeClaim in Enum.GetNames(typeof(TypeClaim)))
+                var typeClaims = Enum.GetNames(typeof(TypeClaim));
+                var valueClaims = Enum.GetNames(typeof(ValueClaim));
+                foreach (var typeClaim in typeClaims)
                 {
-                    foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
+                    foreach (var valueClaim in valueClaims)
                     {
                         var namePolicy = $"{typeClaim}{valueClaim}";
                         x.AddPolicy(namePolicy, policy => policy.RequireClaim(typeClaim, valueClaim));
