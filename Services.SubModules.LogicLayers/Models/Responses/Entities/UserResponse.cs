@@ -1,4 +1,5 @@
 ﻿using Services.SubModules.DataLayers.Models.Tables.Entities;
+using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
@@ -11,6 +12,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public bool? ConfirmedphoneNumber { get; set; }
         public bool? TwoFactorEnabled { get; set; }
         public List<string> Roles { get; set; }
+        public List<Claim> Claims { get; set; }
 
         public UserResponse()
         {
@@ -24,7 +26,8 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             string? phoneNumber,
             bool? confirmedphoneNumber,
             bool? twoFactorEnabled,
-            List<string> roles)
+            List<string> roles,
+            List<Claim> claims)
         {
             Name = name;
             Email = email;
@@ -33,6 +36,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             ConfirmedphoneNumber = confirmedphoneNumber;
             TwoFactorEnabled = twoFactorEnabled;
             Roles = roles;
+            Claims = claims;
         }
     }
 }

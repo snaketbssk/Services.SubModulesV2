@@ -13,6 +13,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public bool ConfirmedPhone { get; set; }
         public bool ConfirmedTwoFactorAuthentication { get; set; }
         public IEnumerable<RoleIdentityGrpcResponseMapping> Roles { get; set; }
+        public IEnumerable<ClaimRoleIdentityGrpcResponseMapping> Claims { get; set; }
         public UserIdentityGrpcResponseMapping(
             bool isSuccess,
             Guid id,
@@ -21,7 +22,8 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             bool confirmedEmail,
             bool confirmedPhone,
             bool confirmedTwoFactorAuthentication,
-            IEnumerable<RoleIdentityGrpcResponseMapping> roles)
+            IEnumerable<RoleIdentityGrpcResponseMapping> roles,
+            IEnumerable<ClaimRoleIdentityGrpcResponseMapping> claims)
         {
             IsSuccess = isSuccess;
             Id = id;
@@ -31,6 +33,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             ConfirmedPhone = confirmedPhone;
             ConfirmedTwoFactorAuthentication = confirmedTwoFactorAuthentication;
             Roles = roles;
+            Claims = claims;
         }
         public override UserIdentityGrpcResponse Map()
         {
@@ -45,7 +48,9 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
                 ConfirmedTwoFactorAuthentication = ConfirmedTwoFactorAuthentication
             };
             var roles = Roles.Select(x => x.Map());
+            var claims = Claims.Select(x => x.Map());
             result.Roles.AddRange(roles);
+            result.Claims.AddRange(claims);
             return result;
         }
 

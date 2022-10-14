@@ -1,4 +1,5 @@
 ﻿using Services.SubModules.DataLayers.Models.Tables;
+using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Responses
 {
@@ -11,5 +12,6 @@ namespace Services.SubModules.LogicLayers.Models.Responses
         bool? ConfirmedphoneNumber { get; set; }
         bool? TwoFactorEnabled { get; set; }
         List<string> Roles { get; set; }
+        List<Claim> Claims { get; set; }
     }
 }
