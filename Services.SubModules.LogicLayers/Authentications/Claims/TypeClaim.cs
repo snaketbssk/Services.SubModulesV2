@@ -15,7 +15,6 @@
         Referral,
         ManageReferral,
         // Services
-        Service,
 
         Telegram,
         ManageTelegram,
