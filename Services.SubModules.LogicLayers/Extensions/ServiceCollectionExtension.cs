@@ -6,11 +6,11 @@ using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
+using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
-using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {

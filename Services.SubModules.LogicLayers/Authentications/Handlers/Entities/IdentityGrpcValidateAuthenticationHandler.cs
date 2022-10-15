@@ -4,11 +4,8 @@ using Microsoft.Extensions.Options;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 using Services.SubModules.LogicLayers.Services;
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {

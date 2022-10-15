@@ -2,12 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
-using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Services;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Linq;
-using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {
