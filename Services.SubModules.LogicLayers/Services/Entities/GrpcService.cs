@@ -32,12 +32,14 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             var result = new Metadata();
             var claims = new List<Claim>();
 
-            var serviceTypeClaim = nameof(TypeClaim.Service);
-            foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
-            {
-                var claim = new Claim(serviceTypeClaim, valueClaim);
-                claims.Add(claim);
-            }
+            claims.Add(new Claim(ClaimConstant.ROLE, RoleConstant.SERVICE));
+
+            //var serviceTypeClaim = nameof(TypeClaim.Service);
+            //foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
+            //{
+            //    var claim = new Claim(serviceTypeClaim, valueClaim);
+            //    claims.Add(claim);
+            //}
 
             var token = _tokenService.GenerateToken(claims);
             result.Add(HeaderConstant.AUTHORIZATION, token);
