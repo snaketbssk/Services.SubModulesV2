@@ -6,7 +6,6 @@
         User,
         ManageUser,
 
-        Role,
         ManageRole,
 
         RealEstate,
