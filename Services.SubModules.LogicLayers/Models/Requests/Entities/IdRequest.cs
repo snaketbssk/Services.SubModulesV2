@@ -8,18 +8,27 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
         {
 
         }
+
         public IdRequest(Guid id) : base(id)
         {
 
         }
+
         public IdRequest(byte[] bytes) : base(new Guid(bytes))
         {
 
         }
+
         public IdRequest(ByteString bytes) : base(new Guid(bytes.ToByteArray()))
         {
 
         }
+
+        public IdRequest(string id) : base(Guid.Parse(id))
+        {
+
+        }
+
         public override string ToIdString()
         {
             var result = Id.ToString();

@@ -2,7 +2,7 @@
 
 namespace Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities
 {
-    public class IdentityAuthenticationSchemeOptions : AuthenticationSchemeOptions
+    public class IdentityGrpcValidateAuthenticationSchemeOptions : AuthenticationSchemeOptions
     {
     }
 }

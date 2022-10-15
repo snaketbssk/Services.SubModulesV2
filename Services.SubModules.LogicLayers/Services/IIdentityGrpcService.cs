@@ -7,5 +7,6 @@ namespace Services.SubModules.LogicLayers.Services
     {
         Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default);
         Task<EmptyIdentityGrpcResponse> ExecuteAsync(IMapping<AddRolesUserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<AuthenticationIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -7,11 +6,11 @@ using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
-using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
+using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -26,6 +25,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper(x => x.AddProfile(new AutoMapping()));
+            serviceCollection.AddAuthorization();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
@@ -42,7 +42,25 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddConfigurationAuthentication(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddGrpcAuthentication(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddAuthentication(x =>
+                {
+                    x.DefaultScheme = SchemeConstant.DEFAULT;
+                    x.DefaultAuthenticateScheme = SchemeConstant.DEFAULT;
+                    x.DefaultChallengeScheme = SchemeConstant.DEFAULT;
+                })
+                .AddScheme<
+                    IdentityGrpcValidateAuthenticationSchemeOptions,
+                    IdentityGrpcValidateAuthenticationHandler>(SchemeConstant.DEFAULT, options => { })
+                .AddScheme<
+                    GrpcValidateAuthenticationSchemeOptions,
+                    GrpcValidateAuthenticationHandler>(SchemeConstant.GRPC, options => { });
+
+            return serviceCollection;
+        }
+
+        private static IServiceCollection AddAuthorization(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddAuthorization(x =>
             {
@@ -61,15 +79,6 @@ namespace Services.SubModules.LogicLayers.Extensions
                 }
             });
 
-            serviceCollection.AddAuthentication(x =>
-                {
-                    x.DefaultScheme = SchemeConstant.DEFAULT;
-                    x.DefaultAuthenticateScheme = SchemeConstant.DEFAULT;
-                    x.DefaultChallengeScheme = SchemeConstant.DEFAULT;
-                })
-                .AddScheme<
-                    IdentityAuthenticationSchemeOptions,
-                    IdentityAuthenticationHandler>(SchemeConstant.DEFAULT, options => { });
             return serviceCollection;
         }
 

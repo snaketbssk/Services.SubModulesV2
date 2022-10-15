@@ -31,9 +31,8 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
         protected sealed override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!HasHeader())
-            {
-                return await Task.FromResult(AuthenticateResult.Fail($"{DateTime.UtcNow} Header not found."));
-            }
+                return await Task.FromResult(AuthenticateResult.NoResult());
+
             IEnumerable<Claim> claims;
             try
             {
@@ -44,6 +43,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             {
                 return await Task.FromResult(AuthenticateResult.Fail($"{DateTime.UtcNow} Token parse exception"));
             }
+
             var claimsIdentity = new ClaimsIdentity(claims, nameof(BaseAuthenticationHandler<TOptions>));
             var authenticationTicket = new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), Scheme.Name);
             return await Task.FromResult(AuthenticateResult.Success(authenticationTicket));

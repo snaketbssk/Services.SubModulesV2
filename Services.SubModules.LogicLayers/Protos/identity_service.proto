@@ -5,6 +5,7 @@ option csharp_namespace = "Services.SubModules.Protos";
 service IdentityGrpc {
 	rpc GetUser (UserIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
 	rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (EmptyIdentityGrpcResponse);
+	rpc Authentication (AuthenticationIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
 }
 
 message EmptyIdentityGrpcResponse 
@@ -43,4 +44,9 @@ message AddRolesUserIdentityGrpcRequest
 {
 	bytes id = 1;
 	repeated string roles = 2;
+}
+
+message AuthenticationIdentityGrpcRequest
+{
+    string token = 1;
 }

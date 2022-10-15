@@ -27,6 +27,34 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
+        public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<AuthenticationIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.AuthenticationAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(
+                    method: "IdentityGrpcService",
+                    path: "AuthenticationAsync",
+                    exception: exception,
+                    cancellationToken);
+                var result = new UserIdentityGrpcResponse
+                {
+                    IsSuccess = false
+                };
+                return result;
+            }
+        }
+
         public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
