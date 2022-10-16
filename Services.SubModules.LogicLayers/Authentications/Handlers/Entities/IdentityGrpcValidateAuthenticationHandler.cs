@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
+using Services.SubModules.LogicLayers.Models.Authentication.Entities;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using Services.SubModules.LogicLayers.Services;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
@@ -29,6 +31,14 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var response = await _identityGrpcService.ExecuteAsync(authenticationIdentityGrpcRequestMapping);
 
             var result = new List<Claim>();
+            var userAuthentication = new UserAuthentication(
+                id: new Guid(response.Id.ToByteArray()),
+                name: response.Login,
+                email: response.Email,
+                roles: new List<string>(),
+                accessToken: token,
+                language: "ru");
+            result.AddRange(userAuthentication.ToClaims());
             result.AddRange(response.Claims.Select(x => new Claim(x.Type, x.Value)));
 
             return result;
