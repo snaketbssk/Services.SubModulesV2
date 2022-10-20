@@ -12,6 +12,7 @@
         public const string GRPC_FILE = "appsettings.Grpc.json";
         public const string ENTITY_FRAMEFORK_FILE = "appsettings.EntityFramework.json";
         public const string SWAGGER_FILE = "appsettings.Swagger.json";
+        public const string SERILOG_FILE = "appsettings.Serilog.json";
         public const string SERVICE_FILE = "appsettings.Service.json";
         public const string TOKEN_FILE = "appsettings.Token.json";
         public const string CRYPTOGRAPHY_FILE = "appsettings.Cryptography.json";

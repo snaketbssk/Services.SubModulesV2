@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Prometheus;
+using Services.SubModules.Configurations.Entities;
+using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using System.Net;
@@ -59,10 +61,13 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 method,
                 path)
                 .Inc();
+            var root = SerilogConfiguration<SerilogRoot>.Instance.Root;
+            var service = root.Seq.Name;
             var timestamp = DateTime.UtcNow;
             var guid = Guid.NewGuid();
             //
             var logResponse = new LogResponse(
+                service: service,
                 timestamp: timestamp,
                 guid: guid,
                 messageException: exception.Message,
@@ -71,7 +76,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 stackTrace: exception?.StackTrace ?? string.Empty);
             var textLogs = logResponse.ToString();
             _logger.LogError(textLogs);
-            await _logService.WriteLogFileAsync(timestamp, textLogs);
+            //await _logService.WriteLogFileAsync(timestamp, textLogs);
             //
             var result = new ExceptionResponse(timestamp, guid);
             return result;

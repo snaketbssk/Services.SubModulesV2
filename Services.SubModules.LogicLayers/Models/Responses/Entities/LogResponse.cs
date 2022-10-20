@@ -4,6 +4,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
     public class LogResponse : ILogResponse
     {
+        public string Service { get; set; }
         public string Timestamp { get; set; }
         public string Guid { get; set; }
         public string MessageException { get; set; }
@@ -11,8 +12,9 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public string Method { get; set; }
         public string StackTrace { get; set; }
 
-        public LogResponse(DateTime timestamp, Guid guid, string messageException, string path, string method, string stackTrace)
+        public LogResponse(string service, DateTime timestamp, Guid guid, string messageException, string path, string method, string stackTrace)
         {
+            Service = service;
             Timestamp = timestamp.ToString();
             Guid = guid.ToString();
             MessageException = messageException;
@@ -25,6 +27,9 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         {
             var result = new StringBuilder();
             result.AppendLine();
+            // Service
+            result.Append("Service: ");
+            result.AppendLine(Service);
             // Timestamp
             result.Append("Timestamp: ");
             result.AppendLine(Timestamp);
