@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Models.Authentication.Entities;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
-using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using Services.SubModules.LogicLayers.Services;
 using System.Security.Claims;
 using System.Text.Encodings.Web;

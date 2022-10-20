@@ -21,9 +21,9 @@ namespace Services.SubModules.LogicLayers.Extensions
                 var path = Path.Combine(baseDirectory, nameFile);
 
                 loggerConfiguration
-                    .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)root.Console.LogEventLevel, 
+                    .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)root.Console.LogEventLevel,
                                      theme: AnsiConsoleTheme.Code)
-                    .WriteTo.File(path: path, 
+                    .WriteTo.File(path: path,
                                   restrictedToMinimumLevel: (LogEventLevel)root.File.LogEventLevel)
                     .WriteTo.Seq(serverUrl: root.Seq.ServerUrl,
                                  apiKey: root.Seq.ApiKey,
