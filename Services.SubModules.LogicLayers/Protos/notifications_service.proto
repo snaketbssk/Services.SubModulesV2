@@ -6,6 +6,9 @@ service NotificationsGrpc {
 	rpc AddSuccessNotification (AddSuccessNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
 	rpc AddWarningNotification (AddWarningNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
 	rpc AddErrorNotification (AddErrorNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
+	rpc AddSuccessGroupNotification (AddSuccessGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
+	rpc AddWarningGroupNotification (AddWarningGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
+	rpc AddErrorGroupNotification (AddErrorGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
 }
 
 message AddSuccessNotificationsGrpcRequest 
@@ -25,6 +28,27 @@ message AddWarningNotificationsGrpcRequest
 message AddErrorNotificationsGrpcRequest 
 {
 	bytes idUser = 1;
+	string title = 2;
+	string content = 3;
+}
+
+message AddSuccessGroupNotificationsGrpcRequest 
+{
+	string nameGroup = 1;
+	string title = 2;
+	string content = 3;
+}
+
+message AddWarningGroupNotificationsGrpcRequest 
+{
+	string nameGroup = 1;
+	string title = 2;
+	string content = 3;
+}
+
+message AddErrorGroupNotificationsGrpcRequest 
+{
+	string nameGroup = 1;
 	string title = 2;
 	string content = 3;
 }
