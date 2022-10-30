@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using Services.SubModules.LogicLayers.Constants;
@@ -41,7 +42,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             //}
 
             var token = _tokenService.GenerateToken(claims);
-            result.Add(HeaderConstant.AUTHORIZATION, token);
+            result.Add(HeaderConstant.AUTHORIZATION, $"{JwtBearerDefaults.AuthenticationScheme} {token}");
             return result;
         }
         protected virtual DateTime GetDeadline()
