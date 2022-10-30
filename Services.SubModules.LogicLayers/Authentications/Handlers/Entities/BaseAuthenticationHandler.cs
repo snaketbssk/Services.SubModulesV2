@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Services.SubModules.LogicLayers.Constants;
@@ -25,7 +26,13 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
         }
         private string GetHeader()
         {
-            var result = Request.Headers[HeaderConstant.AUTHORIZATION].ToString();
+            var autorizationHeader = Request.Headers[HeaderConstant.AUTHORIZATION].ToString();
+
+            if (!autorizationHeader.Contains(JwtBearerDefaults.AuthenticationScheme))
+                throw new ArgumentNullException(nameof(autorizationHeader));
+
+            var result = autorizationHeader.Split(" ").Last();
+
             return result;
         }
         protected sealed override async Task<AuthenticateResult> HandleAuthenticateAsync()

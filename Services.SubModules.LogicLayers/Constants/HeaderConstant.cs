@@ -6,6 +6,11 @@
         /// 
         /// </summary>
         public const string AUTHORIZATION = "Authorization";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string BEARER_HEADER = "Bearer";
         /// <summary>
         /// 
         /// </summary>
