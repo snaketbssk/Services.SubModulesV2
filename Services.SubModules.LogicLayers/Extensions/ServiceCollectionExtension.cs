@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -11,6 +12,8 @@ using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
+using System.Reflection;
+using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -24,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddMemoryCache();
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
-            serviceCollection.AddAutoMapper(x => x.AddProfile(new AutoMapping()));
+            serviceCollection.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             serviceCollection.AddAuthorization();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
