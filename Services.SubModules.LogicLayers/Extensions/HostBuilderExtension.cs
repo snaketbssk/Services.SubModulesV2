@@ -4,6 +4,7 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -29,6 +30,15 @@ namespace Services.SubModules.LogicLayers.Extensions
                                  apiKey: root.Seq.ApiKey,
                                  restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
             });
+
+            using (var log = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger())
+            {
+                var grpcRoot = JsonSerializer.Serialize(GrpcConfiguration<GrpcRoot>.Instance.Root, 
+                                                    new JsonSerializerOptions { WriteIndented = true });
+                log.Information(grpcRoot);
+            }
 
             return hostBuilder;
         }

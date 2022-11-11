@@ -12,6 +12,7 @@ using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
+using StackExchange.Redis;
 using System.Reflection;
 using System.Text.Json;
 
@@ -22,6 +23,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection)
         {
             // Global services
+            serviceCollection.AddRedis();
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
@@ -42,6 +44,14 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddTransient<ITelegramGrpcService, TelegramGrpcService>();
             serviceCollection.AddTransient<INotificationsGrpcService, NotificationsGrpcService>();
             //
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddRedis(this IServiceCollection serviceCollection)
+        {
+            var connectionMultiplexer = ConnectionMultiplexer.Connect(RedisConfiguration<RedisRoot>.Instance.Root.Connection);
+            serviceCollection.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
+
             return serviceCollection;
         }
 
