@@ -37,7 +37,11 @@ namespace Services.SubModules.LogicLayers.Extensions
             {
                 var grpcRoot = JsonSerializer.Serialize(GrpcConfiguration<GrpcRoot>.Instance.Root, 
                                                     new JsonSerializerOptions { WriteIndented = true });
-                log.Information(grpcRoot);
+                log.Information($"{nameof(grpcRoot)} {grpcRoot}");
+
+                var redisRoot = JsonSerializer.Serialize(RedisConfiguration<RedisRoot>.Instance.Root,
+                                                    new JsonSerializerOptions { WriteIndented = true });
+                log.Information($"{nameof(redisRoot)} {redisRoot}");
             }
 
             return hostBuilder;
