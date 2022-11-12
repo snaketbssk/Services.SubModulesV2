@@ -31,7 +31,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 
             var result = new List<Claim>();
             var userAuthentication = new UserAuthentication(
-                id: new Guid(response.Id.ToByteArray()),
+                id: Guid.Parse(response.Id),
                 name: response.Login,
                 email: response.Email,
                 roles: new List<string>(),

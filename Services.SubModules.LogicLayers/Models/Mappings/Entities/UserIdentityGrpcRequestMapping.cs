@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             var result = new UserIdentityGrpcRequest
             {
-                Id = ByteString.CopyFrom(Id.ToByteArray())
+                Id = Id.ToString()
             };
             return result;
         }

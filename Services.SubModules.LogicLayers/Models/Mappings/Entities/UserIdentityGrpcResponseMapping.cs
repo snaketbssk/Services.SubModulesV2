@@ -40,7 +40,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             var result = new UserIdentityGrpcResponse
             {
                 IsSuccess = IsSuccess,
-                Id = ByteString.CopyFrom(Id.ToByteArray()),
+                Id = Id.ToString(),
                 Login = Login,
                 Email = Email,
                 ConfirmedEmail = ConfirmedEmail,

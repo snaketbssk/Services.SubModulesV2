@@ -15,7 +15,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public override AddRolesUserIdentityGrpcRequest Map()
         {
             var result = new AddRolesUserIdentityGrpcRequest();
-            result.Id = ByteString.CopyFrom(Id.ToByteArray());
+            result.Id = Id.ToString();
             result.Roles.AddRange(Roles);
 
             return result;
