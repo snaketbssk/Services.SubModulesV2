@@ -36,7 +36,7 @@ namespace Services.SubModules.LogicLayers.Extensions
                 .WriteTo.Console()
                 .CreateLogger())
             {
-                var grpcRoot = JsonSerializer.Serialize(GrpcConfiguration<GrpcRoot>.Instance.Root, 
+                var grpcRoot = JsonSerializer.Serialize(GrpcConfiguration<GrpcRoot>.Instance.Root,
                                                     new JsonSerializerOptions { WriteIndented = true });
                 log.Information($"{nameof(grpcRoot)} {grpcRoot}");
 

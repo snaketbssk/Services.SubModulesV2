@@ -1,5 +1,4 @@
-﻿using Google.Protobuf;
-using Services.SubModules.Protos;
+﻿using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
