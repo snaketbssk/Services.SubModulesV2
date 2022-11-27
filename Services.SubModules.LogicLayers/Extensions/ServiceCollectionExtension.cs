@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -33,12 +34,13 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
             serviceCollection.AddSingleton<ICryptoService, CryptoService>();
             serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
+            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Transient services
-            serviceCollection.AddTransient<IIdentityGrpcService, IdentityGrpcService>();
-            serviceCollection.AddTransient<IMailerGrpcService, MailerGrpcService>();
-            serviceCollection.AddTransient<IStorageGrpcService, StorageGrpcService>();
-            serviceCollection.AddTransient<ITelegramGrpcService, TelegramGrpcService>();
-            serviceCollection.AddTransient<INotificationsGrpcService, NotificationsGrpcService>();
+            serviceCollection.AddScoped<IIdentityGrpcService, IdentityGrpcService>();
+            serviceCollection.AddScoped<IMailerGrpcService, MailerGrpcService>();
+            serviceCollection.AddScoped<IStorageGrpcService, StorageGrpcService>();
+            serviceCollection.AddScoped<ITelegramGrpcService, TelegramGrpcService>();
+            serviceCollection.AddScoped<INotificationsGrpcService, NotificationsGrpcService>();
             //
             return serviceCollection;
         }
