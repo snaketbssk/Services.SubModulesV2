@@ -5,6 +5,9 @@ using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
 using System.Text.Json;
+using System;
+using Services.SubModules.LogicLayers.Sinks.HttpClients.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -12,6 +15,7 @@ namespace Services.SubModules.LogicLayers.Extensions
     {
         public static IHostBuilder UseSerilog<T>(this IHostBuilder hostBuilder)
         {
+
             hostBuilder.UseSerilog((hostBuilderContext, loggerConfiguration) =>
             {
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -30,6 +34,14 @@ namespace Services.SubModules.LogicLayers.Extensions
                     .WriteTo.Seq(serverUrl: root.Seq.ServerUrl,
                                  apiKey: root.Seq.ApiKey,
                                  restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
+                if (root.Logger.IsEnable)
+                {
+                    loggerConfiguration
+                        .WriteTo.Http(requestUri: root.Logger.ServerUrl,
+                                      queueLimitBytes: null,
+                                      httpClient: new JsonHttpClient(root.Logger.ApiKey),
+                                      restrictedToMinimumLevel: (LogEventLevel)root.Logger.LogEventLevel);
+                }
             });
 
             using (var log = new LoggerConfiguration()

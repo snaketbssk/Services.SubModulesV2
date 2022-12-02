@@ -17,10 +17,20 @@
         public Console Console { get; set; }
         public File File { get; set; }
         public Seq Seq { get; set; }
+        public Logger Logger { get; set; }
     }
 
     public class Seq
     {
+        public string Name { get; set; }
+        public string ServerUrl { get; set; }
+        public string ApiKey { get; set; }
+        public int LogEventLevel { get; set; }
+    }
+
+    public class Logger
+    {
+        public bool IsEnable { get; set; }
         public string Name { get; set; }
         public string ServerUrl { get; set; }
         public string ApiKey { get; set; }
