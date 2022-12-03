@@ -6,6 +6,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        protected HttpRequest _httpRequest => _httpContextAccessor?.HttpContext?.Request;
+
         protected BaseService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
