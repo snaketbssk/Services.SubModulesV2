@@ -12,14 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Serilog.Sinks.Http;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
 
 namespace Services.SubModules.LogicLayers.Sinks.HttpClients.Entities
 {
@@ -30,26 +24,19 @@ namespace Services.SubModules.LogicLayers.Sinks.HttpClients.Entities
     /// <seealso cref="IHttpClient"/>
     public class JsonHttpClient : IHttpClient
     {
-        private const string apiUri = "LogEvents";
+        private const string apiUri = "/api/LogEvents";
         private const string JsonContentType = "application/json";
-        private readonly HttpClient httpClient;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JsonHttpClient"/> class.
-        /// </summary>
-        public JsonHttpClient(string apiKey)
-            : this(new HttpClient())
-        {
-            httpClient.DefaultRequestHeaders.Add("X-ApiKey", apiKey);
-        }
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonHttpClient"/> class with
         /// specified HTTP client.
         /// </summary>
-        public JsonHttpClient(HttpClient httpClient)
+        public JsonHttpClient(string apiKey, HttpClient httpClient)
         {
-            this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _apiKey = apiKey;
         }
 
         ~JsonHttpClient()
@@ -65,11 +52,14 @@ namespace Services.SubModules.LogicLayers.Sinks.HttpClients.Entities
         /// <inheritdoc />
         public virtual async Task<HttpResponseMessage> PostAsync(string requestUri, Stream contentStream)
         {
-            var uri = Path.Combine(requestUri, apiUri);
+            var uri = $"{requestUri}{apiUri}";
             using var content = new StreamContent(contentStream);
             content.Headers.Add("Content-Type", JsonContentType);
+            content.Headers.Add("X-Api-Key", _apiKey);
 
-            var response = await httpClient
+            var s = await content.ReadAsStringAsync();
+
+            var response = await _httpClient
                 .PostAsync(uri, content)
                 .ConfigureAwait(false);
 
@@ -87,7 +77,7 @@ namespace Services.SubModules.LogicLayers.Sinks.HttpClients.Entities
         {
             if (disposing)
             {
-                httpClient.Dispose();
+                _httpClient.Dispose();
             }
         }
     }

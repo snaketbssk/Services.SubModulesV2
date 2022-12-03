@@ -4,10 +4,9 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
-using System.Text.Json;
-using System;
 using Services.SubModules.LogicLayers.Sinks.HttpClients.Entities;
-using Microsoft.Extensions.Configuration;
+using Services.SubModules.LogicLayers.Sinks.TextFormatters.Entities;
+using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -36,11 +35,18 @@ namespace Services.SubModules.LogicLayers.Extensions
                                  restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
                 if (root.Logger.IsEnable)
                 {
+                    var httpClientHandler = new HttpClientHandler();
+                    httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                    var httpClient = new HttpClient(httpClientHandler);
+
+                    var constrainedBufferedFormatter = new ConstrainedBufferedFormatter(null);
+
                     loggerConfiguration
                         .WriteTo.Http(requestUri: root.Logger.ServerUrl,
                                       queueLimitBytes: null,
-                                      httpClient: new JsonHttpClient(root.Logger.ApiKey),
-                                      restrictedToMinimumLevel: (LogEventLevel)root.Logger.LogEventLevel);
+                                      httpClient: new JsonHttpClient(root.Logger.ApiKey, httpClient),
+                                      restrictedToMinimumLevel: (LogEventLevel)root.Logger.LogEventLevel,
+                                      textFormatter: constrainedBufferedFormatter);
                 }
             });
 
