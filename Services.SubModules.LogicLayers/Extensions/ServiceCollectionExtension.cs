@@ -17,7 +17,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfiguration<T>(this IServiceCollection serviceCollection)
         {
             // Global services
             serviceCollection.AddRedis();
@@ -26,7 +26,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddMemoryCache();
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
-            serviceCollection.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            serviceCollection.AddAutoMapper(typeof(T));
             serviceCollection.AddAuthorization();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
