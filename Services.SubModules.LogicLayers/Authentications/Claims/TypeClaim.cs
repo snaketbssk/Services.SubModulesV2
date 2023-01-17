@@ -26,6 +26,10 @@
 
         Notifications,
         ManageNotifications,
+
+        Logger,
+        ManageLogger,
+
         // Other Services
         RealtorApplication,
         ManageRealtorApplication,
