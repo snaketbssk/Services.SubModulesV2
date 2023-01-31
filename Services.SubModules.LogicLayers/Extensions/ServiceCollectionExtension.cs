@@ -28,6 +28,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper(typeof(T));
             serviceCollection.AddAuthorization();
+            serviceCollection.AddHttpClient();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
