@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities.Redis
     public class RedisMailerCacheService : BaseMailerCacheService
     {
         public RedisMailerCacheService(IConnectionMultiplexer connectionMultiplexer)
-            : base()
+            : base(outgoing: new RedisValueRepositoryCache<bool>(connectionMultiplexer, CacheConstant.MAILER_PROJECT, CacheConstant.OUTGOING_CONTAINER, TimeSpan.FromMinutes(1)))
         {
         }
     }

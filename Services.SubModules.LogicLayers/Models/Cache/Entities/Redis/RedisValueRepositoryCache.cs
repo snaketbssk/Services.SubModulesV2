@@ -8,31 +8,28 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities.Redis
 {
-    public class RedisRepositoryCache<TKey, TValue> : BaseRepositoryCache<TKey, TValue>
+    public class RedisValueRepositoryCache<TValue> : BaseValueRepositoryCache<TValue>
     {
         private readonly IConnectionMultiplexer _connectionMultiplexer;
 
-        public RedisRepositoryCache(IConnectionMultiplexer connectionMultiplexer, string project, string container, TimeSpan? expiry) 
+        public RedisValueRepositoryCache(IConnectionMultiplexer connectionMultiplexer, string project, string container, TimeSpan? expiry)
             : base(project, container, expiry)
         {
             _connectionMultiplexer = connectionMultiplexer;
         }
 
-        private string GetKeyHash(TKey key)
+        private string GetKeyHash()
         {
-            var result = $"{Project}-{Container}-{key}";
+            var result = $"{Project}-{Container}";
             return result;
         }
 
-        public override async Task<bool> TryExistsAsync(TKey key, CancellationToken cancellationToken = default)
+        public override async Task<bool> TryExistsAsync(CancellationToken cancellationToken = default)
         {
-            if (key is null)
-                return false;
-
             try
             {
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(key);
+                var keyHash = GetKeyHash();
                 var result = await database.KeyExistsAsync(keyHash);
 
                 return result;
@@ -43,15 +40,12 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities.Redis
             }
         }
 
-        public override async Task<IValueCache<TValue>> TryGetAsync(TKey key, CancellationToken cancellationToken = default)
+        public override async Task<IValuesCache<TValue>> TryGetAsync(CancellationToken cancellationToken = default)
         {
-            if (key is null)
-                return new ValueCache<TValue>(false);
-
             try
             {
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(key);
+                var keyHash = GetKeyHash();
                 var redisValue = await database.StringGetAsync(keyHash);
 
                 if (!redisValue.HasValue || redisValue.IsNullOrEmpty)
@@ -70,15 +64,12 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities.Redis
             }
         }
 
-        public override async Task<bool> TryRemoveAsync(TKey key, CancellationToken cancellationToken = default)
+        public override async Task<bool> TryRemoveAsync(CancellationToken cancellationToken = default)
         {
-            if (key is null)
-                return false;
-
             try
             {
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(key);
+                var keyHash = GetKeyHash();
                 var result = await database.KeyDeleteAsync(keyHash);
 
                 return result;
@@ -89,17 +80,15 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities.Redis
             }
         }
 
-        public override async Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
+        public override async Task<bool> TrySetAsync(TValue value, CancellationToken cancellationToken = default)
         {
-            if (key is null)
-                return false;
             if (value is null)
                 return false;
 
             try
             {
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(key);
+                var keyHash = GetKeyHash();
                 var valueHash = JsonSerializer.Serialize(value);
                 var result = await database.StringSetAsync(keyHash, valueHash, Expiry);
 

@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities.Redis
     public class RedisIdentityCacheService : BaseIdentityCacheService
     {
         public RedisIdentityCacheService(IConnectionMultiplexer connectionMultiplexer) 
-            : base(user: new RedisRepositoryCache<string, UserRedis>(connectionMultiplexer, CacheConstant.IDENTITY_PROJECT, CacheConstant.USER_CONTAINER, TimeSpan.FromMinutes(10)))
+            : base(user: new RedisValuesRepositoryCache<string, UserRedis>(connectionMultiplexer, CacheConstant.IDENTITY_PROJECT, CacheConstant.USER_CONTAINER, TimeSpan.FromMinutes(10)))
         {
         }
     }

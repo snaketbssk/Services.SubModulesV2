@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Cache
 {
-    public interface IValueCache<TValue>
+    public interface IValuesCache<TValues>
     {
-        TValue Value { get; set; }
+        TValues Value { get; set; }
         bool IsSuccessful { get; set; }
     }
 }

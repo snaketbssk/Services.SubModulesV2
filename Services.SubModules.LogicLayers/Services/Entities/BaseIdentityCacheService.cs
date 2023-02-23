@@ -10,9 +10,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public abstract class BaseIdentityCacheService : IIdentityCacheService
     {
-        public IRepositoryCache<string, UserRedis> User { get; private set; }
+        public IValuesRepositoryCache<string, UserRedis> User { get; private set; }
 
-        protected BaseIdentityCacheService(IRepositoryCache<string, UserRedis> user)
+        protected BaseIdentityCacheService(IValuesRepositoryCache<string, UserRedis> user)
         {
             User = user;
         }

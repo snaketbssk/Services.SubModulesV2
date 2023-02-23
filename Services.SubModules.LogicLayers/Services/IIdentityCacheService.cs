@@ -10,6 +10,6 @@ namespace Services.SubModules.LogicLayers.Services
 {
     public interface IIdentityCacheService
     {
-        IRepositoryCache<string, UserRedis> User { get; }
+        IValuesRepositoryCache<string, UserRedis> User { get; }
     }
 }

@@ -15,5 +15,6 @@ namespace Services.SubModules.LogicLayers.Constants
         public const string TELEGRAM_PROJECT = "TELEGRAM_PROJECT";
 
         public const string USER_CONTAINER = "USER_CONTAINER";
+        public const string OUTGOING_CONTAINER = "OUTGOING_CONTAINER";
     }
 }

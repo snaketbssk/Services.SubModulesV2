@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
-    public class ValueCache<TValue> : IValueCache<TValue>
+    public class ValueCache<TValue> : IValuesCache<TValue>
     {
         public bool IsSuccessful { get; set; }
         public TValue Value { get; set; }
