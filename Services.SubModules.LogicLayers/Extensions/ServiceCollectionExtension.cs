@@ -11,6 +11,7 @@ using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
+using Services.SubModules.LogicLayers.Services.Entities.Redis;
 using StackExchange.Redis;
 
 namespace Services.SubModules.LogicLayers.Extensions
@@ -20,7 +21,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IServiceCollection AddConfiguration<T>(this IServiceCollection serviceCollection)
         {
             // Global services
-            serviceCollection.AddRedis();
+            serviceCollection.AddCache();
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
@@ -46,10 +47,25 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddRedis(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCache(this IServiceCollection serviceCollection)
         {
             var connectionMultiplexer = ConnectionMultiplexer.Connect(RedisConfiguration<RedisRoot>.Instance.Root.Connection);
             serviceCollection.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
+
+            var identityCacheService = new RedisIdentityCacheService(connectionMultiplexer);
+            serviceCollection.AddSingleton<IIdentityCacheService>(identityCacheService);
+
+            var mailerCacheService = new RedisMailerCacheService(connectionMultiplexer);
+            serviceCollection.AddSingleton<IMailerCacheService>(mailerCacheService);
+
+            var notificationsCacheService = new RedisNotificationsCacheService(connectionMultiplexer);
+            serviceCollection.AddSingleton<INotificationsCacheService>(notificationsCacheService);
+
+            var storageCacheService = new RedisStorageCacheService(connectionMultiplexer);
+            serviceCollection.AddSingleton<IStorageCacheService>(storageCacheService);
+
+            var telegramCacheService = new RedisTelegramCacheService(connectionMultiplexer);
+            serviceCollection.AddSingleton<ITelegramCacheService>(telegramCacheService);
 
             return serviceCollection;
         }

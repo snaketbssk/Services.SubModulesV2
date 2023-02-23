@@ -17,22 +17,21 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
     public class IdentityGrpcValidateAuthenticationHandler : BaseAuthenticationHandler<IdentityGrpcValidateAuthenticationSchemeOptions>
     {
         private readonly IIdentityGrpcService _identityGrpcService;
-        private readonly IConnectionMultiplexer _connectionMultiplexer;
+        private readonly IIdentityCacheService _identityCacheService;
         private readonly ITokenService _tokenService;
 
-        public IdentityGrpcValidateAuthenticationHandler(
-                                                         IIdentityGrpcService identityGrpcService,
+        public IdentityGrpcValidateAuthenticationHandler(IIdentityGrpcService identityGrpcService,
                                                          IOptionsMonitor<IdentityGrpcValidateAuthenticationSchemeOptions> options,
                                                          ILoggerFactory logger,
                                                          UrlEncoder encoder,
                                                          ISystemClock clock,
-                                                         IConnectionMultiplexer connectionMultiplexer,
-                                                         ITokenService tokenService)
+                                                         ITokenService tokenService, 
+                                                         IIdentityCacheService identityCacheService)
             : base(options, logger, encoder, clock)
         {
             _identityGrpcService = identityGrpcService;
-            _connectionMultiplexer = connectionMultiplexer;
             _tokenService = tokenService;
+            _identityCacheService = identityCacheService;
         }
 
         protected override async Task<IEnumerable<Claim>> GetClaimsAsync(string token)
@@ -40,22 +39,18 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var result = new List<Claim>();
             var decodeClaims = _tokenService.DecodeToken(token);
             var idUserTable = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
-            var keyRedis = $"{nameof(UserRedis)}={idUserTable.Value}";
-            var database = _connectionMultiplexer.GetDatabase();
-            var userIdentityGrpcResponse = await database.StringGetAsync(keyRedis);
-
-            if (userIdentityGrpcResponse.HasValue)
+            var userIdentityGrpcResponse = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
+            if (userIdentityGrpcResponse.IsSuccessful)
             {
-                var userRedis = JsonSerializer.Deserialize<UserRedis>(userIdentityGrpcResponse.ToString());
                 var userAuthentication = new UserAuthentication(
-                    id: userRedis.Id,
-                    name: userRedis.Name,
-                    email: userRedis.Email,
+                    id: userIdentityGrpcResponse.Value.Id,
+                    name: userIdentityGrpcResponse.Value.Name,
+                    email: userIdentityGrpcResponse.Value.Email,
                     roles: new List<string>(),
                     accessToken: token,
                     language: "ru");
                 result.AddRange(userAuthentication.ToClaims());
-                result.AddRange(userRedis.Claims.Select(x => new Claim(x.Type, x.Value)));
+                result.AddRange(userIdentityGrpcResponse.Value.Claims.Select(x => new Claim(x.Type, x.Value)));
             }
             else
             {
