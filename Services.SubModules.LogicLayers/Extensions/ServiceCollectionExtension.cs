@@ -11,8 +11,6 @@ using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
-using Services.SubModules.LogicLayers.Services.Entities.Redis;
-using StackExchange.Redis;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -49,23 +47,14 @@ namespace Services.SubModules.LogicLayers.Extensions
 
         public static IServiceCollection AddCache(this IServiceCollection serviceCollection)
         {
-            var connectionMultiplexer = ConnectionMultiplexer.Connect(RedisConfiguration<RedisRoot>.Instance.Root.Connection);
-            serviceCollection.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
+            var cacheService = RedisCacheService.Initialization();
 
-            var identityCacheService = new RedisIdentityCacheService(connectionMultiplexer);
-            serviceCollection.AddSingleton<IIdentityCacheService>(identityCacheService);
-
-            var mailerCacheService = new RedisMailerCacheService(connectionMultiplexer);
-            serviceCollection.AddSingleton<IMailerCacheService>(mailerCacheService);
-
-            var notificationsCacheService = new RedisNotificationsCacheService(connectionMultiplexer);
-            serviceCollection.AddSingleton<INotificationsCacheService>(notificationsCacheService);
-
-            var storageCacheService = new RedisStorageCacheService(connectionMultiplexer);
-            serviceCollection.AddSingleton<IStorageCacheService>(storageCacheService);
-
-            var telegramCacheService = new RedisTelegramCacheService(connectionMultiplexer);
-            serviceCollection.AddSingleton<ITelegramCacheService>(telegramCacheService);
+            serviceCollection.AddSingleton(cacheService);
+            serviceCollection.AddSingleton<IIdentityCacheService, IdentityCacheService>();
+            serviceCollection.AddSingleton<IMailerCacheService, MailerCacheService>();
+            serviceCollection.AddSingleton<INotificationsCacheService, NotificationsCacheService>();
+            serviceCollection.AddSingleton<IStorageCacheService, StorageCacheService>();
+            serviceCollection.AddSingleton<ITelegramCacheService, TelegramCacheService>();
 
             return serviceCollection;
         }

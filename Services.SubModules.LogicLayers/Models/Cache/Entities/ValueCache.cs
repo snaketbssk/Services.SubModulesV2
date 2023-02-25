@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.SubModules.LogicLayers.Models.Cache.Entities
+﻿namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
     public class ValueCache<TValue> : IValuesCache<TValue>
     {

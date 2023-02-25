@@ -5,12 +5,9 @@ using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Authentication.Entities;
 using Services.SubModules.LogicLayers.Models.Mappings.Entities;
-using Services.SubModules.LogicLayers.Models.Redis.Entities;
 using Services.SubModules.LogicLayers.Services;
-using StackExchange.Redis;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {
@@ -25,7 +22,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
                                                          ILoggerFactory logger,
                                                          UrlEncoder encoder,
                                                          ISystemClock clock,
-                                                         ITokenService tokenService, 
+                                                         ITokenService tokenService,
                                                          IIdentityCacheService identityCacheService)
             : base(options, logger, encoder, clock)
         {
