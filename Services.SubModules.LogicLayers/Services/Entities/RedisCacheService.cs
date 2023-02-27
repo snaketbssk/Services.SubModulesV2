@@ -184,7 +184,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 ArgumentNullException.ThrowIfNull(values);
 
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(project, container);
+                var keyHash = GetKeyHash(project, container, key);
 
                 var hashValues = values.Select(x => new RedisValue(JsonSerializer.Serialize(x))).ToArray();
                 await database.ListRightPushAsync(keyHash, hashValues);
