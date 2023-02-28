@@ -17,6 +17,7 @@
         public Console Console { get; set; }
         public File File { get; set; }
         public Seq Seq { get; set; }
+        public ElasticSearch ElasticSearch { get; set; }
         public Logger Logger { get; set; }
     }
 
@@ -25,6 +26,12 @@
         public string Name { get; set; }
         public string ServerUrl { get; set; }
         public string ApiKey { get; set; }
+        public int LogEventLevel { get; set; }
+    }
+
+    public class ElasticSearch
+    {
+        public string ServerUrl { get; set; }
         public int LogEventLevel { get; set; }
     }
 
