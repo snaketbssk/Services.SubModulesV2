@@ -18,9 +18,9 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
             string language)
         {
             Id = id;
-            Name = name;
+            Login = name;
             Email = email;
-            Roles = roles.ToList();
+            Roles = roles.Select(x => new RoleResponse(Guid.Empty, x)).ToList();
             AccessToken = accessToken;
             Language = language;
         }
@@ -35,9 +35,9 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
                 switch (claimUser)
                 {
                     case ClaimAuthentication.Id: Id = Guid.Parse(claims.First().Value); break;
-                    case ClaimAuthentication.Name: Name = claims.FirstOrDefault().Value; break;
+                    case ClaimAuthentication.Name: Login = claims.FirstOrDefault().Value; break;
                     case ClaimAuthentication.Email: Email = claims.FirstOrDefault().Value; break;
-                    case ClaimAuthentication.Role: Roles = claims.Select(v => v.Value).ToList(); break;
+                    case ClaimAuthentication.Role: Roles = claims.Select(v => new RoleResponse(Guid.Empty, v.Value)).ToList(); break;
                     case ClaimAuthentication.Language: break;
                     case ClaimAuthentication.AccessToken: break;
                     default: throw new ArgumentException(nameof(claimUser));
@@ -53,9 +53,9 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
                 switch (claimUser)
                 {
                     case ClaimAuthentication.Id: Id = Guid.Parse(selectClaims.First().Value); break;
-                    case ClaimAuthentication.Name: Name = selectClaims.First().Value; break;
+                    case ClaimAuthentication.Name: Login = selectClaims.First().Value; break;
                     case ClaimAuthentication.Email: Email = selectClaims.First().Value; break;
-                    case ClaimAuthentication.Role: Roles = selectClaims.Select(v => v.Value).ToList(); break;
+                    case ClaimAuthentication.Role: Roles = selectClaims.Select(v => new RoleResponse(Guid.Empty, v.Value)).ToList(); break;
                     case ClaimAuthentication.Language: break;
                     case ClaimAuthentication.AccessToken: break;
                     default: throw new ArgumentException(nameof(claimUser));
@@ -71,10 +71,10 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
                 switch (claimUser)
                 {
                     case ClaimAuthentication.Id: result.Add(new Claim(claimAttribute.Name, Id.ToString())); break;
-                    case ClaimAuthentication.Name: result.Add(new Claim(claimAttribute.Name, Name)); break;
+                    case ClaimAuthentication.Name: result.Add(new Claim(claimAttribute.Name, Login)); break;
                     case ClaimAuthentication.Email: result.Add(new Claim(claimAttribute.Name, Email)); break;
                     case ClaimAuthentication.Role:
-                        var roles = Roles.Select(v => new Claim(claimAttribute.Name, v));
+                        var roles = Roles.Select(v => new Claim(claimAttribute.Name, v.Name));
                         result.AddRange(roles); break;
                     case ClaimAuthentication.Language: break;
                     case ClaimAuthentication.AccessToken: break;
@@ -86,19 +86,19 @@ namespace Services.SubModules.LogicLayers.Models.Authentication.Entities
         public IEnumerable<Claim> ToJwtClaims()
         {
             var result = new List<Claim>();
-            foreach (JwtClaimAuthentication claimUser in Enum.GetValues(typeof(JwtClaimAuthentication)))
+            foreach (IJwtClaimAuthentication claimUser in Enum.GetValues(typeof(IJwtClaimAuthentication)))
             {
                 var claimAttribute = claimUser.GetAttribute<JwtClaimAttribute>();
                 switch (claimUser)
                 {
-                    case JwtClaimAuthentication.Id: result.Add(new Claim(claimAttribute.Name, Id.ToString())); break;
-                    case JwtClaimAuthentication.Name: result.Add(new Claim(claimAttribute.Name, Name)); break;
-                    case JwtClaimAuthentication.Email: result.Add(new Claim(claimAttribute.Name, Email)); break;
-                    case JwtClaimAuthentication.Role:
-                        var roles = Roles.Select(v => new Claim(claimAttribute.Name, v));
+                    case IJwtClaimAuthentication.Id: result.Add(new Claim(claimAttribute.Name, Id.ToString())); break;
+                    case IJwtClaimAuthentication.Name: result.Add(new Claim(claimAttribute.Name, Login)); break;
+                    case IJwtClaimAuthentication.Email: result.Add(new Claim(claimAttribute.Name, Email)); break;
+                    case IJwtClaimAuthentication.Role:
+                        var roles = Roles.Select(v => new Claim(claimAttribute.Name, v.Name));
                         result.AddRange(roles); break;
-                    case JwtClaimAuthentication.Language: break;
-                    case JwtClaimAuthentication.AccessToken: break;
+                    case IJwtClaimAuthentication.Language: break;
+                    case IJwtClaimAuthentication.AccessToken: break;
                     default: throw new ArgumentException(nameof(claimUser));
                 }
             }

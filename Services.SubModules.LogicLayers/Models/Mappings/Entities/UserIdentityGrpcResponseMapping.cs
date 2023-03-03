@@ -43,8 +43,8 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
                 Login = Login,
                 Email = Email,
                 ConfirmedEmail = ConfirmedEmail,
-                ConfirmedPhone = ConfirmedPhone,
-                ConfirmedTwoFactorAuthentication = ConfirmedTwoFactorAuthentication
+                ConfirmedPhoneNumber = ConfirmedPhone,
+                TwoFactorEnabled = ConfirmedTwoFactorAuthentication
             };
             var roles = Roles.Select(x => x.Map());
             var claims = Claims.Select(x => x.Map());

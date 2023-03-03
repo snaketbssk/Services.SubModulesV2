@@ -3,7 +3,7 @@ using Services.SubModules.LogicLayers.Constants;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication
 {
-    public enum JwtClaimAuthentication
+    public enum IJwtClaimAuthentication
     {
         [JwtClaim(JwtClaimConstant.ID)]
         Id,

@@ -15,16 +15,53 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             _context = context;
             _repository = repository;
         }
-        public abstract Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract TEntity Update(TEntity entity);
-        public abstract Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract void Remove(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task RemoveAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task<bool> ContainsAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        public abstract Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default(CancellationToken));
+        public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            var result = await _repository.AddAsync(entity, cancellationToken);
+            return result.Entity;
+        }
+
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            await _repository.AddRangeAsync(entities, cancellationToken);
+        }
+
+        public virtual TEntity Update(TEntity entity)
+        {
+            var result = _repository.Update(entity);
+            return result.Entity;
+        }
+
+        public virtual void UpdateRange(params TEntity[] entities)
+        {
+            _repository.UpdateRange(entities);
+        }
+
+        public virtual void Remove(TEntity entity)
+        {
+            _repository.Remove(entity);
+        }
+
+        public virtual void RemoveRange(params TEntity[] entities)
+        {
+            _repository.RemoveRange(entities);
+        }
+
+        public abstract Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
+        public virtual async Task<bool> ContainsAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            var result = await _repository.ContainsAsync(entity, cancellationToken);
+            return result;
+        }
+
+        public virtual async Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await _repository.ToListAsync(cancellationToken);
+            return result;
+        }
+
         public abstract Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var result = await _context.SaveChangesAsync(cancellationToken);
             return result;

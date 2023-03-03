@@ -9,6 +9,7 @@ using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
+using Services.SubModules.LogicLayers.Profiles;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
 
@@ -16,7 +17,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfiguration<T>(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection)
         {
             // Global services
             serviceCollection.AddCache();
@@ -25,7 +26,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddMemoryCache();
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
-            serviceCollection.AddAutoMapper(typeof(T));
+            serviceCollection.AddAutoMapper();
             serviceCollection.AddAuthorization();
             serviceCollection.AddHttpClient();
             // Singleton services
@@ -42,6 +43,20 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<ITelegramGrpcService, TelegramGrpcService>();
             serviceCollection.AddScoped<INotificationsGrpcService, NotificationsGrpcService>();
             //
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)
+        {
+            var profileType = typeof(IProfile);
+            var profileTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => profileType.IsAssignableFrom(x))
+                .Where(x => x.Name != profileType.Name)
+                .ToArray();
+
+            serviceCollection.AddAutoMapper(profileTypes);
+
             return serviceCollection;
         }
 

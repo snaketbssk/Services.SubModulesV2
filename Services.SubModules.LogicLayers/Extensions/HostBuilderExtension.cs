@@ -5,8 +5,6 @@ using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
-using Services.SubModules.LogicLayers.Sinks.HttpClients.Entities;
-using Services.SubModules.LogicLayers.Sinks.TextFormatters.Entities;
 using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Extensions
@@ -34,7 +32,7 @@ namespace Services.SubModules.LogicLayers.Extensions
                                      theme: AnsiConsoleTheme.Code)
                     .WriteTo.File(path: path,
                                   restrictedToMinimumLevel: (LogEventLevel)root.File.LogEventLevel)
-                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://93.114.133.241:9200")) 
+                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
                     {
                         IndexFormat = indexFormat,
                         AutoRegisterTemplate = true,

@@ -25,17 +25,21 @@ message UserIdentityGrpcResponse
 	string login = 3;
 	string email = 4;
 	bool confirmedEmail = 5;
-	bool ConfirmedPhone = 6;
-    bool ConfirmedTwoFactorAuthentication = 7;
-	repeated RoleIdentityGrpcResponse roles = 8;
-	repeated ClaimRoleIdentityGrpcResponse claims = 9;
+	string phoneNumber = 6;
+	bool confirmedPhoneNumber = 7;
+	bool twoFactorEnabled = 8;
+	repeated RoleIdentityGrpcResponse roles = 9;
+	repeated ClaimRoleIdentityGrpcResponse claims = 10;
 }
 
-message RoleIdentityGrpcResponse {
-    string name = 1;
+message RoleIdentityGrpcResponse 
+{
+	string id = 1;
+    string name = 2;
 }
 
-message ClaimRoleIdentityGrpcResponse {
+message ClaimRoleIdentityGrpcResponse 
+{
     string type = 1;
     string value = 2;
 }

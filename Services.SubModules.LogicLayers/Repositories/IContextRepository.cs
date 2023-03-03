@@ -5,15 +5,15 @@ namespace Services.SubModules.LogicLayers.Repositories
 {
     public interface IContextRepository<TEntity> : IDisposable where TEntity : class
     {
-        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-        Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
         TEntity Update(TEntity entity);
-        Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        void Remove(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
-        Task RemoveAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        Task<bool> ContainsAsync(IIdRequest idRequest, CancellationToken cancellationToken = default(CancellationToken));
-        Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
+        void Remove(TEntity entity);
+        void RemoveRange(params TEntity[] entities);
+        Task<bool> ContainsAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default);
         Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
