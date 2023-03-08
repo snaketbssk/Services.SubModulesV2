@@ -37,12 +37,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -60,15 +60,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (key is null)
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (key is null)
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
@@ -86,12 +86,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -109,15 +109,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (key is null)
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (key is null)
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
@@ -135,15 +135,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(value);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (value is null)
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(value);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (value is null)
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -162,18 +162,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                //ArgumentNullException.ThrowIfNull(value);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (key is null)
-                    return false;
-                if (value is null)
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                ArgumentNullException.ThrowIfNull(value);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (key is null)
+                //    return false;
+                //if (value is null)
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
@@ -192,15 +192,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(values);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (values is null || !values.Any())
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(values);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (values is null || !values.Any())
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -220,18 +220,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                //ArgumentNullException.ThrowIfNull(values);
-                if (string.IsNullOrWhiteSpace(project))
-                    return false;
-                if (string.IsNullOrWhiteSpace(container))
-                    return false;
-                if (key is null)
-                    return false;
-                if (values is null || !values.Any())
-                    return false;
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                ArgumentNullException.ThrowIfNull(values);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return false;
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return false;
+                //if (key is null)
+                //    return false;
+                //if (values is null || !values.Any())
+                //    return false;
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
@@ -251,12 +251,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                if (string.IsNullOrWhiteSpace(project))
-                    return new ValueCache<TValue>(false);
-                if (string.IsNullOrWhiteSpace(container))
-                    return new ValueCache<TValue>(false);
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return new ValueCache<TValue>(false);
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return new ValueCache<TValue>(false);
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -283,15 +283,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                if (string.IsNullOrWhiteSpace(project))
-                    return new ValueCache<TValue>(false);
-                if (string.IsNullOrWhiteSpace(container))
-                    return new ValueCache<TValue>(false);
-                if (key is null)
-                    return new ValueCache<TValue>(false);
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return new ValueCache<TValue>(false);
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return new ValueCache<TValue>(false);
+                //if (key is null)
+                //    return new ValueCache<TValue>(false);
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
@@ -318,12 +318,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                if (string.IsNullOrWhiteSpace(project))
-                    return new PaginationCache<TValue>(false);
-                if (string.IsNullOrWhiteSpace(container))
-                    return new PaginationCache<TValue>(false);
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return new PaginationCache<TValue>(false);
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return new PaginationCache<TValue>(false);
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
@@ -352,15 +352,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             try
             {
-                //ArgumentNullException.ThrowIfNull(project);
-                //ArgumentNullException.ThrowIfNull(container);
-                //ArgumentNullException.ThrowIfNull(key);
-                if (string.IsNullOrWhiteSpace(project))
-                    return new PaginationCache<TValue>(false);
-                if (string.IsNullOrWhiteSpace(container))
-                    return new PaginationCache<TValue>(false);
-                if (key is null)
-                    return new PaginationCache<TValue>(false);
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+                //if (string.IsNullOrWhiteSpace(project))
+                //    return new PaginationCache<TValue>(false);
+                //if (string.IsNullOrWhiteSpace(container))
+                //    return new PaginationCache<TValue>(false);
+                //if (key is null)
+                //    return new PaginationCache<TValue>(false);
 
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
