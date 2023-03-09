@@ -32,13 +32,16 @@ namespace Services.SubModules.LogicLayers.Extensions
                                      theme: AnsiConsoleTheme.Code)
                     .WriteTo.File(path: path,
                                   restrictedToMinimumLevel: (LogEventLevel)root.File.LogEventLevel)
-                    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
-                    {
-                        IndexFormat = indexFormat,
-                        AutoRegisterTemplate = true,
-                        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
-                        MinimumLogEventLevel = (LogEventLevel)root.ElasticSearch.LogEventLevel
-                    });
+                    .WriteTo.Seq(serverUrl: root.Seq.ServerUrl,
+                                 apiKey: root.Seq.ApiKey,
+                                 restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
+                    //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
+                    //{
+                    //    IndexFormat = indexFormat,
+                    //    AutoRegisterTemplate = true,
+                    //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
+                    //    MinimumLogEventLevel = (LogEventLevel)root.ElasticSearch.LogEventLevel
+                    //});
             });
 
             using (var log = new LoggerConfiguration()
