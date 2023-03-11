@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Services.SubModules.Configurations.Entities;
+using Services.SubModules.Configurations.Models.Roots.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public void ActionSuccess<T>(ILogger<T> _logger, string subject, string content)
         {
             var userAgent = _userAgentService.GetUserAgent();
-            _logger.LogInformation($"action success {subject} {content} {HttpContext.TraceIdentifier} {userAgent.RemoteIpAddress} {userAgent.Browser} {userAgent.VersionBrowser} {userAgent.OS} {userAgent.VersionOS}");
+            _logger.LogInformation($"{SerilogConfiguration<SerilogRoot>.Instance?.Root?.Seq?.Name} action success {subject} {content} {HttpContext.TraceIdentifier} {userAgent.RemoteIpAddress} {userAgent.Browser} {userAgent.VersionBrowser} {userAgent.OS} {userAgent.VersionOS}");
         }
     }
 }
