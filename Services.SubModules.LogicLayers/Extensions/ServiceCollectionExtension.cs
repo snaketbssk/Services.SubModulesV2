@@ -45,7 +45,30 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<IUserAgentService, UserAgentService>();
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
             //
+            //serviceCollection.AddInterfacesAndImplementationsToServiceCollection(type => type.Name.EndsWith("Repository"));
+            //
             return serviceCollection;
+        }
+
+        // Use reflection to find all interfaces and their implementations that match the filter, and add them to the service container
+        public static void AddInterfacesAndImplementationsToServiceCollection(this IServiceCollection serviceCollection, Func<Type, bool> filter)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var types = assemblies.SelectMany(x => x.GetTypes());
+            var list = new Dictionary<object, object>();
+            foreach (var type in types)
+            {
+                if (type.IsInterface && filter(type))
+                {
+                    var implementations = types.Where(x => x.IsClass && !x.IsAbstract && type.IsAssignableFrom(x) && filter(x));
+                    foreach (var implementation in implementations)
+                    {
+                        list.Add(type, implementation);
+                        break;
+                        //services.AddScoped(type, implementation);
+                    }
+                }
+            }
         }
 
         public static IServiceCollection AddAutoMapper(this IServiceCollection serviceCollection)

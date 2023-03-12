@@ -2,17 +2,14 @@
 using Microsoft.Extensions.Logging;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Services.SubModules.LogicLayers.Models.Responses;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class ActionLoggerService : BaseService, IActionLoggerService
     {
         private readonly IUserAgentService _userAgentService;
+        private IUserAgentResponse _userAgentResponse;
 
         public ActionLoggerService(IHttpContextAccessor httpContextAccessor,
                                    IUserAgentService userAgentService) : base(httpContextAccessor)
@@ -20,10 +17,19 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _userAgentService = userAgentService;
         }
 
-        public void ActionSuccess<T>(ILogger<T> _logger, string subject, string content)
+        public IUserAgentResponse GetUserAgentResponse()
         {
-            var userAgent = _userAgentService.GetUserAgent();
-            _logger.LogInformation($"{SerilogConfiguration<SerilogRoot>.Instance?.Root?.Seq?.Name} action success {subject} {content} {HttpContext.TraceIdentifier} {userAgent.RemoteIpAddress} {userAgent.Browser} {userAgent.VersionBrowser} {userAgent.OS} {userAgent.VersionOS}");
+            if (_userAgentResponse is null)
+                _userAgentResponse = _userAgentService.GetUserAgent();
+            return _userAgentResponse;
+        }
+
+        public void ActionSuccess<T>(ILogger<T> logger, string subject, string content)
+        {
+            if (logger is null)
+                return;
+            var userAgent = GetUserAgentResponse();
+            logger.LogInformation($"{SerilogConfiguration<SerilogRoot>.Instance?.Root?.Seq?.Name} action success {subject} {content} {HttpContext.TraceIdentifier} {userAgent?.RemoteIpAddress} {userAgent?.Browser} {userAgent?.VersionBrowser} {userAgent?.OS} {userAgent?.VersionOS}");
         }
     }
 }

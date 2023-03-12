@@ -2,12 +2,6 @@
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using UAParser;
 
 namespace Services.SubModules.LogicLayers.Services.Entities

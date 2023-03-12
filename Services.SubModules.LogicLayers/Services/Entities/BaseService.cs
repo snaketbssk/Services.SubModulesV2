@@ -17,7 +17,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                     ArgumentNullException.ThrowIfNull(_httpContextAccessor?.HttpContext);
                     _httpContext = _httpContextAccessor.HttpContext;
                 }
-                
+
                 return _httpContext;
             }
         }

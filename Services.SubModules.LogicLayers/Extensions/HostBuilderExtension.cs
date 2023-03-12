@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.Elasticsearch;
 using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
@@ -35,13 +34,13 @@ namespace Services.SubModules.LogicLayers.Extensions
                     .WriteTo.Seq(serverUrl: root.Seq.ServerUrl,
                                  apiKey: root.Seq.ApiKey,
                                  restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
-                    //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
-                    //{
-                    //    IndexFormat = indexFormat,
-                    //    AutoRegisterTemplate = true,
-                    //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
-                    //    MinimumLogEventLevel = (LogEventLevel)root.ElasticSearch.LogEventLevel
-                    //});
+                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
+                //{
+                //    IndexFormat = indexFormat,
+                //    AutoRegisterTemplate = true,
+                //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
+                //    MinimumLogEventLevel = (LogEventLevel)root.ElasticSearch.LogEventLevel
+                //});
             });
 
             using (var log = new LoggerConfiguration()
