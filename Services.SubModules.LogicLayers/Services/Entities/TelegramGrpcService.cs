@@ -27,6 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
+
         public async Task<MessageTelegramGrpcResponse> ExecuteAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -54,6 +55,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return result;
             }
         }
+
         public async Task<MediaFilesGrpcResponse> ExecuteAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -71,10 +73,38 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 await _exceptionService.ExecuteAsync(
                     method: "TelegramGrpcService",
-                    path: "SendMediaAsync",
+                    path: "SendMediaFilesAsync",
                     exception: exception,
                     cancellationToken);
                 var result = new MediaFilesGrpcResponse
+                {
+                    IsSuccess = false
+                };
+                return result;
+            }
+        }
+
+        public async Task<MediaImagesGrpcResponse> ExecuteAsync(IMapping<MediaImagesGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new TelegramGrpc.TelegramGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var result = await client.SendImagesAsync(
+                    request: request,
+                    headers: GetHeaders(),
+                    deadline: GetDeadline(),
+                    cancellationToken: cancellationToken);
+                return result;
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(
+                    method: "TelegramGrpcService",
+                    path: "SendMediaImagesAsync",
+                    exception: exception,
+                    cancellationToken);
+                var result = new MediaImagesGrpcResponse
                 {
                     IsSuccess = false
                 };
