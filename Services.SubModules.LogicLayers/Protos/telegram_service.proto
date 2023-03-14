@@ -5,6 +5,7 @@ option csharp_namespace = "Services.SubModules.Protos";
 service TelegramGrpc {
   rpc SendMessage (MessageTelegramGrpcRequest) returns (MessageTelegramGrpcResponse);
   rpc SendMedia (MediaFilesGrpcRequest) returns (MediaFilesGrpcResponse);
+  rpc SendImages (MediaImagesGrpcRequest) returns (MediaImagesGrpcResponse);
 }
 
 message MessageTelegramGrpcRequest
@@ -26,12 +27,27 @@ message MessageFileGrpcRequest
     bytes content = 2;
 }
 
+message MessageImageGrpcRequest
+{
+    string name = 1;
+}
+
 message MediaFilesGrpcRequest
 {
     MessageTelegramGrpcRequest message = 1;
     repeated MessageFileGrpcRequest files = 2;
 }
 
+message MediaImagesGrpcRequest
+{
+    MessageTelegramGrpcRequest message = 1;
+    repeated MessageImageGrpcRequest images = 2;
+}
+
 message MediaFilesGrpcResponse {
+    bool isSuccess = 1;
+}
+
+message MediaImagesGrpcResponse {
     bool isSuccess = 1;
 }

@@ -7,5 +7,6 @@ namespace Services.SubModules.LogicLayers.Services
     {
         Task<MessageTelegramGrpcResponse> ExecuteAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default);
         Task<MediaFilesGrpcResponse> ExecuteAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<MediaImagesGrpcResponse> ExecuteAsync(IMapping<MediaImagesGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }
