@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Services.SubModules.LogicLayers.Models.Exceptions;
+using System.Text;
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
@@ -6,13 +7,14 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
     {
         public string Service { get; set; }
         public string Timestamp { get; set; }
+        public StatusServiceException Status { get; set; }
         public string Guid { get; set; }
         public string MessageException { get; set; }
         public string Path { get; set; }
         public string Method { get; set; }
         public string StackTrace { get; set; }
 
-        public LogResponse(string service, DateTime timestamp, Guid guid, string messageException, string path, string method, string stackTrace)
+        public LogResponse(string service, DateTime timestamp, StatusServiceException status, Guid guid, string messageException, string path, string method, string stackTrace)
         {
             Service = service;
             Timestamp = timestamp.ToString();
@@ -21,6 +23,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             Path = path;
             Method = method;
             StackTrace = stackTrace;
+            Status = status;
         }
 
         public override string ToString()
@@ -33,6 +36,9 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             // Timestamp
             result.Append("Timestamp: ");
             result.AppendLine(Timestamp);
+            // Status
+            result.Append("Status: ");
+            result.AppendLine($"{Status}");
             // Guid
             result.Append("Guid: ");
             result.AppendLine(Guid);

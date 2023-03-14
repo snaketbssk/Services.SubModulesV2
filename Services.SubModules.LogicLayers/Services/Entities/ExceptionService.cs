@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using Prometheus;
 using Services.SubModules.Configurations.Entities;
 using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.LogicLayers.Models.Exceptions;
+using Services.SubModules.LogicLayers.Models.Exceptions.Entities;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using System.Net;
@@ -65,10 +67,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             var service = root.Seq.Name;
             var timestamp = DateTime.UtcNow;
             var guid = Guid.NewGuid();
+            var status = StatusServiceException.Unknown;
             //
             var logResponse = new LogResponse(
                 service: service,
                 timestamp: timestamp,
+                status: status,
                 guid: guid,
                 messageException: exception.Message,
                 path: path,
@@ -76,9 +80,47 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 stackTrace: exception?.StackTrace ?? string.Empty);
             var textLogs = logResponse.ToString();
             _logger.LogError(textLogs);
-            //await _logService.WriteLogFileAsync(timestamp, textLogs);
+            var result = new ExceptionResponse(timestamp, guid, status);
+            return result;
+        }
+
+        public async Task<IExceptionResponse> ExecuteAsync(HttpContext context, ServiceException serviceException, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteAsync(context.Request.Method, context.Request.Path, serviceException);
+            return result;
+        }
+
+        public async Task<IExceptionResponse> ExecuteAsync(ServerCallContext context, ServiceException serviceException, CancellationToken cancellationToken = default)
+        {
+            var result = await ExecuteAsync(context.Method, context.Peer, serviceException);
+            return result;
+        }
+
+        public async Task<IExceptionResponse> ExecuteAsync(string method, string path, ServiceException serviceException, CancellationToken cancellationToken = default)
+        {
+            var statusCode = GetStatusCode(serviceException);
+            REQUEST_COUNT_BY_METHOD.WithLabels(
+                statusCode.ToString(),
+                method,
+                path)
+                .Inc();
+            var root = SerilogConfiguration<SerilogRoot>.Instance.Root;
+            var service = root.Seq.Name;
+            var timestamp = DateTime.UtcNow;
+            var guid = Guid.NewGuid();
             //
-            var result = new ExceptionResponse(timestamp, guid);
+            var logResponse = new LogResponse(
+                service: service,
+                timestamp: timestamp,
+                status: serviceException.Status,
+                guid: guid,
+                messageException: serviceException.Message,
+                path: path,
+                method: method,
+                stackTrace: serviceException?.StackTrace ?? string.Empty);
+            var textLogs = logResponse.ToString();
+            _logger.LogError(textLogs);
+            var result = new ExceptionResponse(timestamp, guid, serviceException.Status);
             return result;
         }
 
