@@ -1,10 +1,5 @@
 ﻿using Services.SubModules.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
