@@ -15,6 +15,7 @@ namespace Services.SubModules.LogicLayers.Models.Exceptions
         Identity = 2000000,
         UserExistsByLogin,
         UserExistsByEmail,
+        AuthorizationFailed,
 
         Mailer = 3000000,
 
