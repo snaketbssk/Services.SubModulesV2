@@ -31,6 +31,6 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 
         public bool OrderByDescending { get; set; }
 
-        public string PropertyOrderBy { get; set; }
+        public string? PropertyOrderBy { get; set; }
     }
 }
