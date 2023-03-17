@@ -7,30 +7,22 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
     {
         [DefaultValue(0)]
         [Range(0, int.MaxValue)]
-        public int From { get; set; }
+        public int NumberPage { get; set; }
 
         [DefaultValue(100)]
-        [Range(0, int.MaxValue)]
-        public int To { get; set; }
+        [Range(1, int.MaxValue)]
+        public int SizePage { get; set; }
 
-        public int Take(int max = 100)
+        public bool? FirstRequest { get; set; }
+
+        public bool? OrderByDescending { get; set; }
+
+        public string? PropertyOrderBy { get; set; }
+
+        public int Skip()
         {
-            var result = Math.Abs(To - From);
-            if (result <= 0)
-            {
-                return 1;
-            }
-            if (result > max)
-            {
-                return max;
-            }
+            var result = NumberPage * SizePage;
             return result;
         }
-
-        public bool FirstRequest { get; set; }
-
-        public bool OrderByDescending { get; set; }
-
-        public string PropertyOrderBy { get; set; }
     }
 }

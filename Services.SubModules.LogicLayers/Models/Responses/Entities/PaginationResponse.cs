@@ -15,30 +15,33 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable,
                                                                     int skip,
                                                                     int take,
-                                                                    bool firstRequest,
-                                                                    string propertyOrderBy,
-                                                                    bool orderByDescending,
+                                                                    bool? firstRequest,
+                                                                    string? propertyOrderBy,
+                                                                    bool? orderByDescending,
                                                                     CancellationToken cancellationToken = default)
         {
             var result = new PaginationResponse<T>();
             if (!string.IsNullOrWhiteSpace(propertyOrderBy))
             {
-                queryable = OrderBy(queryable, propertyOrderBy, orderByDescending);
+                queryable = OrderBy(queryable, 
+                                    propertyOrderBy, 
+                                    !orderByDescending.HasValue ? false : orderByDescending.Value);
             }
-            if (firstRequest)
+            if (!firstRequest.HasValue || firstRequest.Value)
                 result.TotalCount = await queryable.CountAsync(cancellationToken);
+
             result.Values.AddRange(await queryable
-                .Skip(skip)
-                .Take(take)
-                .ToListAsync(cancellationToken));
+                         .Skip(skip)
+                         .Take(take)
+                         .ToListAsync(cancellationToken));
             return result;
         }
         public static async Task<PaginationResponse<T>> CreateAsync(IQueryable<T> queryable, IPaginationRequest paginationRequest, CancellationToken cancellationToken = default)
         {
-            var take = paginationRequest.Take();
+            var skip = paginationRequest.Skip();
             var result = await CreateAsync(queryable,
-                                           paginationRequest.From,
-                                           take,
+                                           skip,
+                                           paginationRequest.SizePage,
                                            paginationRequest.FirstRequest,
                                            paginationRequest.PropertyOrderBy,
                                            paginationRequest.OrderByDescending,
@@ -56,8 +59,8 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         }
         public static PaginationResponse<T> Create(IEnumerable<T> values, IPaginationRequest paginationRequest)
         {
-            var take = paginationRequest.Take();
-            var result = Create(values, paginationRequest.From, take);
+            var skip = paginationRequest.Skip();
+            var result = Create(values, skip, paginationRequest.SizePage);
             return result;
         }
 
