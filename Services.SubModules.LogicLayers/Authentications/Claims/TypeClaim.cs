@@ -30,6 +30,9 @@
         Logger,
         ManageLogger,
 
+        Wallets,
+        ManageWallets,
+
         // Other Services
         RealtorApplication,
         ManageRealtorApplication,
