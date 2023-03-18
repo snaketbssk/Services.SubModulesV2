@@ -37,6 +37,11 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             _repository.UpdateRange(entities);
         }
 
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            _repository.UpdateRange(entities);
+        }
+
         public virtual void Remove(TEntity entity)
         {
             _repository.Remove(entity);

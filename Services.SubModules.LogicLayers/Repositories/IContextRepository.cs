@@ -15,5 +15,7 @@ namespace Services.SubModules.LogicLayers.Repositories
         Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default);
         Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        void UpdateRange(params TEntity[] entities);
+        void UpdateRange(IEnumerable<TEntity> entities);
     }
 }
