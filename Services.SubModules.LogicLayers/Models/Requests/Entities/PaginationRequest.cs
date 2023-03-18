@@ -6,7 +6,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
     public class PaginationRequest : IPaginationRequest
     {
         [DefaultValue(0)]
-        [Range(0, int.MaxValue)]
+        [Range(1, int.MaxValue)]
         public int NumberPage { get; set; }
 
         [DefaultValue(100)]
@@ -21,7 +21,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 
         public int Skip()
         {
-            var result = NumberPage * SizePage;
+            var result = (NumberPage - 1) * SizePage;
             return result;
         }
     }
