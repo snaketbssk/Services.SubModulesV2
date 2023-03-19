@@ -17,5 +17,6 @@ namespace Services.SubModules.LogicLayers.Repositories
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         void UpdateRange(params TEntity[] entities);
         void UpdateRange(IEnumerable<TEntity> entities);
+        Task<List<TEntity>> FindByIdsAsync(IEnumerable<IIdRequest> idsRequest, CancellationToken cancellationToken = default);
     }
 }

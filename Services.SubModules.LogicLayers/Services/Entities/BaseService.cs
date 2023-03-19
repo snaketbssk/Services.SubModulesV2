@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Services.SubModules.LogicLayers.Models.Authentication.Entities;
+using System.Net.Http;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -51,6 +53,22 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 }
 
                 return _httpRequest;
+            }
+        }
+
+        private UserAuthentication _userAuthentication;
+
+        public UserAuthentication UserAuthentication
+        {
+            get
+            {
+                if (_userAuthentication is null)
+                {
+                    ArgumentNullException.ThrowIfNull(_httpContextAccessor?.HttpContext?.User);
+                    _userAuthentication = new UserAuthentication(_httpContextAccessor.HttpContext.User);
+                }
+
+                return _userAuthentication;
             }
         }
 

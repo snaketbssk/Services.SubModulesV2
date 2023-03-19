@@ -57,6 +57,7 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         }
 
         public abstract Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
+        public abstract Task<List<TEntity>> FindByIdsAsync(IEnumerable<IIdRequest> idsRequest, CancellationToken cancellationToken = default);
 
         public virtual async Task<bool> ContainsAsync(TEntity entity, CancellationToken cancellationToken = default)
         {

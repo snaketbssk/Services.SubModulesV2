@@ -16,5 +16,12 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             var result = await GetQueryable().FirstOrDefaultAsync(x => x.Id == idRequest.Id, cancellationToken);
             return result;
         }
+
+        public override async Task<List<TEntity>> FindByIdsAsync(IEnumerable<IIdRequest> idsRequest, CancellationToken cancellationToken = default)
+        {
+            var ids = idsRequest.Select(x => x.Id).ToList();
+            var result = await GetQueryable().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
+            return result;
+        }
     }
 }
