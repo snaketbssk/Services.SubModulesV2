@@ -5,7 +5,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 {
     public class PaginationRequest : IPaginationRequest
     {
-        [DefaultValue(0)]
+        [DefaultValue(1)]
         [Range(1, int.MaxValue)]
         public int NumberPage { get; set; }
 

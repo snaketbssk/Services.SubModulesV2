@@ -23,8 +23,8 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             var result = new PaginationResponse<T>();
             if (!string.IsNullOrWhiteSpace(propertyOrderBy))
             {
-                queryable = OrderBy(queryable, 
-                                    propertyOrderBy, 
+                queryable = OrderBy(queryable,
+                                    propertyOrderBy,
                                     !orderByDescending.HasValue ? false : orderByDescending.Value);
             }
             if (!firstRequest.HasValue || firstRequest.Value)

@@ -1,20 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Services.SubModules.LogicLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Responses;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 
 namespace Services.SubModules.LogicLayers.Repositories.Entities
 {
-    public abstract class ContextRepository<T, TEntity> : IContextRepository<TEntity> where T : DbContext where TEntity : class
+    public abstract class ContextRepository<T, TEntity> : IContextRepository<TEntity>
+        where T : DbContext where TEntity : class
     {
         private readonly T _context;
         protected readonly DbSet<TEntity> _repository;
         private bool _disposable;
+
         public ContextRepository(T context, DbSet<TEntity> repository)
         {
             _disposable = false;
             _context = context;
             _repository = repository;
         }
+
         public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             var result = await _repository.AddAsync(entity, cancellationToken);
@@ -53,6 +57,7 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         }
 
         public abstract Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
+
         public virtual async Task<bool> ContainsAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             var result = await _repository.ContainsAsync(entity, cancellationToken);
@@ -61,11 +66,28 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
 
         public virtual async Task<List<TEntity>> ToListAsync(CancellationToken cancellationToken = default)
         {
-            var result = await _repository.ToListAsync(cancellationToken);
+            var result = await GetQueryable().ToListAsync(cancellationToken);
             return result;
         }
 
-        public abstract Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
+        public virtual async Task<IPaginationResponse<TEntity>> FindByFilterAsync(IPaginationRequest paginationRequest,
+                                                                                  IFilterRequest<TEntity> filterRequest,
+                                                                                  CancellationToken cancellationToken = default)
+        {
+            var queryable = GetQueryable();
+            var filterQueryable = filterRequest.Find(queryable);
+            var result = await PaginationResponse<TEntity>.CreateAsync(filterQueryable,
+                                                                       paginationRequest,
+                                                                       cancellationToken);
+            return result;
+        }
+
+        public virtual IQueryable<TEntity> GetQueryable()
+        {
+            var result = _repository.AsQueryable();
+            return result;
+        }
+
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var result = await _context.SaveChangesAsync(cancellationToken);
