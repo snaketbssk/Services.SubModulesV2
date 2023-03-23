@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Services.SubModules.LogicLayers.Models.Authentication.Entities;
-using System.Net.Http;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
