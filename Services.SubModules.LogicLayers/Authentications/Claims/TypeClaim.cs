@@ -33,6 +33,9 @@
         Wallets,
         ManageWallets,
 
+        Common,
+        ManageCommon,
+
         // Other Services
         RealtorApplication,
         ManageRealtorApplication,
