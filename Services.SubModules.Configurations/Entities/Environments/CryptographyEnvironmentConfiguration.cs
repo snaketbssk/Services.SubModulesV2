@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.Configurations.Entities.Environments
 {
-    public class CryptographyEnvironmentConfiguration<T> : SingletonEnvironmentConfiguration<DatabaseEnvironmentConfiguration<T>>
+    public class CryptographyEnvironmentConfiguration<T> : SingletonEnvironmentConfiguration<CryptographyEnvironmentConfiguration<T>>
         where T : class, new()
     {
         protected override string Prefix => ConfigurationConstant.CRYPTOGRAPHY_ENVIRONMENT;
