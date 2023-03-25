@@ -6,5 +6,6 @@
         public string? ASSEMBLY { get; set; }
         public string? ID { get; set; }
         public string? SESSION { get; set; }
+        public string? DOMAIN { get; set; }
     }
 }

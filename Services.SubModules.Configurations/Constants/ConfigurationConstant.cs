@@ -28,5 +28,7 @@
         public const string SECURITY_ENVIRONMENT = "SECURITY_";
         public const string GRPC_ENVIRONMENT = "GRPC_";
         public const string LOCALIZATION_ENVIRONMENT = "LOCALIZATION_";
+        public const string CRYPTOGRAPHY_ENVIRONMENT = "CRYPTOGRAPHY_";
+        public const string SERVICE_ENVIRONMENT = "SERVICE_";
     }
 }
