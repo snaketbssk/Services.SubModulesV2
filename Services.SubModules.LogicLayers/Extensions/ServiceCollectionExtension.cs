@@ -33,7 +33,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
             serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
-            //serviceCollection.AddSingleton<ICryptoService, CryptoService>();
+            serviceCollection.AddSingleton<ICryptoService, CryptoService>();
             serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Transient services
