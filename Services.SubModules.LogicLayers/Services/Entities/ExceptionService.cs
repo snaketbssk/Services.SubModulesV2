@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Prometheus;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Exceptions;
 using Services.SubModules.LogicLayers.Models.Exceptions.Entities;
 using Services.SubModules.LogicLayers.Models.Responses;
@@ -63,8 +63,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 method,
                 path)
                 .Inc();
-            var root = SerilogConfiguration<SerilogRoot>.Instance.Root;
-            var service = root.Seq.Name;
+            var root = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
+            var service = $"{root.ASSEMBLY} {root.ID}";
             var timestamp = DateTime.UtcNow;
             var guid = Guid.NewGuid();
             var status = StatusServiceException.Unknown;
@@ -104,8 +104,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 method,
                 path)
                 .Inc();
-            var root = SerilogConfiguration<SerilogRoot>.Instance.Root;
-            var service = root.Seq.Name;
+            var root = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
+            var service = $"{root.ASSEMBLY} {root.ID}";
             var timestamp = DateTime.UtcNow;
             var guid = Guid.NewGuid();
             //

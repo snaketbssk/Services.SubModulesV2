@@ -2,59 +2,49 @@
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
-using System.Text.Json;
+using Services.SubModules.Configurations.Constants;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class HostBuilderExtension
     {
+        public static IHostBuilder SetEnvironments<T>(this IHostBuilder hostBuilder)
+        {
+            var keyAssembly = $"{ConfigurationConstant.ASPNETCORE_ENVIRONMENT}{nameof(AspNetCoreEnvironmentRoot.ASSEMBLY)}";
+            var valueAssembly = typeof(T).Assembly.GetName().Name;
+            Environment.SetEnvironmentVariable(keyAssembly, valueAssembly);
+
+            var keySession = $"{ConfigurationConstant.ASPNETCORE_ENVIRONMENT}{nameof(AspNetCoreEnvironmentRoot.SESSION)}";
+            var valueSession = Guid.NewGuid().ToString();
+            Environment.SetEnvironmentVariable(keySession, valueSession);
+
+            return hostBuilder;
+        }
+
         public static IHostBuilder UseSerilog<T>(this IHostBuilder hostBuilder)
         {
+            var rootAspNetCore = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
+            var rootSerilog = SerilogEnvironmentConfiguration<SerilogEnvironmentRoot>.Instance.GetRoot();
 
             hostBuilder.UseSerilog((hostBuilderContext, loggerConfiguration) =>
             {
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                var nameAssembly = typeof(T).Assembly.GetName().Name;
-
-                var root = SerilogConfiguration<SerilogRoot>.Instance.Root;
-                var nameFile = string.Format(root.File.Path, nameAssembly);
+                
+                var nameFile = string.Format(rootSerilog.FILE_PATH, rootAspNetCore.ASSEMBLY);
                 var path = Path.Combine(baseDirectory, nameFile);
-
-                var envirement = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                var indexFormat = $"{nameAssembly.ToLower()}-{envirement.ToLower().Replace('.', '-')}-{DateTime.UtcNow:yyyy-MM}";
 
                 loggerConfiguration
                     .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
-                    .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)root.Console.LogEventLevel,
+                    .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)rootSerilog.CONSOLE_LEVEL,
                                      theme: AnsiConsoleTheme.Code)
                     .WriteTo.File(path: path,
-                                  restrictedToMinimumLevel: (LogEventLevel)root.File.LogEventLevel)
-                    .WriteTo.Seq(serverUrl: root.Seq.ServerUrl,
-                                 apiKey: root.Seq.ApiKey,
-                                 restrictedToMinimumLevel: (LogEventLevel)root.Seq.LogEventLevel);
-                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(root.ElasticSearch.ServerUrl))
-                //{
-                //    IndexFormat = indexFormat,
-                //    AutoRegisterTemplate = true,
-                //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
-                //    MinimumLogEventLevel = (LogEventLevel)root.ElasticSearch.LogEventLevel
-                //});
+                                  restrictedToMinimumLevel: (LogEventLevel)rootSerilog.FILE_LEVEL)
+                    .WriteTo.Seq(serverUrl: rootSerilog.SEQ_HOST,
+                                 apiKey: rootSerilog.SEQ_API_KEY,
+                                 restrictedToMinimumLevel: (LogEventLevel)rootSerilog.SEQ_LEVEL);
             });
-
-            using (var log = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger())
-            {
-                var grpcRoot = JsonSerializer.Serialize(GrpcConfiguration<GrpcRoot>.Instance.Root,
-                                                    new JsonSerializerOptions { WriteIndented = true });
-                log.Information($"{nameof(grpcRoot)} {grpcRoot}");
-
-                var redisRoot = JsonSerializer.Serialize(RedisConfiguration<RedisRoot>.Instance.Root,
-                                                    new JsonSerializerOptions { WriteIndented = true });
-                log.Information($"{nameof(redisRoot)} {redisRoot}");
-            }
 
             return hostBuilder;
         }

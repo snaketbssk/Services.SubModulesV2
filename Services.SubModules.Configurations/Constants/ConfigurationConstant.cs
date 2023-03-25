@@ -18,5 +18,15 @@
         public const string TOKEN_FILE = "appsettings.Token.json";
         public const string CRYPTOGRAPHY_FILE = "appsettings.Cryptography.json";
         public const string LOCALIZATION_FILE = "appsettings.Localization.json";
+
+        // Environments
+        public const string SWAGGER_ENVIRONMENT = "SWAGGER_";
+        public const string REDIS_ENVIRONMENT = "REDIS_";
+        public const string DATABASE_ENVIRONMENT = "DATABASE_";
+        public const string ASPNETCORE_ENVIRONMENT = "ASPNETCORE_";
+        public const string SERILOG_ENVIRONMENT = "SERILOG_";
+        public const string SECURITY_ENVIRONMENT = "SECURITY_";
+        public const string GRPC_ENVIRONMENT = "GRPC_";
+        public const string LOCALIZATION_ENVIRONMENT = "LOCALIZATION_";
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Prometheus;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Middlewares.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
@@ -22,14 +22,16 @@ namespace Services.SubModules.LogicLayers.Extensions
         }
         public static IApplicationBuilder AddSwagger(this IApplicationBuilder applicationBuilder)
         {
-            if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsActiveSwagger)
+            var root = SwaggerEnvironmentConfiguration<SwaggerEnvironmentRoot>.Instance.GetRoot();
+
+            if (root.ACTIVE.HasValue && root.ACTIVE.Value)
             {
                 applicationBuilder.UseSwagger();
                 applicationBuilder.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint(
-                        SwaggerConfiguration<SwaggerRoot>.Instance.Root.Url,
-                        SwaggerConfiguration<SwaggerRoot>.Instance.Root.Name);
+                    //c.SwaggerEndpoint(
+                    //    SwaggerEnvironmentConfiguration<SwaggerEnvironmentRoot>.Instance.Root.Url,
+                    //    SwaggerEnvironmentConfiguration<SwaggerEnvironmentRoot>.Instance.Root.Name);
                 });
             }
             return applicationBuilder;
@@ -45,12 +47,14 @@ namespace Services.SubModules.LogicLayers.Extensions
         {
             applicationBuilder.UseMiddleware<LocalizationMiddleware>();
             applicationBuilder.UseMiddleware<ExceptionMiddleware>();
+
             return applicationBuilder;
         }
         private static IApplicationBuilder AddPrometheus(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseHttpMetrics();
             applicationBuilder.UseGrpcMetrics();
+
             return applicationBuilder;
         }
     }

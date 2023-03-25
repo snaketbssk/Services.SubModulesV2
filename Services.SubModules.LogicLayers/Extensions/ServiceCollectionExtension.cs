@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
@@ -33,7 +33,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
             serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
-            serviceCollection.AddSingleton<ICryptoService, CryptoService>();
+            //serviceCollection.AddSingleton<ICryptoService, CryptoService>();
             serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // Transient services
@@ -141,13 +141,18 @@ namespace Services.SubModules.LogicLayers.Extensions
 
         private static IServiceCollection AddSwagger(this IServiceCollection serviceCollection)
         {
-            if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsActiveSwagger)
+            var rootAspNetCore = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
+            var rootSwagger = SwaggerEnvironmentConfiguration<SwaggerEnvironmentRoot>.Instance.GetRoot();
+
+            var xmlFile = $"{rootAspNetCore.ASSEMBLY}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+            if (rootSwagger.ACTIVE.HasValue && rootSwagger.ACTIVE.Value)
             {
                 serviceCollection.AddSwaggerGen(x =>
                 {
-                    var fileSwagger = SwaggerConfiguration<SwaggerRoot>.Instance.Root.NameFile;
-                    x.IncludeXmlComments(fileSwagger);
-                    if (SwaggerConfiguration<SwaggerRoot>.Instance.Root.IsAuthenticationSwagger)
+                    x.IncludeXmlComments(xmlPath);
+                    if (rootSwagger.AUTHENTICATION.HasValue && rootSwagger.AUTHENTICATION.Value)
                     {
                         x.AddSecurityDefinition(HeaderConstant.AUTHORIZATION, new OpenApiSecurityScheme
                         {
@@ -179,10 +184,10 @@ namespace Services.SubModules.LogicLayers.Extensions
         {
             serviceCollection.AddDbContext<T>(options =>
             {
-                options.UseSqlServer(EntityFrameworkConfiguration<EntityFrameworkRoot>
+                options.UseSqlServer(DatabaseEnvironmentConfiguration<DatabaseEnvironmentRoot>
                     .Instance
-                    .Root
-                    .ConnectionEntityFramework);
+                    .GetRoot()
+                    .CONNECTION);
             });
             return serviceCollection;
         }

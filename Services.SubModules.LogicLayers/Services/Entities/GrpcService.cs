@@ -1,8 +1,8 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Constants;
 using System.Security.Claims;
 
@@ -47,7 +47,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         }
         protected virtual DateTime GetDeadline()
         {
-            var result = DateTime.UtcNow.AddSeconds(GrpcConfiguration<GrpcRoot>.Instance.Root.SecondsTimeout);
+            var result = DateTime.UtcNow.AddSeconds(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().TIMEOUT ?? 60);
             return result;
         }
         ~GrpcService()

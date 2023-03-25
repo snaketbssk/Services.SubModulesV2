@@ -1,5 +1,5 @@
-﻿using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+﻿using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
 
@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public NotificationsGrpcService(IExceptionService exceptionService,
                                         ITokenService tokenService)
-                                        : base(GrpcConfiguration<GrpcRoot>.Instance.Root.NotificationsUrlGrpc, tokenService)
+                                        : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().NOTIFICATIONS_HOST, tokenService)
         {
             _exceptionService = exceptionService;
         }

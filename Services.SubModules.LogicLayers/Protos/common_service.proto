@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Services.SubModules.Protos";
+
+service CommonGrpc {
+	rpc SendMessage (MessageCommonGrpcRequest) returns (MessageCommonGrpcResponse);
+}
+
+message MessageCommonGrpcRequest
+{
+    string type = 1;
+    string language = 2;
+    string address = 3;
+    int64 date = 4;
+    string data = 5;
+}
+
+message MessageCommonGrpcResponse
+{
+    bool isSuccess = 1;
+}

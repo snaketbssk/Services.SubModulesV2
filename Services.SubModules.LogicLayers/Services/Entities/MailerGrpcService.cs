@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
 
@@ -27,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             IExceptionService exceptionService,
             ITokenService tokenService,
             ILogger<MailerGrpcService> logger)
-            : base(GrpcConfiguration<GrpcRoot>.Instance.Root.MailerUrlGrpc, tokenService)
+            : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().MAILER_HOST, tokenService)
         {
             _logger = logger;
             _exceptionService = exceptionService;

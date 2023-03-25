@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Services.SubModules.Protos";
+
+service WalletsGrpc {
+	rpc SendMessage (MessageWalletsGrpcRequest) returns (MessageWalletsGrpcResponse);
+}
+
+message MessageWalletsGrpcRequest
+{
+    string type = 1;
+    string language = 2;
+    string address = 3;
+    int64 date = 4;
+    string data = 5;
+}
+
+message MessageWalletsGrpcResponse
+{
+    bool isSuccess = 1;
+}

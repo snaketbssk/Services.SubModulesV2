@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Services.SubModules.Configurations.Constants;
-using Services.SubModules.Configurations.Entities;
-using Services.SubModules.Configurations.Models.Roots.Entities;
+using Services.SubModules.Configurations.Entities.Environments;
+using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using System.Globalization;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
@@ -61,12 +61,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             if (string.IsNullOrWhiteSpace(culture))
             {
-                return LocalizationConfiguration<LocalizationRoot>.Instance.Root.DefaultCultureLocalization;
+                return LocalizationEnvironmentConfiguration<LocalizationEnvironmentRoot>.Instance.GetRoot().DEFAULT;
             }
 
             if (!_localizations.ContainsKey(culture))
             {
-                return LocalizationConfiguration<LocalizationRoot>.Instance.Root.DefaultCultureLocalization;
+                return LocalizationEnvironmentConfiguration<LocalizationEnvironmentRoot>.Instance.GetRoot().DEFAULT;
             }
 
             return culture;
