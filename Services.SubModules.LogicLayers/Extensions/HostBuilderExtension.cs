@@ -6,6 +6,8 @@ using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Constants;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
+using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Services.SubModules.LogicLayers.Extensions
 {
@@ -24,6 +26,32 @@ namespace Services.SubModules.LogicLayers.Extensions
             var valueSession = Guid.NewGuid().ToString();
             Environment.SetEnvironmentVariable(keySession, valueSession);
 
+            var pattern = @"\${\w+}";
+            foreach (DictionaryEntry environment in Environment.GetEnvironmentVariables())
+            {
+                if (environment.Value is null)
+                    continue;
+
+                var key = environment.Key.ToString();
+                var value = environment.Value.ToString();
+                var matches = Regex.Matches(value, pattern);
+                foreach (Match match in matches)
+                {
+                    var clearMatch = match.Value.Replace("$", string.Empty)
+                                                .Replace("{", string.Empty)
+                                                .Replace("}", string.Empty);
+                    var replace = Environment.GetEnvironmentVariable(clearMatch);
+
+                    if (string.IsNullOrWhiteSpace(replace))
+                        continue;
+
+                    value = value.Replace(match.Value, replace);
+                }
+
+                if (!environment.Value.Equals(value))
+                    Environment.SetEnvironmentVariable(key, value);
+            }
+
             return hostBuilder;
         }
 
@@ -35,7 +63,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             hostBuilder.UseSerilog((hostBuilderContext, loggerConfiguration) =>
             {
                 var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                
+
                 var nameFile = string.Format(rootSerilog.FILE_PATH, rootAspNetCore.ASSEMBLY);
                 var path = Path.Combine(baseDirectory, nameFile);
 
