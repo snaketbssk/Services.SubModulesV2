@@ -6,7 +6,7 @@ namespace Services.SubModules.Configurations.Entities.Environments
     public class ServiceEnvironmentConfiguration<T> : SingletonEnvironmentConfiguration<ServiceEnvironmentConfiguration<T>>
         where T : class, new()
     {
-        protected override string Prefix => ConfigurationConstant.SERVICE_ENVIRONMENT;
+        protected override string Prefix => $"{ConfigurationConstant.SERVICE_ENVIRONMENT}{Environment.GetEnvironmentVariable($"{ConfigurationConstant.SERVICE_ENVIRONMENT}NAME")}";
 
         public T GetRoot()
         {

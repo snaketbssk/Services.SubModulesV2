@@ -30,5 +30,15 @@
         public const string LOCALIZATION_ENVIRONMENT = "LOCALIZATION_";
         public const string CRYPTOGRAPHY_ENVIRONMENT = "CRYPTOGRAPHY_";
         public const string SERVICE_ENVIRONMENT = "SERVICE_";
+
+        // Services
+        public const string IDENTITY_SERVICE = "IDENTITY";
+        public const string LOGGER_SERVICE = "LOGGER";
+        public const string MAILER_SERVICE = "MAILER";
+        public const string STORAGE_SERVICE = "STORAGE";
+        public const string TELEGRAM_SERVICE = "TELEGRAM";
+        public const string NOTIFICATIONS_SERVICE = "NOTIFICATIONS";
+        public const string WALLETS_SERVICE = "WALLETS";
+        public const string COMMON_SERVICE = "COMMON";
     }
 }

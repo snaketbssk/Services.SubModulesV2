@@ -13,10 +13,13 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class HostBuilderExtension
     {
-        public static IHostBuilder SetEnvironments<T>(this IHostBuilder hostBuilder)
+        public static IHostBuilder SetEnvironments<T>(this IHostBuilder hostBuilder, string nameService)
         {
             var envFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
             DotEnv.Fluent().WithEnvFiles(envFile).Load();
+
+            var keyNameService = $"{ConfigurationConstant.SERVICE_ENVIRONMENT}NAME";
+            Environment.SetEnvironmentVariable(keyNameService, $"{nameService}_");
 
             var keyAssembly = $"{ConfigurationConstant.ASPNETCORE_ENVIRONMENT}{nameof(AspNetCoreEnvironmentRoot.ASSEMBLY)}";
             var valueAssembly = typeof(T).Assembly.GetName().Name;

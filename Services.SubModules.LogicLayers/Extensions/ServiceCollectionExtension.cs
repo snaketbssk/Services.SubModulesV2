@@ -180,14 +180,11 @@ namespace Services.SubModules.LogicLayers.Extensions
             }
             return serviceCollection;
         }
-        public static IServiceCollection AddDbContext<T>(this IServiceCollection serviceCollection) where T : DbContext
+        public static IServiceCollection AddDbContext<T>(this IServiceCollection serviceCollection, string? connectionString) where T : DbContext
         {
             serviceCollection.AddDbContext<T>(options =>
             {
-                options.UseSqlServer(DatabaseEnvironmentConfiguration<DatabaseEnvironmentRoot>
-                    .Instance
-                    .GetRoot()
-                    .CONNECTION);
+                options.UseSqlServer(connectionString);
             });
             return serviceCollection;
         }
