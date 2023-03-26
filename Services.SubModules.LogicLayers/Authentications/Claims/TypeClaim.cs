@@ -8,9 +8,6 @@
 
         ManageRole,
 
-        RealEstate,
-        ManageRealEstate,
-
         Referral,
         ManageReferral,
         // Services
@@ -34,13 +31,6 @@
         ManageWallets,
 
         Common,
-        ManageCommon,
-
-        // Other Services
-        RealtorApplication,
-        ManageRealtorApplication,
-
-        CompanyApplication,
-        ManageCompanyApplication
+        ManageCommon
     }
 }
