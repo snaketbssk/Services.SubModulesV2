@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using dotenv.net;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -12,6 +13,9 @@ namespace Services.SubModules.LogicLayers.Extensions
     {
         public static IHostBuilder SetEnvironments<T>(this IHostBuilder hostBuilder)
         {
+            var envFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
+            DotEnv.Fluent().WithEnvFiles(envFile).Load();
+
             var keyAssembly = $"{ConfigurationConstant.ASPNETCORE_ENVIRONMENT}{nameof(AspNetCoreEnvironmentRoot.ASSEMBLY)}";
             var valueAssembly = typeof(T).Assembly.GetName().Name;
             Environment.SetEnvironmentVariable(keyAssembly, valueAssembly);
