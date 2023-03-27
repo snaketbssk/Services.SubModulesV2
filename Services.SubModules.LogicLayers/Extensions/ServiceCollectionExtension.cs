@@ -17,9 +17,27 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims = default)
         {
+            if (claims is null)
+                claims = new Dictionary<string, HashSet<string>>();
+
+            var typeClaims = Enum.GetNames(typeof(TypeClaim));
+            var valueClaims = Enum.GetNames(typeof(ValueClaim));
+            foreach (var typeClaim in typeClaims)
+            {
+                if (!claims.TryGetValue(typeClaim, out var value))
+                {
+                    value = new HashSet<string>();
+                    claims.Add(typeClaim, value);
+                }
+
+                foreach (var valueClaim in valueClaims)
+                    value.Add(valueClaim);
+            }
+
             // Global services
+            serviceCollection.AddAuthorization(claims);
             serviceCollection.AddCache();
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
@@ -27,7 +45,6 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddCors();
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper();
-            serviceCollection.AddAuthorization();
             serviceCollection.AddHttpClient();
             // Singleton services
             serviceCollection.AddSingleton<ITokenService, TokenService>();
@@ -117,21 +134,20 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        private static IServiceCollection AddAuthorization(this IServiceCollection serviceCollection)
+        private static IServiceCollection AddAuthorization(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims)
         {
             serviceCollection.AddAuthorization(x =>
             {
                 x.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
                     .Build();
-                var typeClaims = Enum.GetNames(typeof(TypeClaim));
-                var valueClaims = Enum.GetNames(typeof(ValueClaim));
-                foreach (var typeClaim in typeClaims)
+
+                foreach (var claim in claims)
                 {
-                    foreach (var valueClaim in valueClaims)
+                    foreach (var value in claim.Value)
                     {
-                        var namePolicy = $"{typeClaim}{valueClaim}";
-                        x.AddPolicy(namePolicy, policy => policy.RequireClaim(typeClaim, valueClaim));
+                        var namePolicy = $"{claim.Key}{value}";
+                        x.AddPolicy(namePolicy, policy => policy.RequireClaim(claim.Key, value));
                     }
                 }
             });
