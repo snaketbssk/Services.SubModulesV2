@@ -17,7 +17,7 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 
         public async Task<bool> TrySetAsync(IDictionary<TKey, TValue> values, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TryHashSetAsync(Project, Container, values, cancellationToken);
+            var result = await CacheService.TryHashSetAsync(Project, Container, Expiry, values, cancellationToken);
             return result;
         }
 

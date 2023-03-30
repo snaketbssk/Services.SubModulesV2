@@ -144,7 +144,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 if (redisValues.Length == 0)
                     return default;
 
-                var values = redisValues.Select(x => JsonSerializer.Deserialize<TValue>(x.ToString())).ToList();
+                var values = redisValues.Select(x => JsonSerializer.Deserialize<TValue>(x.Value.ToString())).ToList();
 
                 return (true, values);
             }
@@ -194,6 +194,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
                 await database.HashSetAsync(keyHash, key.ToString(), JsonSerializer.Serialize(value));
 
+                if (expiry.HasValue)
+                    await database.KeyExpireAsync(keyHash, expiry);
+
                 return true;
             }
             catch (Exception)
@@ -202,7 +205,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public override async Task<bool> TryHashSetAsync<TKey, TValue>(string project, string container, IDictionary<TKey, TValue> values, CancellationToken cancellationToken = default)
+        public override async Task<bool> TryHashSetAsync<TKey, TValue>(string project, string container, TimeSpan? expiry, IDictionary<TKey, TValue> values, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -215,6 +218,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var hashValues = values.Select(x => new HashEntry(x.Key.ToString(), JsonSerializer.Serialize(x.Value))).ToArray();
                 await database.HashSetAsync(keyHash, hashValues);
 
+                if (expiry.HasValue)
+                    await database.KeyExpireAsync(keyHash, expiry);
+
                 return true;
             }
             catch (Exception)
@@ -223,20 +229,22 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public override async Task<bool> TryPaginationSetAsync<TKey, TValue>(string project, string container, TimeSpan? expiry, TKey key, IEnumerable<TValue> values, CancellationToken cancellationToken = default)
+        public override async Task<bool> TryPaginationSetAsync<TValue>(string project, string container, TimeSpan? expiry, IEnumerable<TValue> values, CancellationToken cancellationToken = default)
         {
             try
             {
                 ArgumentNullException.ThrowIfNull(project);
                 ArgumentNullException.ThrowIfNull(container);
-                ArgumentNullException.ThrowIfNull(key);
                 ArgumentNullException.ThrowIfNull(values);
 
                 var database = _connectionMultiplexer.GetDatabase();
-                var keyHash = GetKeyHash(project, container, key);
+                var keyHash = GetKeyHash(project, container);
 
                 var hashValues = values.Select(x => new RedisValue(JsonSerializer.Serialize(x))).ToArray();
                 await database.ListRightPushAsync(keyHash, hashValues);
+
+                if (expiry.HasValue)
+                    await database.KeyExpireAsync(keyHash, expiry);
 
                 return true;
             }
@@ -246,7 +254,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public override async Task<(bool isSuccessful, IEnumerable<TValue> values, int totalCount)> TryPaginationGetAsync<TKey, TValue>(string project, string container, int numberPage, int sizePage, CancellationToken cancellationToken = default)
+        public override async Task<(bool isSuccessful, IEnumerable<TValue> values, int totalCount)> TryPaginationGetAsync<TValue>(string project, string container, int numberPage, int sizePage, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -266,6 +274,27 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var totalCount = await database.ListLengthAsync(keyHash);
 
                 return (true, values, (int)totalCount);
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+        }
+
+        public override async Task<(bool isSuccessful, IEnumerable<TValue> values)> TryPaginationGetAllAsync<TValue>(string project, string container, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+
+                var database = _connectionMultiplexer.GetDatabase();
+                var keyHash = GetKeyHash(project, container);
+
+                var redisValues = await database.ListRangeAsync(keyHash);
+                var values = redisValues.Where(x => x.HasValue)
+                                        .Select(x => JsonSerializer.Deserialize<TValue>(x.ToString()));
+                return (true, values);
             }
             catch (Exception)
             {
