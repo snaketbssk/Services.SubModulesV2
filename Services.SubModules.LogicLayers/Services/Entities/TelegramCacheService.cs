@@ -1,5 +1,4 @@
-﻿using Services.SubModules.LogicLayers.Constants;
-using Services.SubModules.LogicLayers.Models.Cache;
+﻿using Services.SubModules.LogicLayers.Models.Cache;
 using Services.SubModules.LogicLayers.Models.Cache.Entities;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
@@ -11,9 +10,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public TelegramCacheService(ICacheService cacheService)
         {
             Outgoing = new ValueRepositoryCache<bool>(cacheService,
-                                                      CacheConstant.TELEGRAM_PROJECT,
-                                                      CacheConstant.OUTGOING_CONTAINER,
-                                                      TimeSpan.FromMinutes(1));
+                                                     nameof(TelegramCacheService),
+                                                     nameof(Outgoing),
+                                                     TimeSpan.FromMinutes(1));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Services.SubModules.LogicLayers.Constants;
-using Services.SubModules.LogicLayers.Models.Cache;
+﻿using Services.SubModules.LogicLayers.Models.Cache;
 using Services.SubModules.LogicLayers.Models.Cache.Entities;
 using Services.SubModules.LogicLayers.Models.Redis.Entities;
 
@@ -12,8 +11,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public IdentityCacheService(ICacheService cacheService)
         {
             User = new ValuesRepositoryCache<string, UserRedis>(cacheService,
-                                                                CacheConstant.IDENTITY_PROJECT,
-                                                                CacheConstant.USER_CONTAINER,
+                                                                nameof(IdentityCacheService),
+                                                                nameof(User),
                                                                 TimeSpan.FromMinutes(10));
         }
     }

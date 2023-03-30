@@ -36,18 +36,18 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var result = new List<Claim>();
             var decodeClaims = _tokenService.DecodeToken(token);
             var idUserTable = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
-            var userIdentityGrpcResponse = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
-            if (userIdentityGrpcResponse.IsSuccessful)
+            var (isSuccessful, value) = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
+            if (isSuccessful)
             {
                 var userAuthentication = new UserAuthentication(
-                    id: userIdentityGrpcResponse.Value.Id,
-                    name: userIdentityGrpcResponse.Value.Name,
-                    email: userIdentityGrpcResponse.Value.Email,
+                    id: value.Id,
+                    name: value.Name,
+                    email: value.Email,
                     roles: new List<string>(),
                     accessToken: token,
                     language: "ru");
                 result.AddRange(userAuthentication.ToClaims());
-                result.AddRange(userIdentityGrpcResponse.Value.Claims.Select(x => new Claim(x.Type, x.Value)));
+                result.AddRange(value.Claims.Select(x => new Claim(x.Type, x.Value)));
             }
             else
             {

@@ -2,9 +2,7 @@
 {
     public interface IValuesRepositoryCache<TKey, TValue> : IRepositoryCache
     {
-        Task<bool> TryExistsAsync(TKey key, CancellationToken cancellationToken = default);
-        Task<bool> TryRemoveAsync(TKey key, CancellationToken cancellationToken = default);
+        Task<(bool isSuccessful, TValue value)> TryGetAsync(TKey key, CancellationToken cancellationToken = default);
         Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default);
-        Task<IValuesCache<TValue>> TryGetAsync(TKey key, CancellationToken cancellationToken = default);
     }
 }

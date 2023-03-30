@@ -1,5 +1,4 @@
-﻿using Services.SubModules.LogicLayers.Constants;
-using Services.SubModules.LogicLayers.Models.Cache;
+﻿using Services.SubModules.LogicLayers.Models.Cache;
 using Services.SubModules.LogicLayers.Models.Cache.Entities;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
@@ -11,8 +10,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public MailerCacheService(ICacheService cacheService)
         {
             Outgoing = new ValueRepositoryCache<bool>(cacheService,
-                                                      CacheConstant.MAILER_PROJECT,
-                                                      CacheConstant.OUTGOING_CONTAINER,
+                                                      nameof(MailerCacheService),
+                                                      nameof(Outgoing),
                                                       TimeSpan.FromMinutes(1));
         }
     }

@@ -2,6 +2,6 @@
 {
     public class DatabaseEnvironmentRoot
     {
-        public string? CONNECTION { get; set; }
+        public string? DATABASE_CONNECTION { get; set; }
     }
 }

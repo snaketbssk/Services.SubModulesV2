@@ -104,14 +104,14 @@ namespace Services.SubModules.LogicLayers.Extensions
 
         public static IServiceCollection AddCache(this IServiceCollection serviceCollection)
         {
-            var cacheService = RedisCacheService.Initialization();
+            //var cacheService = RedisCacheService.Initialization();
 
-            serviceCollection.AddSingleton(cacheService);
-            serviceCollection.AddSingleton<IIdentityCacheService, IdentityCacheService>();
-            serviceCollection.AddSingleton<IMailerCacheService, MailerCacheService>();
-            serviceCollection.AddSingleton<INotificationsCacheService, NotificationsCacheService>();
-            serviceCollection.AddSingleton<IStorageCacheService, StorageCacheService>();
-            serviceCollection.AddSingleton<ITelegramCacheService, TelegramCacheService>();
+            //serviceCollection.AddSingleton(cacheService);
+            //serviceCollection.AddSingleton<IIdentityCacheService, IdentityCacheService>();
+            //serviceCollection.AddSingleton<IMailerCacheService, MailerCacheService>();
+            //serviceCollection.AddSingleton<INotificationsCacheService, NotificationsCacheService>();
+            //serviceCollection.AddSingleton<IStorageCacheService, StorageCacheService>();
+            //serviceCollection.AddSingleton<ITelegramCacheService, TelegramCacheService>();
 
             return serviceCollection;
         }

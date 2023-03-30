@@ -9,27 +9,15 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities
         {
         }
 
-        public async Task<bool> TryExistsAsync(TKey key, CancellationToken cancellationToken = default)
-        {
-            var result = await CacheService.TryExistsAsync(Project, Container, key, cancellationToken);
-            return result;
-        }
-
-        public async Task<bool> TryRemoveAsync(TKey key, CancellationToken cancellationToken = default)
-        {
-            var result = await CacheService.TryRemoveAsync(Project, Container, key, cancellationToken);
-            return result;
-        }
-
         public async Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TrySetAsync(Project, Container, Expiry, key, value, cancellationToken);
+            var result = await CacheService.TrySingleSetAsync(Project, Container, Expiry, key, value, cancellationToken);
             return result;
         }
 
-        public async Task<IValuesCache<TValue>> TryGetAsync(TKey key, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, TValue value)> TryGetAsync(TKey key, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TryGetAsync<TKey, TValue>(Project, Container, key, cancellationToken);
+            var result = await CacheService.TrySingleGetAsync<TKey, TValue>(Project, Container, key, cancellationToken);
             return result;
         }
     }
