@@ -5,11 +5,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class TelegramCacheService : ITelegramCacheService
     {
-        public IValueRepositoryCache<bool> Outgoing { get; private set; }
+        public IOneRepositoryCache<bool> Outgoing { get; private set; }
 
         public TelegramCacheService(ICacheService cacheService)
         {
-            Outgoing = new ValueRepositoryCache<bool>(cacheService,
+            Outgoing = new OneRepositoryCache<bool>(cacheService,
                                                      nameof(TelegramCacheService),
                                                      nameof(Outgoing),
                                                      TimeSpan.FromMinutes(1));
