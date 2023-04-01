@@ -1,15 +1,10 @@
 ﻿using Services.SubModules.LogicLayers.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
     public abstract class OneRepositoryCache : BaseRepositoryCache, IOneRepositoryCache
     {
-        protected OneRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry) 
+        protected OneRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry)
             : base(cacheService, project, container, expiry)
         {
         }
