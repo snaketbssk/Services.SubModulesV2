@@ -1,6 +1,6 @@
 ﻿namespace Services.SubModules.LogicLayers.Models.Cache
 {
-    public interface IManyPaginationRepositoryCache<TKey, TValue> : IRepositoryCache
+    public interface IManyPaginationRepositoryCache<TKey, TValue> : IManyRepositoryCache<TKey>
     {
         Task<bool> TrySetAsync(TKey key, IEnumerable<TValue> values, CancellationToken cancellationToken = default);
 

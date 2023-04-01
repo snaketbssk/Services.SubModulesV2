@@ -1,8 +1,14 @@
-﻿namespace Services.SubModules.LogicLayers.Models.Cache
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.SubModules.LogicLayers.Models.Cache
 {
-    public interface IManyRepositoryCache<TKey, TValue> : IRepositoryCache
+    public interface IManyRepositoryCache<TKey> : IRepositoryCache
     {
-        Task<(bool isSuccessful, TValue value)> TryGetAsync(TKey key, CancellationToken cancellationToken = default);
-        Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default);
+        Task<bool> TryExistsAsync(TKey key, CancellationToken cancellationToken = default);
+        Task<bool> TryRemoveAsync(TKey key, CancellationToken cancellationToken = default);
     }
 }

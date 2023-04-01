@@ -1,6 +1,6 @@
 ﻿namespace Services.SubModules.LogicLayers.Models.Cache
 {
-    public interface IHashRepositoryCache<TKey, TValue> : IRepositoryCache
+    public interface IOneHashRepositoryCache<TKey, TValue> : IOneRepositoryCache
     {
         Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default);
 

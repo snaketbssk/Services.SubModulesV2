@@ -2,7 +2,7 @@
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
-    public class ManyPaginationRepositoryCache<TKey, TValue> : BaseRepositoryCache, IManyPaginationRepositoryCache<TKey, TValue>
+    public class ManyPaginationRepositoryCache<TKey, TValue> : ManyRepositoryCache<TKey>, IManyPaginationRepositoryCache<TKey, TValue>
     {
         public ManyPaginationRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry)
             : base(cacheService, project, container, expiry)

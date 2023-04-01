@@ -1,23 +1,28 @@
 ﻿using Services.SubModules.LogicLayers.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
-    public class ManyRepositoryCache<TKey, TValue> : BaseRepositoryCache, IManyRepositoryCache<TKey, TValue>
+    public abstract class ManyRepositoryCache<TKey> : BaseRepositoryCache, IManyRepositoryCache<TKey>
     {
-        public ManyRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry)
+        protected ManyRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry) 
             : base(cacheService, project, container, expiry)
         {
         }
 
-        public async Task<bool> TrySetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
+        public async Task<bool> TryExistsAsync(TKey key, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TrySetAsync(Project, Container, Expiry, key, value, cancellationToken);
+            var result = await CacheService.TryExistsAsync(Project, Container, key, cancellationToken);
             return result;
         }
 
-        public async Task<(bool isSuccessful, TValue value)> TryGetAsync(TKey key, CancellationToken cancellationToken = default)
+        public async Task<bool> TryRemoveAsync(TKey key, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TryGetAsync<TKey, TValue>(Project, Container, key, cancellationToken);
+            var result = await CacheService.TryRemoveAsync(Project, Container, key, cancellationToken);
             return result;
         }
     }

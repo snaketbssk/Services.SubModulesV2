@@ -1,12 +1,14 @@
 ﻿using dotenv.net;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using Services.SubModules.Configurations.Constants;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using System.Collections;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Services.SubModules.LogicLayers.Extensions
@@ -81,7 +83,24 @@ namespace Services.SubModules.LogicLayers.Extensions
                                  restrictedToMinimumLevel: (LogEventLevel)rootSerilog.SEQ_LEVEL);
             });
 
+            using (var logger = new LoggerConfiguration().WriteTo.Console().CreateLogger())
+            {
+                WriteToConsole(logger, rootAspNetCore);
+            }
+
             return hostBuilder;
+        }
+
+        private static void WriteToConsole(Logger logger, object entity)
+        {
+            var entityType = entity.GetType();
+            var properties = entityType.GetProperties();
+
+            foreach (var property in properties)
+            {
+                var value = property.GetValue(entity);
+                logger.Information($"{property.Name}: {value}");
+            }
         }
     }
 }

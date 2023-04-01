@@ -2,9 +2,9 @@
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
-    public class HashRepositoryCache<TKey, TValue> : BaseRepositoryCache, IHashRepositoryCache<TKey, TValue>
+    public class OneHashRepositoryCache<TKey, TValue> : OneRepositoryCache, IOneHashRepositoryCache<TKey, TValue>
     {
-        public HashRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry)
+        public OneHashRepositoryCache(ICacheService cacheService, string project, string container, TimeSpan? expiry)
             : base(cacheService, project, container, expiry)
         {
         }

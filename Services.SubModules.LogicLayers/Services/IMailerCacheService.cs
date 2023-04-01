@@ -4,6 +4,6 @@ namespace Services.SubModules.LogicLayers.Services
 {
     public interface IMailerCacheService
     {
-        IOneRepositoryCache<bool> Outgoing { get; }
+        IOneValueRepositoryCache<bool> Outgoing { get; }
     }
 }

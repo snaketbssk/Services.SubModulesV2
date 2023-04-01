@@ -1,12 +1,12 @@
 ﻿using Services.SubModules.LogicLayers.Models.Cache;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 
 namespace Services.SubModules.LogicLayers.Services
 {
     public interface ICommonCacheService
     {
-        IOneRepositoryCache<string> Value { get; }
-        IManyRepositoryCache<string, string> Values { get; }
-        IHashRepositoryCache<string, string> Hash { get; }
-        IOnePaginationRepositoryCache<string> Pagination { get; }
+        IOneHashRepositoryCache<Guid, CurrencyResponse> HashCurrencies { get; }
+        IOnePaginationRepositoryCache<CurrencyResponse> PaginationCurrencies { get; }
+        IOneValueRepositoryCache<bool> UpdateCache { get; }
     }
 }

@@ -6,11 +6,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class IdentityCacheService : IIdentityCacheService
     {
-        public IManyRepositoryCache<string, UserRedis> User { get; private set; }
+        public IManyValueRepositoryCache<string, UserRedis> User { get; private set; }
 
         public IdentityCacheService(ICacheService cacheService)
         {
-            User = new ManyRepositoryCache<string, UserRedis>(cacheService,
+            User = new ManyValueRepositoryCache<string, UserRedis>(cacheService,
                                                                 nameof(IdentityCacheService),
                                                                 nameof(User),
                                                                 TimeSpan.FromMinutes(10));
