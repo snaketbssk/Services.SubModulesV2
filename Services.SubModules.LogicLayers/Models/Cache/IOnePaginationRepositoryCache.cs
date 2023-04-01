@@ -1,6 +1,6 @@
 ﻿namespace Services.SubModules.LogicLayers.Models.Cache
 {
-    public interface IOnePaginationRepositoryCache<TValue> : IRepositoryCache
+    public interface IOnePaginationRepositoryCache<TValue> : IOneRepositoryCache
     {
         Task<bool> TrySetAsync(IEnumerable<TValue> values, CancellationToken cancellationToken = default);
 
