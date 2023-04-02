@@ -59,6 +59,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<IStorageGrpcService, StorageGrpcService>();
             serviceCollection.AddScoped<ITelegramGrpcService, TelegramGrpcService>();
             serviceCollection.AddScoped<INotificationsGrpcService, NotificationsGrpcService>();
+            serviceCollection.AddScoped<ICommonGrpcService, CommonGrpcService>();
             serviceCollection.AddScoped<IUserAgentService, UserAgentService>();
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
             //
