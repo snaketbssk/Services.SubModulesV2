@@ -100,16 +100,6 @@ namespace Services.SubModules.LogicLayers.Workers.Entities
 
                 try
                 {
-                    if (isIncrementSeconds || isExecute)
-                        await RunAsync(serviceScope, cancellationToken);
-                }
-                catch (Exception exception)
-                {
-                    Exception(exception);
-                }
-
-                try
-                {
                     await AfterAsync(serviceScope, cancellationToken);
                 }
                 catch (Exception exception)

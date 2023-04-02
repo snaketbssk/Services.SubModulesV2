@@ -241,6 +241,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var keyHash = GetKeyHash(project, container);
 
                 var hashValues = values.Select(x => new RedisValue(JsonSerializer.Serialize(x))).ToArray();
+
+                await database.KeyDeleteAsync(keyHash);
                 await database.ListRightPushAsync(keyHash, hashValues);
 
                 if (expiry.HasValue)
@@ -315,6 +317,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var keyHash = GetKeyHash(project, container, key);
 
                 var hashValues = values.Select(x => new RedisValue(JsonSerializer.Serialize(x))).ToArray();
+
+                await database.KeyDeleteAsync(keyHash);
                 await database.ListRightPushAsync(keyHash, hashValues);
 
                 if (expiry.HasValue)
