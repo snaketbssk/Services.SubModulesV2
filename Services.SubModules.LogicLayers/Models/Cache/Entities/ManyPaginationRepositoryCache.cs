@@ -1,4 +1,6 @@
-﻿using Services.SubModules.LogicLayers.Services;
+﻿using Services.SubModules.LogicLayers.Models.Requests;
+using Services.SubModules.LogicLayers.Models.Responses;
+using Services.SubModules.LogicLayers.Services;
 
 namespace Services.SubModules.LogicLayers.Models.Cache.Entities
 {
@@ -15,9 +17,9 @@ namespace Services.SubModules.LogicLayers.Models.Cache.Entities
             return result;
         }
 
-        public async Task<(bool isSuccessful, IEnumerable<TValue> values, int totalCount)> TryGetAsync(TKey key, int numberPage, int sizePage, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, IPaginationResponse<TValue> pagination)> TryGetAsync(TKey key, IPaginationRequest request, CancellationToken cancellationToken = default)
         {
-            var result = await CacheService.TryPaginationGetAsync<TKey, TValue>(Project, Container, key, numberPage, sizePage, cancellationToken);
+            var result = await CacheService.TryPaginationGetAsync<TKey, TValue>(Project, Container, key, request, cancellationToken);
             return result;
         }
 

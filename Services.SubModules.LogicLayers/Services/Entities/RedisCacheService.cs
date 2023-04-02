@@ -1,5 +1,8 @@
 ﻿using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
+using Services.SubModules.LogicLayers.Models.Requests;
+using Services.SubModules.LogicLayers.Models.Responses;
+using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using StackExchange.Redis;
 using System.Text.Json;
 
@@ -256,7 +259,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public override async Task<(bool isSuccessful, IEnumerable<TValue> values, int totalCount)> TryPaginationGetAsync<TValue>(string project, string container, int numberPage, int sizePage, CancellationToken cancellationToken = default)
+        public override async Task<(bool isSuccessful, IPaginationResponse<TValue> pagination)> TryPaginationGetAsync<TValue>(string project, string container, IPaginationRequest request, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -266,16 +269,23 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container);
 
-                int startIndex = (numberPage - 1) * sizePage;
-                int endIndex = numberPage * sizePage - 1;
+                int startIndex = (request.NumberPage - 1) * request.SizePage;
+                int endIndex = request.NumberPage * request.SizePage - 1;
 
                 var redisValues = await database.ListRangeAsync(keyHash, startIndex, endIndex);
                 var values = redisValues.Where(x => x.HasValue)
-                                        .Select(x => JsonSerializer.Deserialize<TValue>(x.ToString()));
+                                        .Select(x => JsonSerializer.Deserialize<TValue>(x.ToString()))
+                                        .ToList();
 
                 var totalCount = await database.ListLengthAsync(keyHash);
 
-                return (true, values, (int)totalCount);
+                var pagination = new PaginationResponse<TValue>()
+                {
+                    TotalCount = (int)totalCount,
+                    Values = values
+                };
+
+                return (true, pagination);
             }
             catch (Exception)
             {
@@ -332,7 +342,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public override async Task<(bool isSuccessful, IEnumerable<TValue> values, int totalCount)> TryPaginationGetAsync<TKey, TValue>(string project, string container, TKey key, int numberPage, int sizePage, CancellationToken cancellationToken = default)
+        public override async Task<(bool isSuccessful, IPaginationResponse<TValue> pagination)> TryPaginationGetAsync<TKey, TValue>(string project, string container, TKey key, IPaginationRequest request, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -343,16 +353,23 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var database = _connectionMultiplexer.GetDatabase();
                 var keyHash = GetKeyHash(project, container, key);
 
-                int startIndex = (numberPage - 1) * sizePage;
-                int endIndex = numberPage * sizePage - 1;
+                int startIndex = (request.NumberPage - 1) * request.SizePage;
+                int endIndex = request.NumberPage * request.SizePage - 1;
 
                 var redisValues = await database.ListRangeAsync(keyHash, startIndex, endIndex);
                 var values = redisValues.Where(x => x.HasValue)
-                                        .Select(x => JsonSerializer.Deserialize<TValue>(x.ToString()));
+                                        .Select(x => JsonSerializer.Deserialize<TValue>(x.ToString()))
+                                        .ToList();
 
                 var totalCount = await database.ListLengthAsync(keyHash);
 
-                return (true, values, (int)totalCount);
+                var pagination = new PaginationResponse<TValue>()
+                {
+                    TotalCount = (int)totalCount,
+                    Values = values
+                };
+
+                return (true, pagination);
             }
             catch (Exception)
             {
