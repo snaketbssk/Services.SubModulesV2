@@ -2,7 +2,7 @@
 
 namespace Services.SubModules.LogicLayers.Models.Responses
 {
-    public interface ICurrencyResponse<T> : IBaseTable<T>
+    public interface ICurrencyResponse : IBaseTable<Guid>
     {
         string? Code { get; set; }
 
@@ -11,5 +11,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses
         int? Number { get; set; }
 
         string? Name { get; set; }
+
+        bool Enable { get; set; }
     }
 }

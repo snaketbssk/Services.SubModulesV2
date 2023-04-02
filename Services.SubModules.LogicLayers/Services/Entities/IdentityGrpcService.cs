@@ -27,6 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
+
         public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<AuthenticationIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try

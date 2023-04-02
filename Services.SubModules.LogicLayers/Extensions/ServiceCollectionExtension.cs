@@ -53,7 +53,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<ICryptoService, CryptoService>();
             serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // Transient services
+            // Scoped services
             serviceCollection.AddScoped<IIdentityGrpcService, IdentityGrpcService>();
             serviceCollection.AddScoped<IMailerGrpcService, MailerGrpcService>();
             serviceCollection.AddScoped<IStorageGrpcService, StorageGrpcService>();
@@ -61,6 +61,8 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<INotificationsGrpcService, NotificationsGrpcService>();
             serviceCollection.AddScoped<IUserAgentService, UserAgentService>();
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
+            //
+            serviceCollection.AddScoped<ICommonService, CommonService>();
             //
             //serviceCollection.AddInterfacesAndImplementationsToServiceCollection(type => type.Name.EndsWith("Repository"));
             //

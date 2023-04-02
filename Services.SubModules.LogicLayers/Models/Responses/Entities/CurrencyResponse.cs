@@ -2,7 +2,7 @@
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
-    public class CurrencyResponse : BaseTable<Guid>, ICurrencyResponse<Guid>
+    public class CurrencyResponse : BaseTable<Guid>, ICurrencyResponse
     {
         public string? Code { get; set; }
 
@@ -11,5 +11,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public int? Number { get; set; }
 
         public string? Name { get; set; }
+
+        public bool Enable { get; set; }
     }
 }

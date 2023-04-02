@@ -54,6 +54,8 @@ namespace Services.SubModules.LogicLayers.Profiles.Entities
                                              .ReverseMap()
                                              .ForMember(d => d.Type, o => o.MapFrom(s => s.Type))
                                              .ForMember(d => d.Value, o => o.MapFrom(s => s.Value));
+
+            CreateMap<CurrencyResponse, CurrencyCommonGrpcResponse>().ReverseMap();
         }
     }
 }
