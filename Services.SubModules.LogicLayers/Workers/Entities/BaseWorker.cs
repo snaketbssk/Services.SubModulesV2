@@ -97,11 +97,35 @@ namespace Services.SubModules.LogicLayers.Workers.Entities
                 {
                     Exception(exception);
                 }
+
+                try
+                {
+                    if (isIncrementSeconds || isExecute)
+                        await RunAsync(serviceScope, cancellationToken);
+                }
+                catch (Exception exception)
+                {
+                    Exception(exception);
+                }
+
+                try
+                {
+                    await AfterAsync(serviceScope, cancellationToken);
+                }
+                catch (Exception exception)
+                {
+                    Exception(exception);
+                }
             }
         }
 
         protected abstract Task<bool> IsExecuteAsync(IServiceScope serviceScope, CancellationToken cancellationToken);
 
         protected abstract Task RunAsync(IServiceScope serviceScope, CancellationToken cancellationToken);
+
+        protected virtual Task AfterAsync(IServiceScope serviceScope, CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
+        }
     }
 }
