@@ -12,7 +12,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             Outgoing = new OneValueRepositoryCache<bool>(cacheService,
                                                      nameof(TelegramCacheService),
                                                      nameof(Outgoing),
-                                                     TimeSpan.FromMinutes(1));
+                                                     TimeSpan.FromMinutes(2));
         }
     }
 }
