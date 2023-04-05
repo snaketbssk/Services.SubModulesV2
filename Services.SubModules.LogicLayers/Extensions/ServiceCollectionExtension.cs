@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
+using Services.SubModules.LogicLayers.Consumers;
 using Services.SubModules.LogicLayers.Profiles;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
@@ -116,6 +118,38 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSingleton<IStorageCacheService, StorageCacheService>();
             serviceCollection.AddSingleton<ITelegramCacheService, TelegramCacheService>();
             serviceCollection.AddSingleton<ICommonCacheService, CommonCacheService>();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddMassTransit(this IServiceCollection serviceCollection)
+        {
+            var root = RabbitMQEnvironmentConfiguration<RabbitMQEnvironmentRoot>.Instance.GetRoot();
+            var host = $"rabbitmq://{root.HOST}:{root.PORT_5672}";
+
+            var serviceConsumer = typeof(IServiceConsumer);
+            var serviceConsumers = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => serviceConsumer.IsAssignableFrom(x))
+                .Where(x => x.Name != serviceConsumer.Name)
+                .ToArray();
+
+            serviceCollection.AddMassTransit(config =>
+            {
+                foreach (var x in serviceConsumers)
+                    config.AddConsumer(x);
+
+                config.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(host, h =>
+                    {
+                        h.Username(root.DEFAULT_USER);
+                        h.Password(root.DEFAULT_PASS);
+                    });
+
+                    cfg.ConfigureEndpoints(ctx);
+                });
+            });
 
             return serviceCollection;
         }

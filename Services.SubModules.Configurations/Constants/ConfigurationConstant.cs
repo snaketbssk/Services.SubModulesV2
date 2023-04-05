@@ -25,6 +25,7 @@
         public const string DATABASE_ENVIRONMENT = "DATABASE_";
         public const string ASPNETCORE_ENVIRONMENT = "ASPNETCORE_";
         public const string SERILOG_ENVIRONMENT = "SERILOG_";
+        public const string RABBITMQ_ENVIRONMENT = "RABBITMQ_";
         public const string SECURITY_ENVIRONMENT = "SECURITY_";
         public const string GRPC_ENVIRONMENT = "GRPC_";
         public const string LOCALIZATION_ENVIRONMENT = "LOCALIZATION_";
