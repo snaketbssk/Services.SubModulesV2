@@ -122,22 +122,58 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddMassTransit(this IServiceCollection serviceCollection)
-        {
-            var root = RabbitMQEnvironmentConfiguration<RabbitMQEnvironmentRoot>.Instance.GetRoot();
-            var host = $"rabbitmq://{root.HOST}:{root.PORT_5672}";
+        //public static IServiceCollection AddMassTransit2(this IServiceCollection serviceCollection, IEnumerable<IConfigurationConsumer<object>>? serviceConsumer = default)
+        //{
+        //    if (serviceConsumer is not null && serviceConsumer.Any())
+        //    {
+        //        foreach (var x in serviceConsumer)
+        //        {
+        //            var aaa = x.GetType();
+        //        }
+        //    }
 
-            var serviceConsumer = typeof(IServiceConsumer);
-            var serviceConsumers = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => serviceConsumer.IsAssignableFrom(x))
-                .Where(x => x.Name != serviceConsumer.Name)
-                .ToArray();
+        //    var root = RabbitMqEnvironmentConfiguration<RabbitMqEnvironmentRoot>.Instance.GetRoot();
+        //    var host = $"rabbitmq://{root.HOST}:{root.PORT_5672}";
+
+        //    serviceCollection.AddMassTransit(config =>
+        //    {
+        //        if (serviceConsumer is not null && serviceConsumer.Any())
+        //            foreach (var x in serviceConsumer)
+        //                config.AddConsumer(x.GetType());
+
+        //        config.UsingRabbitMq((ctx, cfg) =>
+        //        {
+        //            cfg.Host(host, h =>
+        //            {
+        //                h.Username(root.DEFAULT_USER);
+        //                h.Password(root.DEFAULT_PASS);
+        //            });
+
+        //            if (serviceConsumer is not null && serviceConsumer.Any())
+        //                foreach (var x in serviceConsumer)
+        //                    cfg.ReceiveEndpoint(x.QueueName, e =>
+        //                    {
+        //                        e.ConfigureConsumer(ctx, x.GetType());
+        //                        e.PrefetchCount = 16;
+        //                        e.UseConcurrencyLimit(1);
+        //                        e.UseRetry(configure => configure.Interval(x.RetryCount, x.Interval));
+        //                    });
+        //        });
+        //    });
+
+        //    return serviceCollection;
+        //}
+
+        public static IServiceCollection AddRabbitMqMassTransit(this IServiceCollection serviceCollection, params IConfigurationConsumer[] configurationConsumers)
+        {
+            var root = RabbitMqEnvironmentConfiguration<RabbitMqEnvironmentRoot>.Instance.GetRoot();
+            var host = $"{root.TYPE}://{root.HOST}:{root.PORT_5672}";
 
             serviceCollection.AddMassTransit(config =>
             {
-                foreach (var x in serviceConsumers)
-                    config.AddConsumer(x);
+                if (configurationConsumers is not null && configurationConsumers.Any())
+                    foreach (var x in configurationConsumers)
+                        config.AddConsumer(x.TypeConsumer);
 
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
@@ -147,7 +183,15 @@ namespace Services.SubModules.LogicLayers.Extensions
                         h.Password(root.DEFAULT_PASS);
                     });
 
-                    cfg.ConfigureEndpoints(ctx);
+                    if (configurationConsumers is not null && configurationConsumers.Any())
+                        foreach (var x in configurationConsumers)
+                            cfg.ReceiveEndpoint(x.TypeMessage.Name, e =>
+                            {
+                                e.ConfigureConsumer(ctx, x.TypeConsumer);
+                                e.PrefetchCount = x.PrefetchCount;
+                                e.UseConcurrencyLimit(x.ConcurrencyLimit);
+                                e.UseRetry(configure => configure.Interval(x.RetryCount, x.Interval));
+                            });
                 });
             });
 
@@ -234,11 +278,16 @@ namespace Services.SubModules.LogicLayers.Extensions
             }
             return serviceCollection;
         }
-        public static IServiceCollection AddDbContext<T>(this IServiceCollection serviceCollection, string? connectionString) where T : DbContext
+        public static IServiceCollection AddDbContext<T>(this IServiceCollection serviceCollection) where T : DbContext
         {
+            var root = ServiceEnvironmentConfiguration<DatabaseEnvironmentRoot>.Instance.GetRoot();
+
+            ArgumentNullException.ThrowIfNull(root);
+            ArgumentException.ThrowIfNullOrEmpty(root.DATABASE_CONNECTION);
+
             serviceCollection.AddDbContext<T>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(root.DATABASE_CONNECTION);
             });
             return serviceCollection;
         }
