@@ -63,6 +63,14 @@ namespace Services.SubModules.LogicLayers.Extensions
         {
             var rootAspNetCore = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
             var rootSerilog = SerilogEnvironmentConfiguration<SerilogEnvironmentRoot>.Instance.GetRoot();
+            ArgumentNullException.ThrowIfNull(rootAspNetCore, nameof(rootAspNetCore));
+
+            ArgumentNullException.ThrowIfNull(rootSerilog, nameof(rootSerilog));
+            ArgumentNullException.ThrowIfNull(rootSerilog.FILE_PATH, nameof(rootSerilog.FILE_PATH));
+            ArgumentNullException.ThrowIfNull(rootSerilog.CONSOLE_LEVEL, nameof(rootSerilog.CONSOLE_LEVEL));
+            ArgumentNullException.ThrowIfNull(rootSerilog.FILE_LEVEL, nameof(rootSerilog.FILE_LEVEL));
+            ArgumentNullException.ThrowIfNull(rootSerilog.SEQ_HOST, nameof(rootSerilog.SEQ_HOST));
+            ArgumentNullException.ThrowIfNull(rootSerilog.SEQ_LEVEL, nameof(rootSerilog.SEQ_LEVEL));
 
             hostBuilder.UseSerilog((hostBuilderContext, loggerConfiguration) =>
             {
@@ -72,7 +80,7 @@ namespace Services.SubModules.LogicLayers.Extensions
                 var path = Path.Combine(baseDirectory, nameFile);
 
                 loggerConfiguration
-                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
+                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Information)
                     .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)rootSerilog.CONSOLE_LEVEL,
                                      theme: AnsiConsoleTheme.Code)
                     .WriteTo.File(path: path,
