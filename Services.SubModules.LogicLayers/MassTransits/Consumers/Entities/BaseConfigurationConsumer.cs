@@ -1,15 +1,13 @@
 ﻿using MassTransit;
+using Services.SubModules.LogicLayers.MassTransits.Entities;
 
-namespace Services.SubModules.LogicLayers.Consumers.Entities
+namespace Services.SubModules.LogicLayers.MassTransits.Consumers.Entities
 {
-    public abstract class BaseConfigurationConsumer<TMessage, TConsumer> : IConfigurationConsumer
+    public abstract class BaseConfigurationConsumer<TMessage, TConsumer>
+        : BaseMassTransit<TMessage, TConsumer>, IConfigurationConsumer
         where TMessage : class
         where TConsumer : IConsumer<TMessage>
     {
-        public Type TypeConsumer => typeof(TConsumer);
-
-        public Type TypeMessage => typeof(TMessage);
-
         public abstract int RetryCount { get; }
 
         public abstract int PrefetchCount { get; }

@@ -10,7 +10,7 @@ using Services.SubModules.LogicLayers.Authentications.Claims;
 using Services.SubModules.LogicLayers.Authentications.Handlers.Entities;
 using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Constants;
-using Services.SubModules.LogicLayers.Consumers;
+using Services.SubModules.LogicLayers.MassTransits.Consumers;
 using Services.SubModules.LogicLayers.Profiles;
 using Services.SubModules.LogicLayers.Services;
 using Services.SubModules.LogicLayers.Services.Entities;
@@ -19,7 +19,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfiguration(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims = default)
+        public static IServiceCollection AddConfigurationApi(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims = default)
         {
             if (claims is null)
                 claims = new Dictionary<string, HashSet<string>>();
@@ -48,14 +48,34 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper();
             serviceCollection.AddHttpClient();
-            // Singleton services
-            serviceCollection.AddSingleton<ITokenService, TokenService>();
-            serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
-            serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
-            serviceCollection.AddSingleton<ICryptoService, CryptoService>();
-            serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
-            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // Scoped services
+            serviceCollection.AddConfigurationTransientSubmodules();
+            serviceCollection.AddConfigurationScopedSubmodules();
+            serviceCollection.AddConfigurationSingletonSubmodules();
+            //
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddConfigurationWorker(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddCache();
+            serviceCollection.AddMemoryCache();
+            serviceCollection.AddAutoMapper();
+            serviceCollection.AddHttpClient();
+            serviceCollection.AddConfigurationTransientSubmodules();
+            serviceCollection.AddConfigurationScopedSubmodules();
+            serviceCollection.AddConfigurationSingletonSubmodules();
+            //
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddConfigurationTransientSubmodules(this IServiceCollection serviceCollection)
+        {
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddConfigurationScopedSubmodules(this IServiceCollection serviceCollection)
+        {
             serviceCollection.AddScoped<IIdentityGrpcService, IdentityGrpcService>();
             serviceCollection.AddScoped<IMailerGrpcService, MailerGrpcService>();
             serviceCollection.AddScoped<IStorageGrpcService, StorageGrpcService>();
@@ -64,11 +84,21 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<ICommonGrpcService, CommonGrpcService>();
             serviceCollection.AddScoped<IUserAgentService, UserAgentService>();
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
-            //
             serviceCollection.AddScoped<ICommonService, CommonService>();
-            //
-            //serviceCollection.AddInterfacesAndImplementationsToServiceCollection(type => type.Name.EndsWith("Repository"));
-            //
+            serviceCollection.AddScoped<IBusService, BusService>();
+
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddConfigurationSingletonSubmodules(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddSingleton<ITokenService, TokenService>();
+            serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
+            serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
+            serviceCollection.AddSingleton<ICryptoService, CryptoService>();
+            serviceCollection.AddSingleton<ILocalizationService, LocalizationService>();
+            serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             return serviceCollection;
         }
 
@@ -122,48 +152,6 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        //public static IServiceCollection AddMassTransit2(this IServiceCollection serviceCollection, IEnumerable<IConfigurationConsumer<object>>? serviceConsumer = default)
-        //{
-        //    if (serviceConsumer is not null && serviceConsumer.Any())
-        //    {
-        //        foreach (var x in serviceConsumer)
-        //        {
-        //            var aaa = x.GetType();
-        //        }
-        //    }
-
-        //    var root = RabbitMqEnvironmentConfiguration<RabbitMqEnvironmentRoot>.Instance.GetRoot();
-        //    var host = $"rabbitmq://{root.HOST}:{root.PORT_5672}";
-
-        //    serviceCollection.AddMassTransit(config =>
-        //    {
-        //        if (serviceConsumer is not null && serviceConsumer.Any())
-        //            foreach (var x in serviceConsumer)
-        //                config.AddConsumer(x.GetType());
-
-        //        config.UsingRabbitMq((ctx, cfg) =>
-        //        {
-        //            cfg.Host(host, h =>
-        //            {
-        //                h.Username(root.DEFAULT_USER);
-        //                h.Password(root.DEFAULT_PASS);
-        //            });
-
-        //            if (serviceConsumer is not null && serviceConsumer.Any())
-        //                foreach (var x in serviceConsumer)
-        //                    cfg.ReceiveEndpoint(x.QueueName, e =>
-        //                    {
-        //                        e.ConfigureConsumer(ctx, x.GetType());
-        //                        e.PrefetchCount = 16;
-        //                        e.UseConcurrencyLimit(1);
-        //                        e.UseRetry(configure => configure.Interval(x.RetryCount, x.Interval));
-        //                    });
-        //        });
-        //    });
-
-        //    return serviceCollection;
-        //}
-
         public static IServiceCollection AddRabbitMqMassTransit(this IServiceCollection serviceCollection, params IConfigurationConsumer[] configurationConsumers)
         {
             var root = RabbitMqEnvironmentConfiguration<RabbitMqEnvironmentRoot>.Instance.GetRoot();
@@ -185,7 +173,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 
                     if (configurationConsumers is not null && configurationConsumers.Any())
                         foreach (var x in configurationConsumers)
-                            cfg.ReceiveEndpoint(x.TypeMessage.Name, e =>
+                            cfg.ReceiveEndpoint(x.QueuePath, e =>
                             {
                                 e.ConfigureConsumer(ctx, x.TypeConsumer);
                                 e.PrefetchCount = x.PrefetchCount;
