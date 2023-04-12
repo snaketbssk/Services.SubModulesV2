@@ -2,12 +2,12 @@
 {
     public interface IConfigurationConsumer : IBaseMassTransit
     {
-        int RetryCount { get; }
+        int? RetryCount { get; }
 
-        int PrefetchCount { get; }
+        int? PrefetchCount { get; }
 
-        int ConcurrencyLimit { get; }
+        int? ConcurrencyLimit { get; }
 
-        TimeSpan Interval { get; }
+        TimeSpan? Interval { get; }
     }
 }

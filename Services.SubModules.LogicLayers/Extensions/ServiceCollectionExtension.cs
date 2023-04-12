@@ -152,12 +152,13 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddRabbitMqMassTransit(this IServiceCollection serviceCollection, params IConfigurationConsumer[] configurationConsumers)
+        public static IServiceCollection AddRabbitMqMassTransit<TBus>(this IServiceCollection serviceCollection, params IConfigurationConsumer[] configurationConsumers)
+            where TBus : class, IBus
         {
             var root = RabbitMqEnvironmentConfiguration<RabbitMqEnvironmentRoot>.Instance.GetRoot();
             var host = $"{root.TYPE}://{root.HOST}:{root.PORT_5672}";
 
-            serviceCollection.AddMassTransit(config =>
+            serviceCollection.AddMassTransit<TBus>(config =>
             {
                 if (configurationConsumers is not null && configurationConsumers.Any())
                     foreach (var x in configurationConsumers)
@@ -176,9 +177,12 @@ namespace Services.SubModules.LogicLayers.Extensions
                             cfg.ReceiveEndpoint(x.QueuePath, e =>
                             {
                                 e.ConfigureConsumer(ctx, x.TypeConsumer);
-                                e.PrefetchCount = x.PrefetchCount;
-                                e.UseConcurrencyLimit(x.ConcurrencyLimit);
-                                e.UseRetry(configure => configure.Interval(x.RetryCount, x.Interval));
+                                if (x.PrefetchCount.HasValue)
+                                    e.PrefetchCount = x.PrefetchCount.Value;
+                                if (x.ConcurrencyLimit.HasValue)
+                                    e.UseConcurrencyLimit(x.ConcurrencyLimit.Value);
+                                if (x.RetryCount.HasValue && x.Interval.HasValue)
+                                    e.UseRetry(configure => configure.Interval(x.RetryCount.Value, x.Interval.Value));
                             });
                 });
             });

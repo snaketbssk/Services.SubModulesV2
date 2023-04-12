@@ -1,22 +1,22 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Services.SubModules.LogicLayers.MassTransits.Buses;
 using Services.SubModules.LogicLayers.MassTransits.Producers;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class BusService : BaseService, IBusService
     {
-        private readonly IBus _bus;
+        private readonly IServiceBus _bus;
 
-        public BusService(IHttpContextAccessor httpContextAccessor, IBus bus)
+        public BusService(IHttpContextAccessor httpContextAccessor, IServiceBus bus)
             : base(httpContextAccessor)
         {
             _bus = bus;
         }
 
-        public async Task SendAsync(IProducer containerConsumer, CancellationToken cancellationToken = default)
+        public async Task SendAsync(IProducer producer, CancellationToken cancellationToken = default)
         {
-            await containerConsumer.SendAsync(_bus, cancellationToken);
+            await producer.SendAsync(_bus, cancellationToken);
         }
     }
 }
