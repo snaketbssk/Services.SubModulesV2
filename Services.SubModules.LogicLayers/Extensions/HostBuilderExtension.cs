@@ -80,7 +80,7 @@ namespace Services.SubModules.LogicLayers.Extensions
                 var path = Path.Combine(baseDirectory, nameFile);
 
                 loggerConfiguration
-                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Information)
+                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore.Database.Command", LogEventLevel.Warning)
                     .WriteTo.Console(restrictedToMinimumLevel: (LogEventLevel)rootSerilog.CONSOLE_LEVEL,
                                      theme: AnsiConsoleTheme.Code)
                     .WriteTo.File(path: path,
