@@ -71,6 +71,15 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             return result;
         }
 
+        public virtual async Task<TEntity?> FirstOrDefaultAsync(IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default)
+        {
+            var queryable = GetQueryable();
+            var filterQueryable = filterRequest.Find(queryable);
+            var result = await filterQueryable.FirstOrDefaultAsync(cancellationToken);
+
+            return result;
+        }
+
         public virtual async Task<List<TEntity>> ToListAsync(IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default)
         {
             var queryable = GetQueryable();
