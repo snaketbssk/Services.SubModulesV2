@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Logging;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
@@ -32,31 +33,25 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
-        public async Task<MessageMailerGrpcResponse> ExecuteAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> SendMessageAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new MailerGrpc.MailerGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.SendMessageAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken: cancellationToken);
-                return result;
+                var result = await client.SendMessageAsync(request: request,
+                                                           headers: GetHeaders(),
+                                                           deadline: GetDeadline(),
+                                                           cancellationToken: cancellationToken);
+                return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "MailerGrpcService",
-                    path: "SendMessageAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new MessageMailerGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "MailerGrpcService",
+                                                     path: "SendMessageAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return false;
             }
         }
     }

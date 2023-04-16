@@ -17,8 +17,7 @@ message StorageFileGrpcRequest
 
 message StorageFileGrpcResponse
 {
-    bool isSuccess = 1;
-    string name = 2;
+    string name = 1;
 }
 
 message StorageFilesGrpcRequest
@@ -35,9 +34,8 @@ message StorageReadFileGrpcRequest {
 }
 
 message StorageReadFileGrpcResponse {
-    bool isSuccess = 1;
-    string name = 2;
-    bytes content = 3;
+    string name = 1;
+    bytes content = 2;
 }
 
 message StorageReadFilesGrpcRequest

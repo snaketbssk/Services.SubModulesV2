@@ -1,10 +1,11 @@
-﻿using Services.SubModules.LogicLayers.Models.Mappings;
+﻿using Google.Protobuf.WellKnownTypes;
+using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services
 {
     public interface IMailerGrpcService
     {
-        Task<MessageMailerGrpcResponse> ExecuteAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<bool> SendMessageAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }

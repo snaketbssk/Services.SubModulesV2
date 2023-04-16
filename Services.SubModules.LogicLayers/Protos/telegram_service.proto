@@ -1,11 +1,13 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "Services.SubModules.Protos";
 
 service TelegramGrpc {
-  rpc SendMessage (MessageTelegramGrpcRequest) returns (MessageTelegramGrpcResponse);
-  rpc SendMedia (MediaFilesGrpcRequest) returns (MediaFilesGrpcResponse);
-  rpc SendImages (MediaImagesGrpcRequest) returns (MediaImagesGrpcResponse);
+  rpc SendMessage (MessageTelegramGrpcRequest) returns (google.protobuf.Empty);
+  rpc SendMedia (MediaFilesGrpcRequest) returns (google.protobuf.Empty);
+  rpc SendImages (MediaImagesGrpcRequest) returns (google.protobuf.Empty);
 }
 
 message MessageTelegramGrpcRequest
@@ -14,11 +16,6 @@ message MessageTelegramGrpcRequest
     string language = 2;
     int64 date = 3;
     string data = 4;
-}
-
-message MessageTelegramGrpcResponse
-{
-    bool isSuccess = 1;
 }
 
 message MessageFileGrpcRequest
@@ -42,12 +39,4 @@ message MediaImagesGrpcRequest
 {
     MessageTelegramGrpcRequest message = 1;
     repeated MessageImageGrpcRequest images = 2;
-}
-
-message MediaFilesGrpcResponse {
-    bool isSuccess = 1;
-}
-
-message MediaImagesGrpcResponse {
-    bool isSuccess = 1;
 }

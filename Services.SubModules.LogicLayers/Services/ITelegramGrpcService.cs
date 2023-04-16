@@ -1,12 +1,13 @@
-﻿using Services.SubModules.LogicLayers.Models.Mappings;
+﻿using Google.Protobuf.WellKnownTypes;
+using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services
 {
     public interface ITelegramGrpcService
     {
-        Task<MessageTelegramGrpcResponse> ExecuteAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        Task<MediaFilesGrpcResponse> ExecuteAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        Task<MediaImagesGrpcResponse> ExecuteAsync(IMapping<MediaImagesGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<bool> SendMessageAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<bool> SendMediaAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<bool> SendImagesAsync(IMapping<MediaImagesGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }

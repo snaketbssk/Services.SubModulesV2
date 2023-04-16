@@ -26,12 +26,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public async Task<ICurrencyResponse> GetCurrencyAsync(IIdRequest request, CancellationToken cancellationToken = default)
         {
-            var (isSuccessful, result) = await _commonCacheService.HashCurrencies.TryGetAsync(request.Id, cancellationToken);
-            if (!isSuccessful)
+            var (cacheIsSuccessful, result) = await _commonCacheService.HashCurrencies.TryGetAsync(request.Id, cancellationToken);
+            if (!cacheIsSuccessful)
             {
                 var mapping = new CurrencyCommonGrpcRequestMapping(request.Id);
-                var currencyCommonGrpcResponse = await _commonGrpcService.ExecuteAsync(mapping, cancellationToken);
-                if (currencyCommonGrpcResponse.IsSuccess)
+                var (grpcIsSuccessful, currencyCommonGrpcResponse) = await _commonGrpcService.GetCurrencyAsync(mapping, cancellationToken);
+                if (grpcIsSuccessful)
                     result = _mapper.Map<CurrencyResponse>(currencyCommonGrpcResponse);
             }
 
@@ -40,12 +40,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public async Task<IEnumerable<ICurrencyResponse>> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
-            var (isSuccessful, result) = await _commonCacheService.PaginationCurrencies.TryGetAllAsync(cancellationToken);
-            if (!isSuccessful)
+            var (cacheIsSuccessful, result) = await _commonCacheService.PaginationCurrencies.TryGetAllAsync(cancellationToken);
+            if (!cacheIsSuccessful)
             {
-                var mapping = new CurrenciesCommonGrpcRequestMapping();
-                var currenciesCommonGrpcResponse = await _commonGrpcService.ExecuteAsync(mapping, cancellationToken);
-                if (currenciesCommonGrpcResponse.IsSuccess)
+                var (grpcIsSuccessful, currenciesCommonGrpcResponse) = await _commonGrpcService.GetCurrenciesAsync(cancellationToken);
+                if (grpcIsSuccessful && currenciesCommonGrpcResponse is not null)
                     result = _mapper.Map<List<CurrencyResponse>>(currenciesCommonGrpcResponse.Values);
             }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Logging;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
@@ -24,7 +25,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _commonCacheService = commonCacheService;
         }
 
-        public async Task<CurrencyCommonGrpcResponse> ExecuteAsync(IMapping<CurrencyCommonGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, CurrencyCommonGrpcResponse?)> GetCurrencyAsync(IMapping<CurrencyCommonGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -35,7 +36,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                     headers: GetHeaders(),
                     deadline: GetDeadline(),
                     cancellationToken);
-                return result;
+                return (true, result);
             }
             catch (Exception exception)
             {
@@ -43,26 +44,22 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                      path: nameof(CommonGrpc.CommonGrpcClient.GetCurrencyAsync),
                                                      exception: exception,
                                                      cancellationToken);
-                var result = new CurrencyCommonGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                return (false, default);
             }
         }
 
-        public async Task<CurrenciesCommonGrpcResponse> ExecuteAsync(IMapping<CurrenciesCommonGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, CurrenciesCommonGrpcResponse?)> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
-                var request = mapping.Map();
+                var request = new Empty();
                 var result = await client.GetCurrenciesAsync(
                     request: request,
                     headers: GetHeaders(),
                     deadline: GetDeadline(),
                     cancellationToken);
-                return result;
+                return (true, result);
             }
             catch (Exception exception)
             {
@@ -70,11 +67,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                      path: nameof(CommonGrpc.CommonGrpcClient.GetCurrenciesAsync),
                                                      exception: exception,
                                                      cancellationToken);
-                var result = new CurrenciesCommonGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                return (false, default);
             }
         }
     }

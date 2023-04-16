@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Logging;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
@@ -28,84 +29,69 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
-        public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<AuthenticationIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, UserIdentityGrpcResponse?)> AuthenticationAsync(IMapping<AuthenticationIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.AuthenticationAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.AuthenticationAsync(request: request,
+                                                              headers: GetHeaders(),
+                                                              deadline: GetDeadline(),
+                                                              cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "IdentityGrpcService",
-                    path: "AuthenticationAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new UserIdentityGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
+                                                     path: "AuthenticationAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
 
-        public async Task<UserIdentityGrpcResponse> ExecuteAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, UserIdentityGrpcResponse?)> GetUserAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.GetUserAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.GetUserAsync(request: request,
+                                                       headers: GetHeaders(),
+                                                       deadline: GetDeadline(),
+                                                       cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "IdentityGrpcService",
-                    path: "GetUserAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new UserIdentityGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
+                                                     path: "GetUserAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
 
-        public async Task<EmptyIdentityGrpcResponse> ExecuteAsync(IMapping<AddRolesUserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> AddRolesToUserAsync(IMapping<AddRolesUserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.AddRolesToUserAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.AddRolesToUserAsync(request: request,
+                                                              headers: GetHeaders(),
+                                                              deadline: GetDeadline(),
+                                                              cancellationToken);
+                return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "IdentityGrpcService",
-                    path: "AddRolesToUser",
-                    exception: exception,
-                    cancellationToken);
-                var result = new EmptyIdentityGrpcResponse() { IsSuccess = false };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
+                                                     path: "AddRolesToUser",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return false;
             }
         }
     }

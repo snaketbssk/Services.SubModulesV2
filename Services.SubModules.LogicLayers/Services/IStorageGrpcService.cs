@@ -5,9 +5,9 @@ namespace Services.SubModules.LogicLayers.Services
 {
     public interface IStorageGrpcService
     {
-        Task<StorageFileGrpcResponse> ExecuteAsync(IMapping<StorageFileGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        Task<StorageFilesGrpcResponse> ExecuteAsync(IMapping<StorageFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        Task<StorageReadFilesGrpcResponse> ExecuteAsync(IMapping<StorageReadFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        Task<StorageReadFileGrpcResponse> ExecuteAsync(IMapping<StorageReadFileGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<(bool isSuccessful, StorageFileGrpcResponse?)> SendFileAsync(IMapping<StorageFileGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<(bool isSuccessful, StorageFilesGrpcResponse?)> SendFilesAsync(IMapping<StorageFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<(bool isSuccessful, StorageReadFilesGrpcResponse?)> GetFilesAsync(IMapping<StorageReadFilesGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<(bool isSuccessful, StorageReadFileGrpcResponse?)> GetFileAsync(IMapping<StorageReadFileGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }

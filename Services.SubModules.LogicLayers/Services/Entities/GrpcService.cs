@@ -13,8 +13,10 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         private readonly ITokenService _tokenService;
         public HttpClientHandler HttpClientHandler { get; private set; }
         public GrpcChannel GrpcChannel { get; private set; }
-        public GrpcService(string url, ITokenService tokenService)
+        public GrpcService(string? url, ITokenService tokenService)
         {
+            ArgumentException.ThrowIfNullOrEmpty(url, nameof(url));
+
             _tokenService = tokenService;
             HttpClientHandler = new HttpClientHandler
             {
@@ -33,13 +35,6 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             var claims = new List<Claim>();
 
             claims.Add(new Claim(ClaimConstant.ROLE, RoleConstant.SERVICE));
-
-            //var serviceTypeClaim = nameof(TypeClaim.Service);
-            //foreach (var valueClaim in Enum.GetNames(typeof(ValueClaim)))
-            //{
-            //    var claim = new Claim(serviceTypeClaim, valueClaim);
-            //    claims.Add(claim);
-            //}
 
             var token = _tokenService.GenerateToken(claims);
             result.Add(HeaderConstant.AUTHORIZATION, $"{JwtBearerDefaults.AuthenticationScheme} {token}");

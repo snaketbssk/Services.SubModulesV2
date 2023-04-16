@@ -23,6 +23,10 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             try
             {
                 var root = RedisEnvironmentConfiguration<RedisEnvironmentRoot>.Instance.GetRoot();
+
+                ArgumentNullException.ThrowIfNull(root, nameof(root));
+                ArgumentNullException.ThrowIfNull(root.CONNECTION, nameof(root.CONNECTION));
+
                 var connectionMultiplexer = ConnectionMultiplexer.Connect(root.CONNECTION);
                 var result = new RedisCacheService(connectionMultiplexer);
 

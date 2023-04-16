@@ -1,4 +1,5 @@
-﻿using Services.SubModules.Configurations.Entities.Environments;
+﻿using Google.Protobuf.WellKnownTypes;
+using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
@@ -18,87 +19,69 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         {
             _exceptionService = exceptionService;
         }
-        public async Task<EmptyNotificationsGrpcResponse> ExecuteAsync(IMapping<AddSuccessNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> AddSuccessNotificationAsync(IMapping<AddSuccessNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.AddSuccessNotificationAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.AddSuccessNotificationAsync(request: request,
+                                                                      headers: GetHeaders(),
+                                                                      deadline: GetDeadline(),
+                                                                      cancellationToken);
+                return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "NotificationsGrpcService",
-                    path: "AddSuccessNotificationAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new EmptyNotificationsGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
+                                                     path: "AddSuccessNotificationAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return false;
             }
         }
 
-        public async Task<EmptyNotificationsGrpcResponse> ExecuteAsync(IMapping<AddWarningNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> AddWarningNotificationAsync(IMapping<AddWarningNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.AddWarningNotificationAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.AddWarningNotificationAsync(request: request,
+                                                                      headers: GetHeaders(),
+                                                                      deadline: GetDeadline(),
+                                                                      cancellationToken);
+                return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "NotificationsGrpcService",
-                    path: "AddWarningNotificationAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new EmptyNotificationsGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
+                                                     path: "AddWarningNotificationAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return false;
             }
         }
 
-        public async Task<EmptyNotificationsGrpcResponse> ExecuteAsync(IMapping<AddErrorNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> AddErrorNotificationAsync(IMapping<AddErrorNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.AddErrorNotificationAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.AddErrorNotificationAsync(request: request,
+                                                                    headers: GetHeaders(),
+                                                                    deadline: GetDeadline(),
+                                                                    cancellationToken);
+                return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "NotificationsGrpcService",
-                    path: "AddErrorNotificationAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new EmptyNotificationsGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
+                                                     path: "AddErrorNotificationAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return false;
             }
         }
     }

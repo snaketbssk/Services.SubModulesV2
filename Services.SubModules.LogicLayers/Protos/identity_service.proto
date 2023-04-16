@@ -1,16 +1,13 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "Services.SubModules.Protos";
 
 service IdentityGrpc {
 	rpc GetUser (UserIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
-	rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (EmptyIdentityGrpcResponse);
+	rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (google.protobuf.Empty);
 	rpc Authentication (AuthenticationIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
-}
-
-message EmptyIdentityGrpcResponse 
-{
-	bool isSuccess = 1;
 }
 
 message UserIdentityGrpcRequest
@@ -20,16 +17,15 @@ message UserIdentityGrpcRequest
 
 message UserIdentityGrpcResponse
 {
-	bool isSuccess = 1;
-	string id = 2;
-	string login = 3;
-	string email = 4;
-	bool confirmedEmail = 5;
-	string phoneNumber = 6;
-	bool confirmedPhoneNumber = 7;
-	bool twoFactorEnabled = 8;
-	repeated RoleIdentityGrpcResponse roles = 9;
-	repeated ClaimRoleIdentityGrpcResponse claims = 10;
+	string id = 1;
+	string login = 2;
+	string email = 3;
+	bool confirmedEmail = 4;
+	string phoneNumber = 5;
+	bool confirmedPhoneNumber = 6;
+	bool twoFactorEnabled = 7;
+	repeated RoleIdentityGrpcResponse roles = 8;
+	repeated ClaimRoleIdentityGrpcResponse claims = 9;
 }
 
 message RoleIdentityGrpcResponse 

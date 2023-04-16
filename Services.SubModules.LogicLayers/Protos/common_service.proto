@@ -1,10 +1,12 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "Services.SubModules.Protos";
 
 service CommonGrpc {
 	rpc GetCurrency (CurrencyCommonGrpcRequest) returns (CurrencyCommonGrpcResponse);
-	rpc GetCurrencies (CurrenciesCommonGrpcRequest) returns (CurrenciesCommonGrpcResponse);
+	rpc GetCurrencies (google.protobuf.Empty) returns (CurrenciesCommonGrpcResponse);
 }
 
 message CurrencyCommonGrpcRequest
@@ -14,21 +16,15 @@ message CurrencyCommonGrpcRequest
 
 message CurrencyCommonGrpcResponse
 {
-	bool isSuccess = 1;
-	string id = 2;
-	string code = 3;
-	string symbol = 4;
-	int32 number = 5;
-	string name = 6;
-	bool enable = 7;
-}
-
-message CurrenciesCommonGrpcRequest
-{
+	string id = 1;
+	string code = 2;
+	string symbol = 3;
+	int32 number = 4;
+	string name = 5;
+	bool enable = 6;
 }
 
 message CurrenciesCommonGrpcResponse
 {
-	bool isSuccess = 1;
-	repeated CurrencyCommonGrpcResponse values = 2;
+	repeated CurrencyCommonGrpcResponse values = 1;
 }

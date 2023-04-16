@@ -1,14 +1,16 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "Services.SubModules.Protos";
 
 service NotificationsGrpc {
-	rpc AddSuccessNotification (AddSuccessNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
-	rpc AddWarningNotification (AddWarningNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
-	rpc AddErrorNotification (AddErrorNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
-	rpc AddSuccessGroupNotification (AddSuccessGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
-	rpc AddWarningGroupNotification (AddWarningGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
-	rpc AddErrorGroupNotification (AddErrorGroupNotificationsGrpcRequest) returns (EmptyNotificationsGrpcResponse);
+	rpc AddSuccessNotification (AddSuccessNotificationsGrpcRequest) returns (google.protobuf.Empty);
+	rpc AddWarningNotification (AddWarningNotificationsGrpcRequest) returns (google.protobuf.Empty);
+	rpc AddErrorNotification (AddErrorNotificationsGrpcRequest) returns (google.protobuf.Empty);
+	rpc AddSuccessGroupNotification (AddSuccessGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
+	rpc AddWarningGroupNotification (AddWarningGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
+	rpc AddErrorGroupNotification (AddErrorGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
 }
 
 message AddSuccessNotificationsGrpcRequest 
@@ -51,9 +53,4 @@ message AddErrorGroupNotificationsGrpcRequest
 	string nameGroup = 1;
 	string title = 2;
 	string content = 3;
-}
-
-message EmptyNotificationsGrpcResponse 
-{
-	bool isSuccess = 1;
 }

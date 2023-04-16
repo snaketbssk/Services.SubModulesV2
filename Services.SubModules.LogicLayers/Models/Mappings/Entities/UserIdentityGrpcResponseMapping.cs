@@ -4,7 +4,6 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
     public class UserIdentityGrpcResponseMapping : Mapping<UserIdentityGrpcResponse>
     {
-        public bool IsSuccess { get; set; }
         public Guid Id { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
@@ -14,7 +13,6 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public IEnumerable<RoleIdentityGrpcResponseMapping> Roles { get; set; }
         public IEnumerable<ClaimRoleIdentityGrpcResponseMapping> Claims { get; set; }
         public UserIdentityGrpcResponseMapping(
-            bool isSuccess,
             Guid id,
             string login,
             string email,
@@ -24,7 +22,6 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             IEnumerable<RoleIdentityGrpcResponseMapping> roles,
             IEnumerable<ClaimRoleIdentityGrpcResponseMapping> claims)
         {
-            IsSuccess = isSuccess;
             Id = id;
             Login = login;
             Email = email;
@@ -38,7 +35,6 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             var result = new UserIdentityGrpcResponse
             {
-                IsSuccess = IsSuccess,
                 Id = Id.ToString(),
                 Login = Login,
                 Email = Email,

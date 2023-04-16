@@ -36,8 +36,8 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var result = new List<Claim>();
             var decodeClaims = _tokenService.DecodeToken(token);
             var idUserTable = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
-            var (isSuccessful, value) = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
-            if (isSuccessful)
+            var (cacheIsSuccessful, value) = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
+            if (cacheIsSuccessful)
             {
                 var userAuthentication = new UserAuthentication(
                     id: value.Id,
@@ -52,15 +52,18 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             else
             {
                 var authenticationIdentityGrpcRequestMapping = new AuthenticationIdentityGrpcRequestMapping(token);
-                var response = await _identityGrpcService.ExecuteAsync(authenticationIdentityGrpcRequestMapping);
+                var (grpcIsSuccessful, response) = await _identityGrpcService.AuthenticationAsync(authenticationIdentityGrpcRequestMapping);
+                
+                if (!grpcIsSuccessful)
+                    throw new ArgumentException(nameof(grpcIsSuccessful));
+                ArgumentNullException.ThrowIfNull(response, nameof(response));
 
-                var userAuthentication = new UserAuthentication(
-                    id: Guid.Parse(response.Id),
-                    name: response.Login,
-                    email: response.Email,
-                    roles: new List<string>(),
-                    accessToken: token,
-                    language: "ru");
+                var userAuthentication = new UserAuthentication(id: Guid.Parse(response.Id),
+                                                                name: response.Login,
+                                                                email: response.Email,
+                                                                roles: new List<string>(),
+                                                                accessToken: token,
+                                                                language: "ru");
                 result.AddRange(userAuthentication.ToClaims());
                 result.AddRange(response.Claims.Select(x => new Claim(x.Type, x.Value)));
             }

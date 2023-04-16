@@ -1,9 +1,11 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "Services.SubModules.Protos";
 
 service MailerGrpc {
-  rpc SendMessage (MessageMailerGrpcRequest) returns (MessageMailerGrpcResponse);
+  rpc SendMessage (MessageMailerGrpcRequest) returns (google.protobuf.Empty);
 }
 
 message MessageMailerGrpcRequest
@@ -13,9 +15,4 @@ message MessageMailerGrpcRequest
     string address = 3;
     int64 date = 4;
     string data = 5;
-}
-
-message MessageMailerGrpcResponse
-{
-    bool isSuccess = 1;
 }

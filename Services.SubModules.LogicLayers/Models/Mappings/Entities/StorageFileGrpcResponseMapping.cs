@@ -4,18 +4,15 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
     public class StorageFileGrpcResponseMapping : Mapping<StorageFileGrpcResponse>
     {
-        public bool IsSuccess { get; set; }
         public string Name { get; set; }
-        public StorageFileGrpcResponseMapping(bool isSuccess, string name)
+        public StorageFileGrpcResponseMapping(string name)
         {
-            IsSuccess = isSuccess;
             Name = name;
         }
         public override StorageFileGrpcResponse Map()
         {
             var result = new StorageFileGrpcResponse
             {
-                IsSuccess = IsSuccess,
                 Name = Name
             };
             return result;

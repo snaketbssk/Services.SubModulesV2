@@ -27,108 +27,90 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
-        public async Task<StorageFileGrpcResponse> ExecuteAsync(IMapping<StorageFileGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, StorageFileGrpcResponse?)> SendFileAsync(IMapping<StorageFileGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.SendFileAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.SendFileAsync(request: request,
+                                                        headers: GetHeaders(),
+                                                        deadline: GetDeadline(),
+                                                        cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "StorageGrpcService",
-                    path: "SendFileAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new StorageFileGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
+                                                     path: "SendFileAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
-        public async Task<StorageFilesGrpcResponse> ExecuteAsync(IMapping<StorageFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, StorageFilesGrpcResponse?)> SendFilesAsync(IMapping<StorageFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.SendFilesAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.SendFilesAsync(request: request,
+                                                         headers: GetHeaders(),
+                                                         deadline: GetDeadline(),
+                                                         cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "StorageGrpcService",
-                    path: "SendFilesAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new StorageFilesGrpcResponse();
-                return result;
+                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
+                                                     path: "SendFilesAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
 
-        public async Task<StorageReadFileGrpcResponse> ExecuteAsync(IMapping<StorageReadFileGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, StorageReadFileGrpcResponse?)> GetFileAsync(IMapping<StorageReadFileGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.GetFileAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.GetFileAsync(request: request,
+                                                       headers: GetHeaders(),
+                                                       deadline: GetDeadline(),
+                                                       cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "StorageGrpcService",
-                    path: "GetFileAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new StorageReadFileGrpcResponse
-                {
-                    IsSuccess = false
-                };
-                return result;
+                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
+                                                     path: "GetFileAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
 
-        public async Task<StorageReadFilesGrpcResponse> ExecuteAsync(IMapping<StorageReadFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, StorageReadFilesGrpcResponse?)> GetFilesAsync(IMapping<StorageReadFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.GetFilesAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
-                return result;
+                var result = await client.GetFilesAsync(request: request,
+                                                        headers: GetHeaders(),
+                                                        deadline: GetDeadline(),
+                                                        cancellationToken);
+                return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(
-                    method: "StorageGrpcService",
-                    path: "GetFilesAsync",
-                    exception: exception,
-                    cancellationToken);
-                var result = new StorageReadFilesGrpcResponse();
-                return result;
+                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
+                                                     path: "GetFilesAsync",
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
             }
         }
     }

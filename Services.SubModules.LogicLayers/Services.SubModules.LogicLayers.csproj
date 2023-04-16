@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+	<Protobuf Include="Protos\types_service.proto" />
 	<Protobuf Include="Protos\notifications_service.proto" />
 	<Protobuf Include="Protos\identity_service.proto" />
 	<Protobuf Include="Protos\mailer_service.proto" />

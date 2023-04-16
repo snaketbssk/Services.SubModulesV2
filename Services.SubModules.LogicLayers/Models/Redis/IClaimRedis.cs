@@ -2,7 +2,7 @@
 {
     public interface IClaimRedis
     {
-        string Type { get; set; }
-        string Value { get; set; }
+        string? Type { get; set; }
+        string? Value { get; set; }
     }
 }
