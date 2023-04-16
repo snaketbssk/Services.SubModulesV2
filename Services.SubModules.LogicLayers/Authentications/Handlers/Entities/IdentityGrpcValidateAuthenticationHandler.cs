@@ -53,7 +53,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             {
                 var authenticationIdentityGrpcRequestMapping = new AuthenticationIdentityGrpcRequestMapping(token);
                 var (grpcIsSuccessful, response) = await _identityGrpcService.AuthenticationAsync(authenticationIdentityGrpcRequestMapping);
-                
+
                 if (!grpcIsSuccessful)
                     throw new ArgumentException(nameof(grpcIsSuccessful));
                 ArgumentNullException.ThrowIfNull(response, nameof(response));

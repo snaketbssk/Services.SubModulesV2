@@ -85,7 +85,6 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<IUserAgentService, UserAgentService>();
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
             serviceCollection.AddScoped<ICommonService, CommonService>();
-            serviceCollection.AddScoped<IBusService, BusService>();
 
             return serviceCollection;
         }
