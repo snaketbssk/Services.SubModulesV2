@@ -36,7 +36,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 IssuedAt = nowAt,
                 Audience = root.AUDIENCE,
                 Subject = new ClaimsIdentity(claims),
-                Expires = nowAt.AddDays(root.EXPIRE ?? 0),
+                Expires = nowAt.AddDays(root.EXPIRE ?? 1),
+                NotBefore = nowAt.AddMinutes(-1),
                 SigningCredentials = credentials
             };
             var tokenHandler = new JwtSecurityTokenHandler();
