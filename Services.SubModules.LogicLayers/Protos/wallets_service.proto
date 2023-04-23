@@ -10,6 +10,8 @@ service WalletsGrpc {
     rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc InstantlyWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc InstantlyUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc UpdateStateConfirmed (IdGrpcModel) returns (google.protobuf.Empty);
     rpc UpdateStateError (IdGrpcModel) returns (google.protobuf.Empty);
     rpc UpdateStateFrozen (IdGrpcModel) returns (google.protobuf.Empty);

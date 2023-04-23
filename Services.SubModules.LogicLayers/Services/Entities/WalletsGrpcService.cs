@@ -75,6 +75,30 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        public async Task<(bool isSuccessful, IdGrpcModel?)> InstantlyWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.InstantlyWalletAsync(request: request,
+                                                               headers: headers,
+                                                               deadline: deadline,
+                                                               cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
+                                                     path: nameof(InstantlyWalletAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
+
         public async Task<(bool isSuccessful, IdGrpcModel?)> CreditUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -117,6 +141,30 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
                                                      path: nameof(CreditWalletAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
+
+        public async Task<(bool isSuccessful, IdGrpcModel?)> InstantlyUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.InstantlyUserAsync(request: request,
+                                                             headers: headers,
+                                                             deadline: deadline,
+                                                             cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
+                                                     path: nameof(InstantlyUserAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);

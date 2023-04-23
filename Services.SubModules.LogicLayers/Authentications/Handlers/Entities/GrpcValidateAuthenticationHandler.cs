@@ -5,7 +5,6 @@ using Services.SubModules.LogicLayers.Authentications.SchemeOptions.Entities;
 using Services.SubModules.LogicLayers.Services;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Text.Json;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {
