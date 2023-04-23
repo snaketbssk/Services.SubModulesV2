@@ -47,25 +47,33 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public IEnumerable<Claim> DecodeToken(string token)
         {
-            var symmetricSecurityKey = GetSymmetricSecurityKey();
-            var handler = new JwtSecurityTokenHandler();
-            var root = SecurityEnvironmentConfiguration<SecurityEnvironmentRoot>.Instance.GetRoot();
-            handler.ValidateToken(
-                token,
-                new TokenValidationParameters
-                {
-                    IssuerSigningKey = symmetricSecurityKey,
-                    ValidIssuer = root.ISSUER,
-                    ValidateIssuer = false,
-                    ValidAudience = root.AUDIENCE,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
-                },
-                out var validateToken);
-            var jwtSecurityToken = (JwtSecurityToken)validateToken;
-            var result = GetClaims(jwtSecurityToken.Claims);
-            return result;
+            try
+            {
+                var symmetricSecurityKey = GetSymmetricSecurityKey();
+                var handler = new JwtSecurityTokenHandler();
+                var root = SecurityEnvironmentConfiguration<SecurityEnvironmentRoot>.Instance.GetRoot();
+                handler.ValidateToken(
+                    token,
+                    new TokenValidationParameters
+                    {
+                        IssuerSigningKey = symmetricSecurityKey,
+                        ValidIssuer = root.ISSUER,
+                        ValidateIssuer = false,
+                        ValidAudience = root.AUDIENCE,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    },
+                    out var validateToken);
+                var jwtSecurityToken = (JwtSecurityToken)validateToken;
+                var result = GetClaims(jwtSecurityToken.Claims);
+                return result;
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"token {token}");
+                throw;
+            }
         }
 
         private IEnumerable<Claim> GetClaims(IEnumerable<Claim> claims)
