@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-option csharp_namespace = "Services.SubModules.Protos";
-
 import "Protos/types_service.proto";
 
+option csharp_namespace = "Services.SubModules.Protos";
+
 service WalletsGrpc {
-    rpc CreditWallet (WalletTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
-    rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
-    rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
-    rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
+    rpc CreditWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
 }
 
 message WalletTransactionWalletsGrpcRequest
@@ -16,7 +16,7 @@ message WalletTransactionWalletsGrpcRequest
     string description = 1;
     string walletId = 2;
     string reference = 3;
-    DecimalValue amount = 4;
+    DecimalGrpcModel amount = 4;
 }
 
 message UserTransactionWalletsGrpcRequest
@@ -24,11 +24,6 @@ message UserTransactionWalletsGrpcRequest
     string description = 1;
     string userId = 2;
     string reference = 3;
-    DecimalValue amount = 4;
+    DecimalGrpcModel amount = 4;
     string currencyId = 5;
-}
-
-message TransactionWalletsGrpcResponse
-{
-    string id = 1;
 }

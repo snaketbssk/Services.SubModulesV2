@@ -3,7 +3,7 @@ using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
-    public class UserIdentityGrpcRequestMapping : Mapping<UserIdentityGrpcRequest>
+    public class UserIdentityGrpcRequestMapping : Mapping<IdGrpcModel>
     {
         public Guid Id { get; set; }
         public UserIdentityGrpcRequestMapping(Guid id)
@@ -14,16 +14,16 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             Id = idRequest.Id;
         }
-        public override UserIdentityGrpcRequest Map()
+        public override IdGrpcModel Map()
         {
-            var result = new UserIdentityGrpcRequest
+            var result = new IdGrpcModel
             {
                 Id = Id.ToString()
             };
             return result;
         }
 
-        public override UserIdentityGrpcRequest Update(UserIdentityGrpcRequest result)
+        public override IdGrpcModel Update(IdGrpcModel result)
         {
             throw new NotImplementedException();
         }

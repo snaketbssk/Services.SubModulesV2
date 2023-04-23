@@ -25,7 +25,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _commonCacheService = commonCacheService;
         }
 
-        public async Task<(bool isSuccessful, CurrencyCommonGrpcResponse?)> GetCurrencyAsync(IMapping<CurrencyCommonGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, CurrencyCommonGrpcResponse?)> GetCurrencyAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try
             {

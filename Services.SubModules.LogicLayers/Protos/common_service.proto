@@ -1,17 +1,13 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "Protos/types_service.proto";
 
 option csharp_namespace = "Services.SubModules.Protos";
 
 service CommonGrpc {
-	rpc GetCurrency (CurrencyCommonGrpcRequest) returns (CurrencyCommonGrpcResponse);
+	rpc GetCurrency (IdGrpcModel) returns (CurrencyCommonGrpcResponse);
 	rpc GetCurrencies (google.protobuf.Empty) returns (CurrenciesCommonGrpcResponse);
-}
-
-message CurrencyCommonGrpcRequest
-{
-	string id = 1;
 }
 
 message CurrencyCommonGrpcResponse

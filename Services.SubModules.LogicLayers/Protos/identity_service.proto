@@ -1,18 +1,14 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "Protos/types_service.proto";
 
 option csharp_namespace = "Services.SubModules.Protos";
 
 service IdentityGrpc {
-	rpc GetUser (UserIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
+	rpc GetUser (IdGrpcModel) returns (UserIdentityGrpcResponse);
 	rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (google.protobuf.Empty);
 	rpc Authentication (AuthenticationIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
-}
-
-message UserIdentityGrpcRequest
-{
-	string id = 1;
 }
 
 message UserIdentityGrpcResponse

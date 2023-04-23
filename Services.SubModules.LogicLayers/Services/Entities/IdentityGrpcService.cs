@@ -52,7 +52,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public async Task<(bool isSuccessful, UserIdentityGrpcResponse?)> GetUserAsync(IMapping<UserIdentityGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, UserIdentityGrpcResponse?)> GetUserAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try
             {

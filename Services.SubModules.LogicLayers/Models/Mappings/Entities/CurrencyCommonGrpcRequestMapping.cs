@@ -2,7 +2,7 @@
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
-    public class CurrencyCommonGrpcRequestMapping : Mapping<CurrencyCommonGrpcRequest>
+    public class CurrencyCommonGrpcRequestMapping : Mapping<IdGrpcModel>
     {
         public Guid Id { get; set; }
 
@@ -11,9 +11,9 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             Id = id;
         }
 
-        public override CurrencyCommonGrpcRequest Map()
+        public override IdGrpcModel Map()
         {
-            var result = new CurrencyCommonGrpcRequest()
+            var result = new IdGrpcModel()
             {
                 Id = Id.ToString()
             };
@@ -21,7 +21,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
             return result;
         }
 
-        public override CurrencyCommonGrpcRequest Update(CurrencyCommonGrpcRequest result)
+        public override IdGrpcModel Update(IdGrpcModel result)
         {
             throw new NotImplementedException();
         }

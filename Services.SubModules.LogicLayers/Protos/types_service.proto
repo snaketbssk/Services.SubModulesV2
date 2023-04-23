@@ -2,7 +2,11 @@ syntax = "proto3";
 
 option csharp_namespace = "Services.SubModules.Protos";
 
-message DecimalValue {
+message IdGrpcModel {
+    string id = 1;
+}
+
+message DecimalGrpcModel {
     int64 units = 1;
     int32 nanos = 2;
 }

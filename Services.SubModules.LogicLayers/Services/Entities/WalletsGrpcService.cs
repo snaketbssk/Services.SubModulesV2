@@ -27,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> CreditWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, IdGrpcModel?)> CreditWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> DebitWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, IdGrpcModel?)> DebitWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> CreditUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, IdGrpcModel?)> CreditUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> DebitUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, IdGrpcModel?)> DebitUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
