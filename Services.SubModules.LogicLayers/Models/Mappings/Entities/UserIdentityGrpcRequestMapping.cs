@@ -1,4 +1,5 @@
-﻿using Services.SubModules.Protos;
+﻿using Services.SubModules.LogicLayers.Models.Requests;
+using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
@@ -8,6 +9,10 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         public UserIdentityGrpcRequestMapping(Guid id)
         {
             Id = id;
+        }
+        public UserIdentityGrpcRequestMapping(IIdRequest idRequest)
+        {
+            Id = idRequest.Id;
         }
         public override UserIdentityGrpcRequest Map()
         {

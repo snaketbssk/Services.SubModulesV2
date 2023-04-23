@@ -5,16 +5,27 @@ option csharp_namespace = "Services.SubModules.Protos";
 import "Protos/types_service.proto";
 
 service WalletsGrpc {
-    rpc Credit (TransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
-    rpc Debit (TransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
+    rpc CreditWallet (WalletTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
+    rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
+    rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
+    rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (TransactionWalletsGrpcResponse);
 }
 
-message TransactionWalletsGrpcRequest
+message WalletTransactionWalletsGrpcRequest
 {
     string description = 1;
     string walletId = 2;
     string reference = 3;
     DecimalValue amount = 4;
+}
+
+message UserTransactionWalletsGrpcRequest
+{
+    string description = 1;
+    string userId = 2;
+    string reference = 3;
+    DecimalValue amount = 4;
+    string currencyId = 5;
 }
 
 message TransactionWalletsGrpcResponse

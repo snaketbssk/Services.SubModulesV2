@@ -34,16 +34,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new TelegramGrpc.TelegramGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendMessageAsync(request: request,
-                                                           headers: GetHeaders(),
-                                                           deadline: GetDeadline(),
+                                                           headers: headers,
+                                                           deadline: deadline,
                                                            cancellationToken: cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "TelegramGrpcService",
-                                                     path: "SendMessageAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(TelegramGrpcService),
+                                                     path: nameof(SendMessageAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
@@ -56,16 +58,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new TelegramGrpc.TelegramGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendMediaAsync(request: request,
-                                                         headers: GetHeaders(),
-                                                         deadline: GetDeadline(),
+                                                         headers: headers,
+                                                         deadline: deadline,
                                                          cancellationToken: cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "TelegramGrpcService",
-                                                     path: "SendMediaFilesAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(TelegramGrpcService),
+                                                     path: nameof(SendMediaAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
@@ -78,16 +82,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new TelegramGrpc.TelegramGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendImagesAsync(request: request,
-                                                          headers: GetHeaders(),
-                                                          deadline: GetDeadline(),
+                                                          headers: headers,
+                                                          deadline: deadline,
                                                           cancellationToken: cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "TelegramGrpcService",
-                                                     path: "SendMediaImagesAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(TelegramGrpcService),
+                                                     path: nameof(SendImagesAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;

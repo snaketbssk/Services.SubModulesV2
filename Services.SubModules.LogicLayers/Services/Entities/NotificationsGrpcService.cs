@@ -24,16 +24,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.AddSuccessNotificationAsync(request: request,
-                                                                      headers: GetHeaders(),
-                                                                      deadline: GetDeadline(),
+                                                                      headers: headers,
+                                                                      deadline: deadline,
                                                                       cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
-                                                     path: "AddSuccessNotificationAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
+                                                     path: nameof(AddSuccessNotificationAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
@@ -46,16 +48,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.AddWarningNotificationAsync(request: request,
-                                                                      headers: GetHeaders(),
-                                                                      deadline: GetDeadline(),
+                                                                      headers: headers,
+                                                                      deadline: deadline,
                                                                       cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
-                                                     path: "AddWarningNotificationAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
+                                                     path: nameof(AddWarningNotificationAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
@@ -68,16 +72,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.AddErrorNotificationAsync(request: request,
-                                                                    headers: GetHeaders(),
-                                                                    deadline: GetDeadline(),
+                                                                    headers: headers,
+                                                                    deadline: deadline,
                                                                     cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "NotificationsGrpcService",
-                                                     path: "AddErrorNotificationAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
+                                                     path: nameof(AddErrorNotificationAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;

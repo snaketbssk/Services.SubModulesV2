@@ -3,11 +3,6 @@ using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -32,44 +27,48 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> CreditAsync(IMapping<TransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> CreditWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.CreditAsync(request: request,
-                                                      headers: GetHeaders(),
-                                                      deadline: GetDeadline(),
-                                                      cancellationToken);
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.CreditWalletAsync(request: request,
+                                                            headers: headers,
+                                                            deadline: deadline,
+                                                            cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
                 await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
-                                                     path: nameof(CreditAsync),
+                                                     path: nameof(CreditWalletAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
             }
         }
 
-        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> DebitAsync(IMapping<TransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> DebitWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
                 var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.DebitAsync(request: request,
-                                                     headers: GetHeaders(),
-                                                     deadline: GetDeadline(),
-                                                     cancellationToken);
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.DebitWalletAsync(request: request,
+                                                           headers: headers,
+                                                           deadline: deadline,
+                                                           cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
                 await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
-                                                     path: nameof(CreditAsync),
+                                                     path: nameof(CreditWalletAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);

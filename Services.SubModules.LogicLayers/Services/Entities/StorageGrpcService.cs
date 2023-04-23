@@ -33,16 +33,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendFileAsync(request: request,
-                                                        headers: GetHeaders(),
-                                                        deadline: GetDeadline(),
+                                                        headers: headers,
+                                                        deadline: deadline,
                                                         cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
-                                                     path: "SendFileAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(StorageGrpcService),
+                                                     path: nameof(SendFileAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -54,16 +56,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendFilesAsync(request: request,
-                                                         headers: GetHeaders(),
-                                                         deadline: GetDeadline(),
+                                                         headers: headers,
+                                                         deadline: deadline,
                                                          cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
-                                                     path: "SendFilesAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(StorageGrpcService),
+                                                     path: nameof(SendFilesAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -76,16 +80,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.GetFileAsync(request: request,
-                                                       headers: GetHeaders(),
-                                                       deadline: GetDeadline(),
+                                                       headers: headers,
+                                                       deadline: deadline,
                                                        cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
-                                                     path: "GetFileAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(StorageGrpcService),
+                                                     path: nameof(GetFileAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -98,16 +104,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new StorageGrpc.StorageGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.GetFilesAsync(request: request,
-                                                        headers: GetHeaders(),
-                                                        deadline: GetDeadline(),
+                                                        headers: headers,
+                                                        deadline: deadline,
                                                         cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "StorageGrpcService",
-                                                     path: "GetFilesAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(StorageGrpcService),
+                                                     path: nameof(GetFilesAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);

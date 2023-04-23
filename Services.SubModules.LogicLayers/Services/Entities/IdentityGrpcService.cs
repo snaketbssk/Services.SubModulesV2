@@ -34,16 +34,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.AuthenticationAsync(request: request,
-                                                              headers: GetHeaders(),
-                                                              deadline: GetDeadline(),
+                                                              headers: headers,
+                                                              deadline: deadline,
                                                               cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
-                                                     path: "AuthenticationAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(IdentityGrpcService),
+                                                     path: nameof(AuthenticationAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -56,16 +58,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.GetUserAsync(request: request,
-                                                       headers: GetHeaders(),
-                                                       deadline: GetDeadline(),
+                                                       headers: headers,
+                                                       deadline: deadline,
                                                        cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
-                                                     path: "GetUserAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(IdentityGrpcService),
+                                                     path: nameof(GetUserAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -78,16 +82,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new IdentityGrpc.IdentityGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.AddRolesToUserAsync(request: request,
-                                                              headers: GetHeaders(),
-                                                              deadline: GetDeadline(),
+                                                              headers: headers,
+                                                              deadline: deadline,
                                                               cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "IdentityGrpcService",
-                                                     path: "AddRolesToUser",
+                await _exceptionService.ExecuteAsync(method: nameof(IdentityGrpcService),
+                                                     path: nameof(AddRolesToUserAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;

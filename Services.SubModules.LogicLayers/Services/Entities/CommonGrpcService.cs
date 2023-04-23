@@ -31,17 +31,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
                 var request = mapping.Map();
-                var result = await client.GetCurrencyAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetCurrencyAsync(request: request,
+                                                           headers: headers,
+                                                           deadline: deadline,
+                                                           cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
                 await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
-                                                     path: nameof(CommonGrpc.CommonGrpcClient.GetCurrencyAsync),
+                                                     path: nameof(GetCurrencyAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);
@@ -54,17 +55,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
                 var request = new Empty();
-                var result = await client.GetCurrenciesAsync(
-                    request: request,
-                    headers: GetHeaders(),
-                    deadline: GetDeadline(),
-                    cancellationToken);
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetCurrenciesAsync(request: request,
+                                                             headers: headers,
+                                                             deadline: deadline,
+                                                             cancellationToken);
                 return (true, result);
             }
             catch (Exception exception)
             {
                 await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
-                                                     path: nameof(CommonGrpc.CommonGrpcClient.GetCurrenciesAsync),
+                                                     path: nameof(GetCurrenciesAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return (false, default);

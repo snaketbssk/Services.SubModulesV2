@@ -38,16 +38,18 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             {
                 var client = new MailerGrpc.MailerGrpcClient(GrpcChannel);
                 var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
                 var result = await client.SendMessageAsync(request: request,
-                                                           headers: GetHeaders(),
-                                                           deadline: GetDeadline(),
+                                                           headers: headers,
+                                                           deadline: deadline,
                                                            cancellationToken: cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: "MailerGrpcService",
-                                                     path: "SendMessageAsync",
+                await _exceptionService.ExecuteAsync(method: nameof(IdentityGrpcService),
+                                                     path: nameof(SendMessageAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
