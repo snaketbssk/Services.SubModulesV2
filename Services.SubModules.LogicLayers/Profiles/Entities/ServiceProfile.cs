@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Services.SubModules.LogicLayers.Models.Requests.Entities;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
 using Services.SubModules.Protos;
 using System.Security.Claims;
@@ -56,6 +57,11 @@ namespace Services.SubModules.LogicLayers.Profiles.Entities
                                              .ForMember(d => d.Value, o => o.MapFrom(s => s.Value));
 
             CreateMap<CurrencyResponse, CurrencyCommonGrpcResponse>().ReverseMap();
+
+            CreateMap<IdGrpcModel, IdRequest>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => Parse(s.Id)))
+                .ReverseMap()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Id.ToString()));
         }
     }
 }

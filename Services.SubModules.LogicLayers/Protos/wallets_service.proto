@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
 import "Protos/types_service.proto";
 
 option csharp_namespace = "Services.SubModules.Protos";
@@ -9,6 +10,16 @@ service WalletsGrpc {
     rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc UpdateStateConfirmed (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateStateError (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateStateFrozen (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateStateProccess (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateStateDeclined (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateGroupStateConfirmed (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateGroupStateError (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateGroupStateFrozen (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateGroupStateProccess (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateGroupStateDeclined (IdGrpcModel) returns (google.protobuf.Empty);
 }
 
 message WalletTransactionWalletsGrpcRequest
