@@ -48,44 +48,25 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public IEnumerable<Claim> DecodeToken(string token)
         {
-            try
-            {
-                var symmetricSecurityKey = GetSymmetricSecurityKey();
-                var handler = new JwtSecurityTokenHandler();
-                var root = SecurityEnvironmentConfiguration<SecurityEnvironmentRoot>.Instance.GetRoot();
-                handler.ValidateToken(
-                    token,
-                    new TokenValidationParameters
-                    {
-                        IssuerSigningKey = symmetricSecurityKey,
-                        ValidIssuer = root.ISSUER,
-                        ValidateIssuer = false,
-                        ValidAudience = root.AUDIENCE,
-                        ValidateAudience = false,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    },
-                    out var validateToken);
-                var jwtSecurityToken = (JwtSecurityToken)validateToken;
-                var result = GetClaims(jwtSecurityToken.Claims);
-                return result;
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"token {token} exception {exception.StackTrace}");
-
-                try
+            var symmetricSecurityKey = GetSymmetricSecurityKey();
+            var handler = new JwtSecurityTokenHandler();
+            var root = SecurityEnvironmentConfiguration<SecurityEnvironmentRoot>.Instance.GetRoot();
+            handler.ValidateToken(
+                token,
+                new TokenValidationParameters
                 {
-                    var symmetricSecurityKey = GetSymmetricSecurityKey();
-                    _logger.LogError($"symmetricSecurityKey {symmetricSecurityKey}");
-                }
-                catch (Exception exception2)
-                {
-                    _logger.LogError($"exception {exception2.StackTrace}");
-                }
-
-                throw;
-            }
+                    IssuerSigningKey = symmetricSecurityKey,
+                    ValidIssuer = root.ISSUER,
+                    ValidateIssuer = false,
+                    ValidAudience = root.AUDIENCE,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out var validateToken);
+            var jwtSecurityToken = (JwtSecurityToken)validateToken;
+            var result = GetClaims(jwtSecurityToken.Claims);
+            return result;
         }
 
         private IEnumerable<Claim> GetClaims(IEnumerable<Claim> claims)

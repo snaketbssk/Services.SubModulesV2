@@ -26,10 +26,6 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
         protected override Task<IEnumerable<Claim>> GetClaimsAsync(string token)
         {
             var result = _tokenService.DecodeToken(token);
-
-            var claims = result.ToDictionary(key => key.Type, value => value.Value);
-            Logger.LogError($"token {token} claims {JsonSerializer.Serialize(claims)}");
-
             return Task.FromResult(result);
         }
     }
