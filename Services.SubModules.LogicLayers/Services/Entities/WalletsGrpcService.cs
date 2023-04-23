@@ -74,5 +74,53 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return (false, default);
             }
         }
+
+        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> CreditUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.CreditUserAsync(request: request,
+                                                            headers: headers,
+                                                            deadline: deadline,
+                                                            cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
+                                                     path: nameof(CreditWalletAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
+
+        public async Task<(bool isSuccessful, TransactionWalletsGrpcResponse?)> DebitUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new WalletsGrpc.WalletsGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.DebitUserAsync(request: request,
+                                                           headers: headers,
+                                                           deadline: deadline,
+                                                           cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(WalletsGrpcService),
+                                                     path: nameof(CreditWalletAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
     }
 }
