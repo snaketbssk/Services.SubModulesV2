@@ -69,9 +69,20 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var result = GetClaims(jwtSecurityToken.Claims);
                 return result;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                _logger.LogError($"token {token}");
+                _logger.LogError($"token {token} exception {exception.StackTrace}");
+
+                try
+                {
+                    var symmetricSecurityKey = GetSymmetricSecurityKey();
+                    _logger.LogError($"symmetricSecurityKey {symmetricSecurityKey}");
+                }
+                catch (Exception exception2)
+                {
+                    _logger.LogError($"exception {exception2.StackTrace}");
+                }
+
                 throw;
             }
         }
