@@ -12,16 +12,23 @@ service WalletsGrpc {
     rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc InstantlyWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc InstantlyUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
-    rpc UpdateStateConfirmed (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateStateError (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateStateFrozen (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateStateProccess (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateStateDeclined (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateGroupStateConfirmed (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateGroupStateError (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateGroupStateFrozen (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateGroupStateProccess (IdGrpcModel) returns (google.protobuf.Empty);
-    rpc UpdateGroupStateDeclined (IdGrpcModel) returns (google.protobuf.Empty);
+    rpc UpdateState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
+    rpc UpdateGroupState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
+}
+
+enum StatusTransactionWalletsGrpcEnum
+{
+    proccess = 0;
+    declined = 1;
+    error = 2;
+    confirmed = 3;
+    frozen = 4;
+}
+
+message UpdateTransactionWalletsGrpcRequest
+{
+    string id = 1;
+    StatusTransactionWalletsGrpcEnum status = 2;
 }
 
 message WalletTransactionWalletsGrpcRequest
