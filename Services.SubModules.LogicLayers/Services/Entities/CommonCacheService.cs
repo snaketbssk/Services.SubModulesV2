@@ -9,6 +9,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public IOneValueRepositoryCache<bool> UpdateCache { get; private set; }
         public IOneHashRepositoryCache<Guid, CurrencyResponse> HashCurrencies { get; private set; }
         public IOnePaginationRepositoryCache<CurrencyResponse> PaginationCurrencies { get; private set; }
+        public IOneHashRepositoryCache<Guid, CountryResponse> HashCountries { get; private set; }
+        public IOnePaginationRepositoryCache<CountryResponse> PaginationCountries { get; private set; }
 
         public CommonCacheService(ICacheService cacheService)
         {
@@ -24,6 +26,14 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                                                       nameof(CommonCacheService),
                                                                                       nameof(PaginationCurrencies),
                                                                                       TimeSpan.FromDays(1));
+            HashCountries = new OneHashRepositoryCache<Guid, CountryResponse>(cacheService,
+                                                                              nameof(CommonCacheService),
+                                                                              nameof(HashCurrencies),
+                                                                              TimeSpan.FromDays(1));
+            PaginationCountries = new OnePaginationRepositoryCache<CountryResponse>(cacheService,
+                                                                                    nameof(CommonCacheService),
+                                                                                    nameof(PaginationCurrencies),
+                                                                                    TimeSpan.FromDays(1));
         }
     }
 }

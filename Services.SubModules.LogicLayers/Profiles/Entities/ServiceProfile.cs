@@ -57,6 +57,7 @@ namespace Services.SubModules.LogicLayers.Profiles.Entities
                                              .ForMember(d => d.Value, o => o.MapFrom(s => s.Value));
 
             CreateMap<CurrencyResponse, CurrencyCommonGrpcResponse>().ReverseMap();
+            CreateMap<CountryResponse, CountryCommonGrpcResponse>().ReverseMap();
 
             CreateMap<IdGrpcModel, IdRequest>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => Parse(s.Id)))

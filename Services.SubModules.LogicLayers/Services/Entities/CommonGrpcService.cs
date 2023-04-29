@@ -72,5 +72,53 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return (false, default);
             }
         }
+
+        public async Task<(bool isSuccessful, CountryCommonGrpcResponse?)> GetCountryAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetCountryAsync(request: request,
+                                                           headers: headers,
+                                                           deadline: deadline,
+                                                           cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
+                                                     path: nameof(GetCountryAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
+
+        public async Task<(bool isSuccessful, CountriesCommonGrpcResponse?)> GetCountriesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
+                var request = new Empty();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetCountriesAsync(request: request,
+                                                             headers: headers,
+                                                             deadline: deadline,
+                                                             cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
+                                                     path: nameof(GetCountriesAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
     }
 }
