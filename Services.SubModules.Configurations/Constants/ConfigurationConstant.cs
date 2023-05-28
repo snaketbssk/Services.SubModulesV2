@@ -41,5 +41,6 @@
         public const string NOTIFICATIONS_SERVICE = "NOTIFICATIONS";
         public const string WALLETS_SERVICE = "WALLETS";
         public const string COMMON_SERVICE = "COMMON";
+        public const string EXPORTMETRICS_SERVICE = "EXPORTMETRICS";
     }
 }
