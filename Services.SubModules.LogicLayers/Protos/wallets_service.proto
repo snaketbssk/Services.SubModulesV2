@@ -13,7 +13,6 @@ service WalletsGrpc {
     rpc InstantlyWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc InstantlyUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc UpdateState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
-    rpc UpdateGroupState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
 }
 
 enum StatusTransactionWalletsGrpcEnum
