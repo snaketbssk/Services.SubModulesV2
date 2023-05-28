@@ -42,5 +42,6 @@
         public const string WALLETS_SERVICE = "WALLETS";
         public const string COMMON_SERVICE = "COMMON";
         public const string EXPORTMETRICS_SERVICE = "EXPORTMETRICS";
+        public const string IMPORTMETRICS_SERVICE = "IMPORTMETRICS";
     }
 }
