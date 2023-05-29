@@ -42,8 +42,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 
             // Global services
             serviceCollection.AddAuthorization(claims);
-            if (enableCache)
-                serviceCollection.AddCache();
+            serviceCollection.AddCache(enableCache);
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
@@ -58,9 +57,9 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddConfigurationWorker(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfigurationWorker(this IServiceCollection serviceCollection, bool enableCache = true)
         {
-            serviceCollection.AddCache();
+            serviceCollection.AddCache(enableCache);
             serviceCollection.AddMemoryCache();
             serviceCollection.AddAutoMapper();
             serviceCollection.AddHttpClient();
@@ -140,9 +139,9 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddCache(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCache(this IServiceCollection serviceCollection, bool enableCache)
         {
-            var cacheService = RedisCacheService.Initialization();
+            var cacheService = RedisCacheService.Initialization(enableCache);
 
             serviceCollection.AddSingleton(cacheService);
             serviceCollection.AddSingleton<IIdentityCacheService, IdentityCacheService>();

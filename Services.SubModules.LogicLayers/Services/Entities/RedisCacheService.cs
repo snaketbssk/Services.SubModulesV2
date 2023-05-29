@@ -18,8 +18,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _connectionMultiplexer = connectionMultiplexer;
         }
 
-        public static ICacheService Initialization()
+        public static ICacheService Initialization(bool enableCache)
         {
+            if (!enableCache)
+                return new RedisCacheService(default);
+
             try
             {
                 var root = RedisEnvironmentConfiguration<RedisEnvironmentRoot>.Instance.GetRoot();
