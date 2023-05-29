@@ -19,7 +19,9 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfigurationApi(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims = default)
+        public static IServiceCollection AddConfigurationApi(this IServiceCollection serviceCollection,
+                                                             IDictionary<string, HashSet<string>> claims = default,
+                                                             bool enableCache = true)
         {
             if (claims is null)
                 claims = new Dictionary<string, HashSet<string>>();
@@ -40,7 +42,8 @@ namespace Services.SubModules.LogicLayers.Extensions
 
             // Global services
             serviceCollection.AddAuthorization(claims);
-            serviceCollection.AddCache();
+            if (enableCache)
+                serviceCollection.AddCache();
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
