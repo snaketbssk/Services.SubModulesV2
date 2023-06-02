@@ -19,7 +19,9 @@ namespace Services.SubModules.LogicLayers.Extensions
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddConfigurationApi(this IServiceCollection serviceCollection, IDictionary<string, HashSet<string>> claims = default)
+        public static IServiceCollection AddConfigurationApi(this IServiceCollection serviceCollection,
+                                                             IDictionary<string, HashSet<string>> claims = default,
+                                                             bool enableCache = true)
         {
             if (claims is null)
                 claims = new Dictionary<string, HashSet<string>>();
@@ -40,7 +42,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 
             // Global services
             serviceCollection.AddAuthorization(claims);
-            serviceCollection.AddCache();
+            serviceCollection.AddCache(enableCache);
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
@@ -55,9 +57,9 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddConfigurationWorker(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddConfigurationWorker(this IServiceCollection serviceCollection, bool enableCache = true)
         {
-            serviceCollection.AddCache();
+            serviceCollection.AddCache(enableCache);
             serviceCollection.AddMemoryCache();
             serviceCollection.AddAutoMapper();
             serviceCollection.AddHttpClient();
@@ -137,9 +139,9 @@ namespace Services.SubModules.LogicLayers.Extensions
             return serviceCollection;
         }
 
-        public static IServiceCollection AddCache(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCache(this IServiceCollection serviceCollection, bool enableCache)
         {
-            var cacheService = RedisCacheService.Initialization();
+            var cacheService = RedisCacheService.Initialization(enableCache);
 
             serviceCollection.AddSingleton(cacheService);
             serviceCollection.AddSingleton<IIdentityCacheService, IdentityCacheService>();
