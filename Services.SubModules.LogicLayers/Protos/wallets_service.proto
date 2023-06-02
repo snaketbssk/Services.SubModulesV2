@@ -10,9 +10,10 @@ service WalletsGrpc {
     rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
-    rpc InstantlyWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
-    rpc InstantlyUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
     rpc UpdateState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
+    rpc CreateWalletOrder (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc CreateUserOrder (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+    rpc UpdateStateOrder (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
 }
 
 enum StatusTransactionWalletsGrpcEnum
