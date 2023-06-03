@@ -59,7 +59,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             return hostBuilder;
         }
 
-        public static IHostBuilder UseSerilog(this IHostBuilder hostBuilder)
+        public static IHostBuilder UseServiceSerilog(this IHostBuilder hostBuilder)
         {
             var rootAspNetCore = AspNetCoreEnvironmentConfiguration<AspNetCoreEnvironmentRoot>.Instance.GetRoot();
             var rootSerilog = SerilogEnvironmentConfiguration<SerilogEnvironmentRoot>.Instance.GetRoot();
