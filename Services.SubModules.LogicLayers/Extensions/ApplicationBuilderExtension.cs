@@ -14,7 +14,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             applicationBuilder.AddCors();
             applicationBuilder.AddMiddlewares();
             applicationBuilder.UseRouting();
-            applicationBuilder.UseHttpsRedirection();
+            //applicationBuilder.UseHttpsRedirection();
             applicationBuilder.UseAuthentication();
             applicationBuilder.UseAuthorization();
             applicationBuilder.AddPrometheus();
