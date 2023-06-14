@@ -39,6 +39,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IApplicationBuilder AddCors(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseCors(x => x.AllowAnyOrigin()
+                                             .WithOrigins("http://10.0.0.2:3000")
                                              .AllowAnyMethod()
                                              .AllowAnyHeader());
             return applicationBuilder;
