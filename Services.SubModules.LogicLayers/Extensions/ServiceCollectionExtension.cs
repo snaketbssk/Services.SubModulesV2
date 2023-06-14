@@ -46,7 +46,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
-            serviceCollection.AddCors();
+            //serviceCollection.AddCors();
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper();
             serviceCollection.AddHttpClient();

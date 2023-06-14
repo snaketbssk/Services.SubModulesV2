@@ -11,7 +11,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IApplicationBuilder AddConfiguration(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.AddSwagger();
-            applicationBuilder.AddCors();
+            //applicationBuilder.AddCors();
             applicationBuilder.AddMiddlewares();
             applicationBuilder.UseRouting();
             //applicationBuilder.UseHttpsRedirection();
