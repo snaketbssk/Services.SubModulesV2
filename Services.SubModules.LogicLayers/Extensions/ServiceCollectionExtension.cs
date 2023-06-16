@@ -46,13 +46,29 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddGrpc();
             serviceCollection.AddControllers();
             serviceCollection.AddMemoryCache();
-            //serviceCollection.AddCors();
             serviceCollection.AddSwagger();
             serviceCollection.AddAutoMapper();
             serviceCollection.AddHttpClient();
             serviceCollection.AddConfigurationTransientSubmodules();
             serviceCollection.AddConfigurationScopedSubmodules();
             serviceCollection.AddConfigurationSingletonSubmodules();
+            serviceCollection.AddServiceCors();
+            //
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddServiceCors(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsConstant.POLICY,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyHeader()
+                                             .AllowAnyMethod()
+                                             .AllowAnyOrigin();
+                                  });
+            });
             //
             return serviceCollection;
         }

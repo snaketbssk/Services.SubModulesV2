@@ -2,6 +2,7 @@
 using Prometheus;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
+using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Middlewares.Entities;
 
 namespace Services.SubModules.LogicLayers.Extensions
@@ -11,7 +12,7 @@ namespace Services.SubModules.LogicLayers.Extensions
         public static IApplicationBuilder AddConfiguration(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.AddSwagger();
-            //applicationBuilder.AddCors();
+            applicationBuilder.AddServiceCors();
             applicationBuilder.AddMiddlewares();
             applicationBuilder.UseRouting();
             //applicationBuilder.UseHttpsRedirection();
@@ -36,12 +37,10 @@ namespace Services.SubModules.LogicLayers.Extensions
             }
             return applicationBuilder;
         }
-        public static IApplicationBuilder AddCors(this IApplicationBuilder applicationBuilder)
+        public static IApplicationBuilder AddServiceCors(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseCors(x => x.AllowAnyOrigin()
-                                             .WithOrigins("http://10.0.0.1:3000,http://10.0.0.2:3000")
-                                             .AllowAnyMethod()
-                                             .AllowAnyHeader());
+            applicationBuilder.UseCors(CorsConstant.POLICY);
+            //
             return applicationBuilder;
         }
         public static IApplicationBuilder AddMiddlewares(this IApplicationBuilder applicationBuilder)
