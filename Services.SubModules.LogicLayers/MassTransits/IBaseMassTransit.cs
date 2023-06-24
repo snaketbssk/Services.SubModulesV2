@@ -2,8 +2,6 @@
 {
     public interface IBaseMassTransit
     {
-        Type TypeConsumer { get; }
-
         Type TypeMessage { get; }
 
         string QueuePath { get; }

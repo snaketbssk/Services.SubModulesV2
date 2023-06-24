@@ -1,8 +1,10 @@
 ﻿namespace Services.SubModules.LogicLayers.MassTransits.Entities
 {
-    public class BaseMassTransit<TMessage, TConsumer> : IBaseMassTransit
+    public abstract class BaseMassTransit<TMessage> : IBaseMassTransit
     {
-        public Type TypeConsumer => typeof(TConsumer);
+        public abstract string NameAssembly { get; }
+
+        public abstract string NameConsumer { get; }
 
         public Type TypeMessage => typeof(TMessage);
 
@@ -10,11 +12,26 @@
 
         public virtual string? Postfix { get; }
 
-        public virtual string QueuePath => string.Format("{0}{1}_{2}_{3}{4}",
-                                                          string.IsNullOrWhiteSpace(Prefix) ? "" : $"{Prefix}_",
-                                                          typeof(TConsumer).Assembly.GetName().Name,
-                                                          TypeConsumer.Name,
-                                                          TypeMessage.Name,
-                                                          string.IsNullOrWhiteSpace(Postfix) ? "" : $"_{Postfix}");
+        public string QueuePath
+        {
+            get
+            {
+                var values = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(Prefix))
+                    values.Add(Prefix);
+                if (!string.IsNullOrWhiteSpace(NameAssembly))
+                    values.Add(NameAssembly);
+                if (!string.IsNullOrWhiteSpace(NameConsumer))
+                    values.Add(NameConsumer);
+                if (!string.IsNullOrWhiteSpace(Postfix))
+                    values.Add(Postfix);
+
+                var separator = '_';
+                var result = string.Join(separator, values);
+
+                return result;
+            }
+        }
     }
 }

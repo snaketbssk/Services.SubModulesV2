@@ -3,10 +3,9 @@ using Services.SubModules.LogicLayers.MassTransits.Entities;
 
 namespace Services.SubModules.LogicLayers.MassTransits.Producers.Entities
 {
-    public abstract class BaseProducer<TMessage, TConsumer>
-        : BaseMassTransit<TMessage, TConsumer>, IProducer
+    public abstract class BaseProducer<TMessage>
+        : BaseMassTransit<TMessage>, IProducer
         where TMessage : class
-        where TConsumer : IConsumer<TMessage>
     {
         public TMessage Message { set; get; }
 

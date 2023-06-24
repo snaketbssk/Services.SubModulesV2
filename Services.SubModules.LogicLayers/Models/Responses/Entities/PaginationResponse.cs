@@ -69,17 +69,15 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             var parameter = Expression.Parameter(typeof(T));
             var source = propertyOrderBy.Split('.').Aggregate((Expression)parameter, Expression.Property);
             if (source.Type.IsEnum)
-            {
                 source = Expression.Call(source, typeof(object).GetMethod(nameof(object.ToString)));
-            }
+
             var lambda = Expression.Lambda(typeof(Func<,>).MakeGenericType(typeof(T), source.Type), source, parameter);
-            var result = typeof(Queryable).GetMethods().Single(
-                method => method.Name == (orderByDescending ? "OrderByDescending" : "OrderBy") &&
-                          method.IsGenericMethodDefinition &&
-                          method.GetGenericArguments().Length == 2 &&
-                          method.GetParameters().Length == 2)
-                .MakeGenericMethod(typeof(T), source.Type)
-                .Invoke(null, new object[] { queryable, lambda }) as IQueryable<T>;
+            var result = typeof(Queryable).GetMethods().Single(method => method.Name == (orderByDescending ? "OrderByDescending" : "OrderBy") &&
+                                                                         method.IsGenericMethodDefinition &&
+                                                                         method.GetGenericArguments().Length == 2 &&
+                                                                         method.GetParameters().Length == 2)
+                                                       .MakeGenericMethod(typeof(T), source.Type)
+                                                       .Invoke(null, new object[] { queryable, lambda }) as IQueryable<T>;
 
             return result;
         }

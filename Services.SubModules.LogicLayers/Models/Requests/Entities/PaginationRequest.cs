@@ -24,5 +24,34 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
             var result = (NumberPage - 1) * SizePage;
             return result;
         }
+
+        public static IPaginationRequest CreateDefault(int? numberPage = default,
+                                                       int? sizePage = default,
+                                                       bool? firstRequest = default,
+                                                       bool? orderByDescending = default,
+                                                       string? propertyOrderBy = default)
+        {
+            var request = new PaginationRequest()
+            {
+                NumberPage = 1,
+                SizePage = 1,
+                FirstRequest = false,
+                OrderByDescending = false,
+                PropertyOrderBy = "Id"
+            };
+
+            if (numberPage.HasValue)
+                request.NumberPage = numberPage.Value;
+            if (sizePage.HasValue)
+                request.SizePage = sizePage.Value;
+            if (firstRequest.HasValue)
+                request.FirstRequest = firstRequest.Value;
+            if (orderByDescending.HasValue)
+                request.OrderByDescending = orderByDescending.Value;
+            if (!string.IsNullOrEmpty(propertyOrderBy))
+                request.PropertyOrderBy = propertyOrderBy;
+
+            return request;
+        }
     }
 }

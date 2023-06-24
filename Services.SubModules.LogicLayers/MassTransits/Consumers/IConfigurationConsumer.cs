@@ -2,6 +2,8 @@
 {
     public interface IConfigurationConsumer : IBaseMassTransit
     {
+        Type TypeConsumer { get; }
+
         int? RetryCount { get; }
 
         int? PrefetchCount { get; }
