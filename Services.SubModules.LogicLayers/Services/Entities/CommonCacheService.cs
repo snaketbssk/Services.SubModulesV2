@@ -28,11 +28,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                                                       TimeSpan.FromDays(1));
             HashCountries = new OneHashRepositoryCache<Guid, CountryResponse>(cacheService,
                                                                               nameof(CommonCacheService),
-                                                                              nameof(HashCurrencies),
+                                                                              nameof(HashCountries),
                                                                               TimeSpan.FromDays(1));
             PaginationCountries = new OnePaginationRepositoryCache<CountryResponse>(cacheService,
                                                                                     nameof(CommonCacheService),
-                                                                                    nameof(PaginationCurrencies),
+                                                                                    nameof(PaginationCountries),
                                                                                     TimeSpan.FromDays(1));
         }
     }
