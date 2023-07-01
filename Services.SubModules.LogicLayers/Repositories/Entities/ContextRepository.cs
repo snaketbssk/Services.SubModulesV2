@@ -2,6 +2,8 @@
 using Services.SubModules.LogicLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
+using EFCore.BulkExtensions;
+using Services.SubModules.DataLayers.Models.Requests;
 
 namespace Services.SubModules.LogicLayers.Repositories.Entities
 {
@@ -17,6 +19,24 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             _disposable = false;
             _context = context;
             _repository = repository;
+        }
+
+        public virtual async Task<TEntity> FirstOrDefaultAsync(ISqlRequest sqlRequest, CancellationToken cancellationToken = default)
+        {
+            var result = (await ToListAsync(sqlRequest, cancellationToken)).FirstOrDefault();
+            return result;
+        }
+
+        public virtual async Task<List<TEntity>> ToListAsync(ISqlRequest sqlRequest, CancellationToken cancellationToken = default)
+        {
+            var parameters = sqlRequest.GetParameters();
+            var result = await _repository.FromSqlRaw(sqlRequest.Sql, parameters).ToListAsync(cancellationToken);
+            return result;
+        }
+
+        public virtual async Task BulkInsertAsync(IEnumerable<TEntity> entities, BulkConfig? bulkConfig = null, Action<decimal>? progress = null, Type? type = null, CancellationToken cancellationToken = default)
+        {
+            await _context.BulkInsertAsync(entities, bulkConfig, progress, type, cancellationToken);
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -112,6 +132,7 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             var result = await _context.SaveChangesAsync(cancellationToken);
             return result;
         }
+
         public void Dispose()
         {
             if (!_disposable)
