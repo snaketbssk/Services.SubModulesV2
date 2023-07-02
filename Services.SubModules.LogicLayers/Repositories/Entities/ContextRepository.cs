@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
+using Services.SubModules.DataLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Requests;
 using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using EFCore.BulkExtensions;
-using Services.SubModules.DataLayers.Models.Requests;
 
 namespace Services.SubModules.LogicLayers.Repositories.Entities
 {
