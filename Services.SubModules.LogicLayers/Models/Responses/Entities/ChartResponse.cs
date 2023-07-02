@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
-    public class TransactionChartResponse : ITransactionChartResponse
+    public class ChartResponse : IChartResponse
     {
         public IEnumerable<string> Labels { get; set; }
         public IEnumerable<decimal> Values { get; set; }
         public int TotalCount { get; set; }
 
-        public TransactionChartResponse(IEnumerable<string> labels, IEnumerable<decimal> values)
+        public ChartResponse(IEnumerable<string> labels, IEnumerable<decimal> values)
         {
             ArgumentNullException.ThrowIfNull(labels, nameof(labels));
             ArgumentNullException.ThrowIfNull(values, nameof(values));
@@ -33,7 +33,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             TotalCount = countLabels;
         }
 
-        public TransactionChartResponse(IEnumerable<DateTime> labels, IEnumerable<decimal> values) 
+        public ChartResponse(IEnumerable<DateTime> labels, IEnumerable<decimal> values) 
             : this(labels.Select(x => x.ToString(DatetimeConstant.FORMAT)), values)
         {
         }

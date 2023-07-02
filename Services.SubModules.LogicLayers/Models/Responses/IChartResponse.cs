@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Responses
 {
-    public interface ITransactionChartResponse
+    public interface IChartResponse
     {
         IEnumerable<string> Labels { get; set; }
         IEnumerable<decimal> Values { get; set; }
