@@ -5,5 +5,7 @@
         public const string YEAR = "0000";
         public const string MONTH = "00";
         public const string DAY = "00";
+        public const string FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     }
 }

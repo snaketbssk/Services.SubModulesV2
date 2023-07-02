@@ -1,0 +1,41 @@
+﻿using Services.SubModules.LogicLayers.Constants;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.SubModules.LogicLayers.Models.Responses.Entities
+{
+    public class TransactionChartResponse : ITransactionChartResponse
+    {
+        public IEnumerable<string> Labels { get; set; }
+        public IEnumerable<decimal> Values { get; set; }
+        public int TotalCount { get; set; }
+
+        public TransactionChartResponse(IEnumerable<string> labels, IEnumerable<decimal> values)
+        {
+            ArgumentNullException.ThrowIfNull(labels, nameof(labels));
+            ArgumentNullException.ThrowIfNull(values, nameof(values));
+            if (!labels.Any())
+                throw new ArgumentOutOfRangeException(nameof(labels));
+            if (!values.Any())
+                throw new ArgumentOutOfRangeException(nameof(values));
+
+            var countLabels = labels.Count();
+            var countValues = values.Count();
+            if (countLabels != countValues)
+                throw new ArgumentOutOfRangeException("Count");
+
+            Labels = labels;
+            Values = values;
+            TotalCount = countLabels;
+        }
+
+        public TransactionChartResponse(IEnumerable<DateTime> labels, IEnumerable<decimal> values) 
+            : this(labels.Select(x => x.ToString(DatetimeConstant.FORMAT)), values)
+        {
+        }
+    }
+}
