@@ -44,5 +44,6 @@
         public const string EXPORTMETRICS_SERVICE = "EXPORTMETRICS";
         public const string IMPORTMETRICS_SERVICE = "IMPORTMETRICS";
         public const string PAYMENTGATEWAYS_SERVICE = "PAYMENTGATEWAYS";
+        public const string REFERRALS_SERVICE = "REFERRALS";
     }
 }

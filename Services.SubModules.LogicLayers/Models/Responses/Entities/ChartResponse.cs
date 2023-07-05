@@ -1,10 +1,4 @@
 ﻿using Services.SubModules.LogicLayers.Constants;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
@@ -33,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
             TotalCount = countLabels;
         }
 
-        public ChartResponse(IEnumerable<DateTime> labels, IEnumerable<decimal> values) 
+        public ChartResponse(IEnumerable<DateTime> labels, IEnumerable<decimal> values)
             : this(labels.Select(x => x.ToString(DatetimeConstant.FORMAT)), values)
         {
         }

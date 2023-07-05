@@ -31,6 +31,9 @@
         ManageWallets,
 
         Common,
-        ManageCommon
+        ManageCommon,
+
+        Referrals,
+        ManageReferrals,
     }
 }
