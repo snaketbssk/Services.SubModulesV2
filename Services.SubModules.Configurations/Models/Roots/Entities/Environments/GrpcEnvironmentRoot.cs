@@ -14,5 +14,6 @@
         public string? NOTIFICATIONS_HOST { get; set; }
         public string? WALLETS_HOST { get; set; }
         public string? COMMON_HOST { get; set; }
+        public string? REFERRALS_HOST { get; set; }
     }
 }

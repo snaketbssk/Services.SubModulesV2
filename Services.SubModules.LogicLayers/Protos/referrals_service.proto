@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "Protos/types_service.proto";
+
+option csharp_namespace = "Services.SubModules.Protos";
+
+service ReferralsGrpc {
+	rpc CreateReferral (CreateReferralReferralsGrpcRequest) returns (google.protobuf.Empty);
+}
+
+message CreateReferralReferralsGrpcRequest
+{
+	string idUser = 1;
+	string tokenReferral = 2;
+}
