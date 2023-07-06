@@ -10,6 +10,6 @@ namespace Services.SubModules.LogicLayers.Services
 {
     public interface IReferralsGrpcService
     {
-        Task<bool> CreateReferral(IMapping<CreateReferralReferralsGrpcRequest> mapping, CancellationToken cancellationToken = default);
+        Task<bool> CreateReferralAsync(IMapping<CreateReferralReferralsGrpcRequest> mapping, CancellationToken cancellationToken = default);
     }
 }

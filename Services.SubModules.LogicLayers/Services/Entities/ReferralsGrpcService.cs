@@ -32,7 +32,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
-        public async Task<bool> CreateReferral(IMapping<CreateReferralReferralsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        public async Task<bool> CreateReferralAsync(IMapping<CreateReferralReferralsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             catch (Exception exception)
             {
                 await _exceptionService.ExecuteAsync(method: nameof(ReferralsGrpcService),
-                                                     path: nameof(CreateReferral),
+                                                     path: nameof(CreateReferralAsync),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
