@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Services.SubModules.LogicLayers.Constants;
+﻿using Services.SubModules.LogicLayers.Constants;
 
 namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
