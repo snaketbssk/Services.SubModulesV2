@@ -5,5 +5,6 @@ namespace Services.SubModules.LogicLayers.Models.Responses
     public interface ILanguageResponse : IBaseTable<Guid>
     {
         string? Name { get; set; }
+        string? Code { get; set; }
     }
 }

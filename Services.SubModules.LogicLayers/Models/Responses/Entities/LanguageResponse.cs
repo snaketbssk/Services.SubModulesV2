@@ -5,5 +5,6 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
     public class LanguageResponse : BaseTable<Guid>, ILanguageResponse
     {
         public string? Name { get; set; }
+        public string? Code { get; set; }
     }
 }
