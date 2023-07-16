@@ -1,10 +1,4 @@
-﻿using Google.Protobuf;
-using Services.SubModules.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
 {
