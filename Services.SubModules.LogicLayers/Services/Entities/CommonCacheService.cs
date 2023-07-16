@@ -11,6 +11,8 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         public IOnePaginationRepositoryCache<CurrencyResponse> PaginationCurrencies { get; private set; }
         public IOneHashRepositoryCache<Guid, CountryResponse> HashCountries { get; private set; }
         public IOnePaginationRepositoryCache<CountryResponse> PaginationCountries { get; private set; }
+        public IOneHashRepositoryCache<Guid, LanguageResponse> HashLanguages { get; private set; }
+        public IOnePaginationRepositoryCache<LanguageResponse> PaginationLanguages { get; private set; }
 
         public CommonCacheService(ICacheService cacheService)
         {
@@ -18,6 +20,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                        nameof(CommonCacheService),
                                                        nameof(UpdateCache),
                                                        TimeSpan.FromMinutes(1));
+
             HashCurrencies = new OneHashRepositoryCache<Guid, CurrencyResponse>(cacheService,
                                                                              nameof(CommonCacheService),
                                                                              nameof(HashCurrencies),
@@ -26,6 +29,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                                                                       nameof(CommonCacheService),
                                                                                       nameof(PaginationCurrencies),
                                                                                       TimeSpan.FromDays(1));
+
             HashCountries = new OneHashRepositoryCache<Guid, CountryResponse>(cacheService,
                                                                               nameof(CommonCacheService),
                                                                               nameof(HashCountries),
@@ -33,6 +37,15 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             PaginationCountries = new OnePaginationRepositoryCache<CountryResponse>(cacheService,
                                                                                     nameof(CommonCacheService),
                                                                                     nameof(PaginationCountries),
+                                                                                    TimeSpan.FromDays(1));
+
+            HashLanguages = new OneHashRepositoryCache<Guid, LanguageResponse>(cacheService,
+                                                                              nameof(CommonCacheService),
+                                                                              nameof(HashLanguages),
+                                                                              TimeSpan.FromDays(1));
+            PaginationLanguages = new OnePaginationRepositoryCache<LanguageResponse>(cacheService,
+                                                                                    nameof(CommonCacheService),
+                                                                                    nameof(PaginationLanguages),
                                                                                     TimeSpan.FromDays(1));
         }
     }

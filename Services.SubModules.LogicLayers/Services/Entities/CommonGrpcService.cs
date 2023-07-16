@@ -120,5 +120,53 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 return (false, default);
             }
         }
+
+        public async Task<(bool isSuccessful, LanguageCommonGrpcResponse?)> GetLanguageAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
+                var request = mapping.Map();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetLanguageAsync(request: request,
+                                                           headers: headers,
+                                                           deadline: deadline,
+                                                           cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
+                                                     path: nameof(GetLanguageAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
+
+        public async Task<(bool isSuccessful, LanguagesCommonGrpcResponse?)> GetLanguagesAsync(CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var client = new CommonGrpc.CommonGrpcClient(GrpcChannel);
+                var request = new Empty();
+                var headers = GetHeaders();
+                var deadline = GetDeadline();
+                var result = await client.GetLanguagesAsync(request: request,
+                                                             headers: headers,
+                                                             deadline: deadline,
+                                                             cancellationToken);
+                return (true, result);
+            }
+            catch (Exception exception)
+            {
+                await _exceptionService.ExecuteAsync(method: nameof(CommonGrpcService),
+                                                     path: nameof(GetLanguagesAsync),
+                                                     exception: exception,
+                                                     cancellationToken);
+                return (false, default);
+            }
+        }
     }
 }

@@ -8,8 +8,10 @@ option csharp_namespace = "Services.SubModules.Protos";
 service CommonGrpc {
 	rpc GetCurrency (IdGrpcModel) returns (CurrencyCommonGrpcResponse);
 	rpc GetCountry (IdGrpcModel) returns (CountryCommonGrpcResponse);
+	rpc GetLanguage (IdGrpcModel) returns (LanguageCommonGrpcResponse);
 	rpc GetCurrencies (google.protobuf.Empty) returns (CurrenciesCommonGrpcResponse);
 	rpc GetCountries (google.protobuf.Empty) returns (CountriesCommonGrpcResponse);
+	rpc GetLanguages (google.protobuf.Empty) returns (LanguagesCommonGrpcResponse);
 }
 
 message CurrencyCommonGrpcResponse
@@ -37,4 +39,16 @@ message CountryCommonGrpcResponse
 message CountriesCommonGrpcResponse
 {
 	repeated CountryCommonGrpcResponse values = 1;
+}
+
+message LanguageCommonGrpcResponse
+{
+	string id = 1;
+	string name = 2;
+	bool enable = 3;
+}
+
+message LanguagesCommonGrpcResponse
+{
+	repeated LanguageCommonGrpcResponse values = 1;
 }

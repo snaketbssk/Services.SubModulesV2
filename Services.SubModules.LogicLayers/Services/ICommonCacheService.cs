@@ -10,5 +10,7 @@ namespace Services.SubModules.LogicLayers.Services
         IOneValueRepositoryCache<bool> UpdateCache { get; }
         IOneHashRepositoryCache<Guid, CountryResponse> HashCountries { get; }
         IOnePaginationRepositoryCache<CountryResponse> PaginationCountries { get; }
+        IOneHashRepositoryCache<Guid, LanguageResponse> HashLanguages { get; }
+        IOnePaginationRepositoryCache<LanguageResponse> PaginationLanguages { get; }
     }
 }
