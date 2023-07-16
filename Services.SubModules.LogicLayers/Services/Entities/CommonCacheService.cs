@@ -6,7 +6,6 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 {
     public class CommonCacheService : ICommonCacheService
     {
-        public IOneValueRepositoryCache<bool> UpdateCache { get; private set; }
         public IOneHashRepositoryCache<Guid, CurrencyResponse> HashCurrencies { get; private set; }
         public IOnePaginationRepositoryCache<CurrencyResponse> PaginationCurrencies { get; private set; }
         public IOneHashRepositoryCache<Guid, CountryResponse> HashCountries { get; private set; }
@@ -16,11 +15,6 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         public CommonCacheService(ICacheService cacheService)
         {
-            UpdateCache = new OneValueRepositoryCache<bool>(cacheService,
-                                                       nameof(CommonCacheService),
-                                                       nameof(UpdateCache),
-                                                       TimeSpan.FromMinutes(1));
-
             HashCurrencies = new OneHashRepositoryCache<Guid, CurrencyResponse>(cacheService,
                                                                              nameof(CommonCacheService),
                                                                              nameof(HashCurrencies),
