@@ -36,18 +36,28 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var result = new List<Claim>();
             var decodeClaims = _tokenService.DecodeToken(token);
             var idUserTable = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
-            var (cacheIsSuccessful, value) = await _identityCacheService.User.TryGetAsync(idUserTable.Value);
-            if (cacheIsSuccessful)
+
+            ArgumentNullException.ThrowIfNull(idUserTable, nameof(idUserTable));
+
+            var (cacheSessionIsSuccessful, sessionValue) = await _identityCacheService.Sessions.TryGetAsync(token);
+
+            if (!cacheSessionIsSuccessful)
+                throw new ArgumentException(nameof(cacheSessionIsSuccessful));
+            if (idUserTable.Value != sessionValue)
+                throw new ArgumentException(nameof(sessionValue));
+
+            var (cacheUserIsSuccessful, userValue) = await _identityCacheService.Users.TryGetAsync(idUserTable.Value);
+            if (cacheUserIsSuccessful)
             {
                 var userAuthentication = new UserAuthentication(
-                    id: value.Id,
-                    name: value.Name,
-                    email: value.Email,
+                    id: userValue.Id,
+                    name: userValue.Name,
+                    email: userValue.Email,
                     roles: new List<string>(),
                     accessToken: token,
                     language: "ru");
                 result.AddRange(userAuthentication.ToClaims());
-                result.AddRange(value.Claims.Select(x => new Claim(x.Type, x.Value)));
+                result.AddRange(userValue.Claims.Select(x => new Claim(x.Type, x.Value)));
             }
             else
             {
