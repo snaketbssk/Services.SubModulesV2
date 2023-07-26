@@ -26,5 +26,6 @@ namespace Services.SubModules.LogicLayers.Repositories
         Task<TEntity?> FirstOrDefaultAsync(IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
         Task BulkInsertAsync(IEnumerable<TEntity> entities, BulkConfig? bulkConfig = null, Action<decimal>? progress = null, Type? type = null, CancellationToken cancellationToken = default);
         Task<bool> AnyAsync(IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
+        Task<int> CountAsync(IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
     }
 }
