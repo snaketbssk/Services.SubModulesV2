@@ -18,10 +18,15 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
                                                                     bool? firstRequest,
                                                                     string? propertyOrderBy,
                                                                     bool? orderByDescending,
+                                                                    bool? randomOrderBy,
                                                                     CancellationToken cancellationToken = default)
         {
             var result = new PaginationResponse<T>();
-            if (!string.IsNullOrWhiteSpace(propertyOrderBy))
+            if (randomOrderBy.HasValue && randomOrderBy.Value)
+            {
+                queryable = queryable.OrderBy(x => Guid.NewGuid());
+            }
+            else if (!string.IsNullOrWhiteSpace(propertyOrderBy))
             {
                 queryable = OrderBy(queryable,
                                     propertyOrderBy,
@@ -45,6 +50,7 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
                                            paginationRequest.FirstRequest,
                                            paginationRequest.PropertyOrderBy,
                                            paginationRequest.OrderByDescending,
+                                           paginationRequest.RandomOrderBy,
                                            cancellationToken);
             return result;
         }

@@ -17,6 +17,8 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 
         public bool? OrderByDescending { get; set; }
 
+        public bool? RandomOrderBy { get; set; }
+
         public string? PropertyOrderBy { get; set; }
 
         public int Skip()
@@ -29,6 +31,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
                                                        int? sizePage = default,
                                                        bool? firstRequest = default,
                                                        bool? orderByDescending = default,
+                                                       bool? randomOrderBy = default,
                                                        string? propertyOrderBy = default)
         {
             var request = new PaginationRequest()
@@ -37,6 +40,7 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
                 SizePage = 1,
                 FirstRequest = false,
                 OrderByDescending = false,
+                RandomOrderBy = false,
                 PropertyOrderBy = "Id"
             };
 
@@ -48,6 +52,8 @@ namespace Services.SubModules.LogicLayers.Models.Requests.Entities
                 request.FirstRequest = firstRequest.Value;
             if (orderByDescending.HasValue)
                 request.OrderByDescending = orderByDescending.Value;
+            if (randomOrderBy.HasValue)
+                request.RandomOrderBy = randomOrderBy.Value;
             if (!string.IsNullOrEmpty(propertyOrderBy))
                 request.PropertyOrderBy = propertyOrderBy;
 
