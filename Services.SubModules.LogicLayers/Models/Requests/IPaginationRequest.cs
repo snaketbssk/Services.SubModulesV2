@@ -7,6 +7,7 @@
         bool? OrderByDescending { get; set; }
         string? PropertyOrderBy { get; set; }
         bool? FirstRequest { get; set; }
+        bool? RandomOrderBy { get; set; }
 
         int Skip();
     }
