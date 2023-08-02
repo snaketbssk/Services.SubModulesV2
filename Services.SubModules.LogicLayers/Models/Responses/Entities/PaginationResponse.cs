@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Services.SubModules.LogicLayers.Models.Requests;
 using System.Linq.Expressions;
 
@@ -85,6 +86,14 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
                                                        .MakeGenericMethod(typeof(T), source.Type)
                                                        .Invoke(null, new object[] { queryable, lambda }) as IQueryable<T>;
 
+            return result;
+        }
+
+        public IPaginationResponse<TClass> Convert<TClass>(IMapper mapper)
+        {
+            var result = new PaginationResponse<TClass>();
+            result.TotalCount = TotalCount;
+            result.Values = mapper.Map<List<TClass>>(Values);
             return result;
         }
     }
