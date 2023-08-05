@@ -21,6 +21,11 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             _repository = repository;
         }
 
+        internal protected T GetContext()
+        {
+            return _context;
+        }
+
         public virtual async Task<TEntity> FirstOrDefaultAsync(ISqlRequest sqlRequest, CancellationToken cancellationToken = default)
         {
             var result = (await ToListAsync(sqlRequest, cancellationToken)).FirstOrDefault();
@@ -125,6 +130,13 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
             var result = await filterQueryable.ToListAsync(cancellationToken);
 
             return result;
+        }
+
+        public virtual void Remove(IFilterRequest<TEntity> filterRequest)
+        {
+            var queryable = GetQueryable();
+            var filterQueryable = filterRequest.Find(queryable);
+            _repository.RemoveRange(filterQueryable);
         }
 
         public virtual async Task<IPaginationResponse<TEntity>> ToPaginationAsync(IPaginationRequest paginationRequest,
