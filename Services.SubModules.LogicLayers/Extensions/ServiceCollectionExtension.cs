@@ -111,6 +111,7 @@ namespace Services.SubModules.LogicLayers.Extensions
 
         public static IServiceCollection AddConfigurationSingletonSubmodules(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddSingleton<IEnumService, EnumService>();
             serviceCollection.AddSingleton<ITokenService, TokenService>();
             serviceCollection.AddSingleton<IWriterLogService, WriterLogService>();
             serviceCollection.AddSingleton<IExceptionService, ExceptionService>();
