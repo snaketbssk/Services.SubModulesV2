@@ -10,18 +10,10 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             var result = new List<IEnumResponse>();
             result.AddRange(Enum.GetValues(typeof(CommonEnumResponse))
                                 .Cast<CommonEnumResponse>()
-                                .Select(value => new EnumResponse
-                                {
-                                    Id = Convert.ToInt32(value),
-                                    Label = value.ToString()
-                                }));
+                                .Select(value => EnumResponse.FromEnum(value)));
             result.AddRange(Enum.GetValues(typeof(TEnum))
                                 .Cast<TEnum>()
-                                .Select(value => new EnumResponse
-                                {
-                                    Id = Convert.ToInt32(value),
-                                    Label = value.ToString()
-                                }));
+                                .Select(value => EnumResponse.FromEnum(value)));
 
             return result;
         }
