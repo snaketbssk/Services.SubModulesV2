@@ -1,37 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Services.SubModules.LogicLayers.Services;
+using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Middlewares.Entities
 {
+    /// <summary>
+    /// Middleware to handle localization for requests.
+    /// </summary>
     public class LocalizationMiddleware
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly RequestDelegate _requestDelegate;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ILogger<LocalizationMiddleware> _logger;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly IWriterLogService _logService;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ILocalizationService _localizationService;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="LocalizationMiddleware"/> class.
         /// </summary>
-        /// <param name="logService"></param>
-        /// <param name="requestDelegate"></param>
-        /// <param name="loggerFactory"></param>
+        /// <param name="localizationService">The localization service for managing cultures.</param>
+        /// <param name="logService">The writer log service for logging.</param>
+        /// <param name="requestDelegate">The next request delegate in the pipeline.</param>
+        /// <param name="loggerFactory">The logger factory for creating loggers.</param>
         public LocalizationMiddleware(
             ILocalizationService localizationService,
             IWriterLogService logService,
@@ -44,11 +34,18 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
             _localizationService = localizationService;
         }
 
+        /// <summary>
+        /// Invokes the middleware to handle localization for the request.
+        /// </summary>
         public async Task InvokeAsync(HttpContext context)
         {
+            // Get the culture from the request headers
             var culture = context.Request.Headers["X-Culture"];
+
+            // Set the culture in the localization service
             _localizationService.SetCulture(culture);
 
+            // Continue processing the request pipeline
             await _requestDelegate(context);
         }
     }

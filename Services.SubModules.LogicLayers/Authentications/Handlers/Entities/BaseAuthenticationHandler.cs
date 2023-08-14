@@ -8,6 +8,10 @@ using System.Text.Encodings.Web;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {
+    /// <summary>
+    /// Base class for authentication handlers. Provides common functionality for handling authentication using JWT tokens.
+    /// </summary>
+    /// <typeparam name="TOptions">The type of authentication scheme options.</typeparam>
     public abstract class BaseAuthenticationHandler<TOptions> : AuthenticationHandler<TOptions>
         where TOptions : AuthenticationSchemeOptions, new()
     {
@@ -19,22 +23,37 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             : base(options, logger, encoder, clock)
         {
         }
+
+        /// <summary>
+        /// Checks if the request contains the required authorization header.
+        /// </summary>
+        /// <returns><c>true</c> if the header is present; otherwise, <c>false</c>.</returns>
         private bool HasHeader()
         {
             var result = Request.Headers.ContainsKey(HeaderConstant.AUTHORIZATION);
             return result;
         }
+
+        /// <summary>
+        /// Retrieves the authorization header value from the request.
+        /// </summary>
+        /// <returns>The token value extracted from the header.</returns>
         private string GetHeader()
         {
-            var autorizationHeader = Request.Headers[HeaderConstant.AUTHORIZATION].ToString();
+            var authorizationHeader = Request.Headers[HeaderConstant.AUTHORIZATION].ToString();
 
-            if (!autorizationHeader.Contains(JwtBearerDefaults.AuthenticationScheme))
-                throw new ArgumentNullException(nameof(autorizationHeader));
+            if (!authorizationHeader.Contains(JwtBearerDefaults.AuthenticationScheme))
+                throw new ArgumentNullException(nameof(authorizationHeader));
 
-            var result = autorizationHeader.Split(" ").Last();
+            var result = authorizationHeader.Split(" ").Last();
 
             return result;
         }
+
+        /// <summary>
+        /// Handles the authentication process.
+        /// </summary>
+        /// <returns>An <see cref="AuthenticateResult"/> indicating the authentication result.</returns>
         protected sealed override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             if (!HasHeader())
@@ -55,6 +74,12 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var authenticationTicket = new AuthenticationTicket(new ClaimsPrincipal(claimsIdentity), Scheme.Name);
             return await Task.FromResult(AuthenticateResult.Success(authenticationTicket));
         }
+
+        /// <summary>
+        /// Retrieves and validates claims from the token.
+        /// </summary>
+        /// <param name="token">The token extracted from the authorization header.</param>
+        /// <returns>A collection of claims representing the authenticated user.</returns>
         protected abstract Task<IEnumerable<Claim>> GetClaimsAsync(string token);
     }
 }

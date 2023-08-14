@@ -11,12 +11,25 @@ using System.Text.Encodings.Web;
 
 namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
 {
+    /// <summary>
+    /// Authentication handler for validating gRPC requests using Identity authentication scheme.
+    /// </summary>
     public class IdentityGrpcValidateAuthenticationHandler : BaseAuthenticationHandler<IdentityGrpcValidateAuthenticationSchemeOptions>
     {
         private readonly IIdentityGrpcService _identityGrpcService;
         private readonly IIdentityCacheService _identityCacheService;
         private readonly ITokenService _tokenService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IdentityGrpcValidateAuthenticationHandler"/> class.
+        /// </summary>
+        /// <param name="identityGrpcService">The gRPC service for identity-related operations.</param>
+        /// <param name="options">The options for the authentication scheme.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="encoder">The URL encoder.</param>
+        /// <param name="clock">The system clock.</param>
+        /// <param name="tokenService">The service for decoding and validating tokens.</param>
+        /// <param name="identityCacheService">The service for caching identity-related data.</param>
         public IdentityGrpcValidateAuthenticationHandler(IIdentityGrpcService identityGrpcService,
                                                          IOptionsMonitor<IdentityGrpcValidateAuthenticationSchemeOptions> options,
                                                          ILoggerFactory logger,
@@ -31,6 +44,11 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             _identityCacheService = identityCacheService;
         }
 
+        /// <summary>
+        /// Retrieves and validates claims from the provided token.
+        /// </summary>
+        /// <param name="token">The token extracted from the request.</param>
+        /// <returns>A collection of claims representing the authenticated user.</returns>
         protected override async Task<IEnumerable<Claim>> GetClaimsAsync(string token)
         {
             var result = new List<Claim>();
@@ -49,6 +67,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             var (cacheUserIsSuccessful, userValue) = await _identityCacheService.Users.TryGetAsync(idUserTable.Value);
             if (cacheUserIsSuccessful)
             {
+                // Construct claims for a cached user
                 var userAuthentication = new UserAuthentication(
                     id: userValue.Id,
                     name: userValue.Name,
@@ -61,6 +80,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
             }
             else
             {
+                // Fetch user details via gRPC if not found in cache
                 var authenticationIdentityGrpcRequestMapping = new AuthenticationIdentityGrpcRequestMapping(token);
                 var (grpcIsSuccessful, response) = await _identityGrpcService.AuthenticationAsync(authenticationIdentityGrpcRequestMapping);
 
@@ -68,6 +88,7 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
                     throw new ArgumentException(nameof(grpcIsSuccessful));
                 ArgumentNullException.ThrowIfNull(response, nameof(response));
 
+                // Construct claims for a user fetched via gRPC
                 var userAuthentication = new UserAuthentication(id: Guid.Parse(response.Id),
                                                                 name: response.Login,
                                                                 email: response.Email,
