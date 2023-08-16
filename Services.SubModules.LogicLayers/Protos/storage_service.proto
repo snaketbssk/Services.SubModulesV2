@@ -1,48 +1,73 @@
 syntax = "proto3";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Storage gRPC service definition.
 service StorageGrpc {
-  rpc SendFile (StorageFileGrpcRequest) returns (StorageFileGrpcResponse);
-  rpc SendFiles (StorageFilesGrpcRequest) returns (StorageFilesGrpcResponse);
-  rpc GetFile (StorageReadFileGrpcRequest) returns (StorageReadFileGrpcResponse);
-  rpc GetFiles (StorageReadFilesGrpcRequest) returns (StorageReadFilesGrpcResponse);
+    // Sends a single file to the storage.
+    rpc SendFile (StorageFileGrpcRequest) returns (StorageFileGrpcResponse);
+
+    // Sends multiple files to the storage.
+    rpc SendFiles (StorageFilesGrpcRequest) returns (StorageFilesGrpcResponse);
+
+    // Retrieves the content of a single file from the storage.
+    rpc GetFile (StorageReadFileGrpcRequest) returns (StorageReadFileGrpcResponse);
+
+    // Retrieves the content of multiple files from the storage.
+    rpc GetFiles (StorageReadFilesGrpcRequest) returns (StorageReadFilesGrpcResponse);
 }
 
-message StorageFileGrpcRequest
-{
+// Request message for sending a single file to the storage.
+message StorageFileGrpcRequest {
+    // Name of the file.
     string name = 1;
+
+    // Content of the file.
     bytes content = 2;
 }
 
-message StorageFileGrpcResponse
-{
+// Response message for sending a single file to the storage.
+message StorageFileGrpcResponse {
+    // Name of the stored file.
     string name = 1;
 }
 
-message StorageFilesGrpcRequest
-{
+// Request message for sending multiple files to the storage.
+message StorageFilesGrpcRequest {
+    // List of files to send.
     repeated StorageFileGrpcRequest files = 1;
 }
 
+// Response message for sending multiple files to the storage.
 message StorageFilesGrpcResponse {
+    // List of stored file names.
     repeated StorageFileGrpcResponse files = 1;
 }
 
+// Request message for retrieving the content of a single file from the storage.
 message StorageReadFileGrpcRequest {
+    // Name of the file to retrieve.
     string name = 1;
 }
 
+// Response message for retrieving the content of a single file from the storage.
 message StorageReadFileGrpcResponse {
+    // Name of the retrieved file.
     string name = 1;
+
+    // Content of the retrieved file.
     bytes content = 2;
 }
 
-message StorageReadFilesGrpcRequest
-{
+// Request message for retrieving the content of multiple files from the storage.
+message StorageReadFilesGrpcRequest {
+    // List of file names to retrieve.
     repeated StorageReadFileGrpcRequest files = 1;
 }
 
+// Response message for retrieving the content of multiple files from the storage.
 message StorageReadFilesGrpcResponse {
+    // List of retrieved files and their content.
     repeated StorageReadFileGrpcResponse files = 1;
 }

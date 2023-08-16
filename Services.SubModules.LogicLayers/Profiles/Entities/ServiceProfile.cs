@@ -6,6 +6,9 @@ using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Profiles.Entities
 {
+    /// <summary>
+    /// AutoMapper profile for mapping between entities and Proto messages.
+    /// </summary>
     public class ServiceProfile : Profile, IProfile
     {
         private Guid Parse(string value)

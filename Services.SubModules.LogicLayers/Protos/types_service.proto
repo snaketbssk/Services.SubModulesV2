@@ -1,12 +1,19 @@
 syntax = "proto3";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Represents an ID in gRPC model.
 message IdGrpcModel {
+    // ID value.
     string id = 1;
 }
 
+// Represents a decimal number in gRPC model.
 message DecimalGrpcModel {
+    // The units part of the decimal.
     int64 units = 1;
+
+    // The nanoseconds part of the decimal.
     int32 nanos = 2;
 }

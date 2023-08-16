@@ -2,55 +2,98 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Notifications gRPC service definition.
 service NotificationsGrpc {
-	rpc AddSuccessNotification (AddSuccessNotificationsGrpcRequest) returns (google.protobuf.Empty);
-	rpc AddWarningNotification (AddWarningNotificationsGrpcRequest) returns (google.protobuf.Empty);
-	rpc AddErrorNotification (AddErrorNotificationsGrpcRequest) returns (google.protobuf.Empty);
-	rpc AddSuccessGroupNotification (AddSuccessGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
-	rpc AddWarningGroupNotification (AddWarningGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
-	rpc AddErrorGroupNotification (AddErrorGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
+    // Adds a success notification.
+    rpc AddSuccessNotification (AddSuccessNotificationsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Adds a warning notification.
+    rpc AddWarningNotification (AddWarningNotificationsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Adds an error notification.
+    rpc AddErrorNotification (AddErrorNotificationsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Adds a success group notification.
+    rpc AddSuccessGroupNotification (AddSuccessGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Adds a warning group notification.
+    rpc AddWarningGroupNotification (AddWarningGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Adds an error group notification.
+    rpc AddErrorGroupNotification (AddErrorGroupNotificationsGrpcRequest) returns (google.protobuf.Empty);
 }
 
-message AddSuccessNotificationsGrpcRequest 
-{
-	bytes idUser = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding a success notification.
+message AddSuccessNotificationsGrpcRequest {
+    // ID of the user to receive the notification.
+    bytes idUser = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }
 
-message AddWarningNotificationsGrpcRequest 
-{
-	bytes idUser = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding a warning notification.
+message AddWarningNotificationsGrpcRequest {
+    // ID of the user to receive the notification.
+    bytes idUser = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }
 
-message AddErrorNotificationsGrpcRequest 
-{
-	bytes idUser = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding an error notification.
+message AddErrorNotificationsGrpcRequest {
+    // ID of the user to receive the notification.
+    bytes idUser = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }
 
-message AddSuccessGroupNotificationsGrpcRequest 
-{
-	string nameGroup = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding a success group notification.
+message AddSuccessGroupNotificationsGrpcRequest {
+    // Name of the notification group.
+    string nameGroup = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }
 
-message AddWarningGroupNotificationsGrpcRequest 
-{
-	string nameGroup = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding a warning group notification.
+message AddWarningGroupNotificationsGrpcRequest {
+    // Name of the notification group.
+    string nameGroup = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }
 
-message AddErrorGroupNotificationsGrpcRequest 
-{
-	string nameGroup = 1;
-	string title = 2;
-	string content = 3;
+// Request message for adding an error group notification.
+message AddErrorGroupNotificationsGrpcRequest {
+    // Name of the notification group.
+    string nameGroup = 1;
+
+    // Title of the notification.
+    string title = 2;
+
+    // Content of the notification.
+    string content = 3;
 }

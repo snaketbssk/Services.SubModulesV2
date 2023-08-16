@@ -3,46 +3,80 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/types_service.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Identity gRPC service definition.
 service IdentityGrpc {
-	rpc GetUser (IdGrpcModel) returns (UserIdentityGrpcResponse);
-	rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (google.protobuf.Empty);
-	rpc Authentication (AuthenticationIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
+    // Retrieves user information by ID.
+    rpc GetUser (IdGrpcModel) returns (UserIdentityGrpcResponse);
+
+    // Adds roles to a user.
+    rpc AddRolesToUser (AddRolesUserIdentityGrpcRequest) returns (google.protobuf.Empty);
+
+    // Performs user authentication.
+    rpc Authentication (AuthenticationIdentityGrpcRequest) returns (UserIdentityGrpcResponse);
 }
 
-message UserIdentityGrpcResponse
-{
-	string id = 1;
-	string login = 2;
-	string email = 3;
-	bool confirmedEmail = 4;
-	string phoneNumber = 5;
-	bool confirmedPhoneNumber = 6;
-	bool twoFactorEnabled = 7;
-	repeated RoleIdentityGrpcResponse roles = 8;
-	repeated ClaimRoleIdentityGrpcResponse claims = 9;
+// Response message for user information.
+message UserIdentityGrpcResponse {
+    // User ID.
+    string id = 1;
+
+    // User's login.
+    string login = 2;
+
+    // User's email.
+    string email = 3;
+
+    // Indicates if user's email is confirmed.
+    bool confirmedEmail = 4;
+
+    // User's phone number.
+    string phoneNumber = 5;
+
+    // Indicates if user's phone number is confirmed.
+    bool confirmedPhoneNumber = 6;
+
+    // Indicates if two-factor authentication is enabled.
+    bool twoFactorEnabled = 7;
+
+    // List of roles associated with the user.
+    repeated RoleIdentityGrpcResponse roles = 8;
+
+    // List of claims associated with the user.
+    repeated ClaimRoleIdentityGrpcResponse claims = 9;
 }
 
-message RoleIdentityGrpcResponse 
-{
-	string id = 1;
+// Response message for a role.
+message RoleIdentityGrpcResponse {
+    // Role ID.
+    string id = 1;
+
+    // Role name.
     string name = 2;
 }
 
-message ClaimRoleIdentityGrpcResponse 
-{
+// Response message for a claim associated with a role.
+message ClaimRoleIdentityGrpcResponse {
+    // Claim type.
     string type = 1;
+
+    // Claim value.
     string value = 2;
 }
 
-message AddRolesUserIdentityGrpcRequest
-{
-	string id = 1;
-	repeated string roles = 2;
+// Request message for adding roles to a user.
+message AddRolesUserIdentityGrpcRequest {
+    // User ID.
+    string id = 1;
+
+    // List of roles to be added.
+    repeated string roles = 2;
 }
 
-message AuthenticationIdentityGrpcRequest
-{
+// Request message for user authentication.
+message AuthenticationIdentityGrpcRequest {
+    // User's authentication token.
     string token = 1;
 }

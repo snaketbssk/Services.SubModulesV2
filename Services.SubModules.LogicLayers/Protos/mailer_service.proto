@@ -2,17 +2,29 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Mailer gRPC service definition.
 service MailerGrpc {
-  rpc SendMessage (MessageMailerGrpcRequest) returns (google.protobuf.Empty);
+    // Sends a message through the mailer.
+    rpc SendMessage (MessageMailerGrpcRequest) returns (google.protobuf.Empty);
 }
 
-message MessageMailerGrpcRequest
-{
+// Request message for sending a message through the mailer.
+message MessageMailerGrpcRequest {
+    // Type of the message.
     string type = 1;
+
+    // Language of the message.
     string language = 2;
+
+    // Recipient's email address.
     string address = 3;
+
+    // Date of the message.
     int64 date = 4;
+
+    // Content of the message.
     string data = 5;
 }

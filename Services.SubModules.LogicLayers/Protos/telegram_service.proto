@@ -2,41 +2,65 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Telegram gRPC service definition.
 service TelegramGrpc {
-  rpc SendMessage (MessageTelegramGrpcRequest) returns (google.protobuf.Empty);
-  rpc SendMedia (MediaFilesGrpcRequest) returns (google.protobuf.Empty);
-  rpc SendImages (MediaImagesGrpcRequest) returns (google.protobuf.Empty);
+    // Sends a text message to Telegram.
+    rpc SendMessage (MessageTelegramGrpcRequest) returns (google.protobuf.Empty);
+
+    // Sends media files to Telegram.
+    rpc SendMedia (MediaFilesGrpcRequest) returns (google.protobuf.Empty);
+
+    // Sends images to Telegram.
+    rpc SendImages (MediaImagesGrpcRequest) returns (google.protobuf.Empty);
 }
 
-message MessageTelegramGrpcRequest
-{
+// Request message for sending a text message to Telegram.
+message MessageTelegramGrpcRequest {
+    // Type of the message.
     string type = 1;
+
+    // Language of the message.
     string language = 2;
+
+    // Date of the message.
     int64 date = 3;
+
+    // Content of the message.
     string data = 4;
 }
 
-message MessageFileGrpcRequest
-{
+// Request message for sending a file to Telegram.
+message MessageFileGrpcRequest {
+    // Name of the file.
     string name = 1;
+
+    // Content of the file.
     bytes content = 2;
 }
 
-message MessageImageGrpcRequest
-{
+// Request message for sending an image to Telegram.
+message MessageImageGrpcRequest {
+    // Name of the image.
     string name = 1;
 }
 
-message MediaFilesGrpcRequest
-{
+// Request message for sending media files to Telegram.
+message MediaFilesGrpcRequest {
+    // Message to accompany the media.
     MessageTelegramGrpcRequest message = 1;
+
+    // List of files to send.
     repeated MessageFileGrpcRequest files = 2;
 }
 
-message MediaImagesGrpcRequest
-{
+// Request message for sending images to Telegram.
+message MediaImagesGrpcRequest {
+    // Message to accompany the images.
     MessageTelegramGrpcRequest message = 1;
+
+    // List of images to send.
     repeated MessageImageGrpcRequest images = 2;
 }

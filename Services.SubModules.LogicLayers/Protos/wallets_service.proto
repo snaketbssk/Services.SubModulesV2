@@ -3,21 +3,38 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/types_service.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Wallets gRPC service definition.
 service WalletsGrpc {
+    // Credits the wallet with a transaction and returns the ID of the transaction.
     rpc CreditWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Credits the user with a transaction and returns the ID of the transaction.
     rpc CreditUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Debits the wallet with a transaction and returns the ID of the transaction.
     rpc DebitWallet (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Debits the user with a transaction and returns the ID of the transaction.
     rpc DebitUser (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Updates the state of a transaction and returns an empty response.
     rpc UpdateState (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
+
+    // Creates a wallet order transaction and returns the ID of the transaction.
     rpc CreateWalletOrder (WalletTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Creates a user order transaction and returns the ID of the transaction.
     rpc CreateUserOrder (UserTransactionWalletsGrpcRequest) returns (IdGrpcModel);
+
+    // Updates the state of an order transaction and returns an empty response.
     rpc UpdateStateOrder (UpdateTransactionWalletsGrpcRequest) returns (google.protobuf.Empty);
 }
 
-enum StatusTransactionWalletsGrpcEnum
-{
+// Enum for status of wallet transactions.
+enum StatusTransactionWalletsGrpcEnum {
     proccess = 0;
     declined = 1;
     error = 2;
@@ -25,25 +42,44 @@ enum StatusTransactionWalletsGrpcEnum
     frozen = 4;
 }
 
-message UpdateTransactionWalletsGrpcRequest
-{
+// Request message for updating the state of a transaction.
+message UpdateTransactionWalletsGrpcRequest {
+    // ID of the transaction.
     string id = 1;
+
+    // Status of the transaction.
     StatusTransactionWalletsGrpcEnum status = 2;
 }
 
-message WalletTransactionWalletsGrpcRequest
-{
+// Request message for wallet transactions.
+message WalletTransactionWalletsGrpcRequest {
+    // Description of the transaction.
     string description = 1;
+
+    // ID of the wallet.
     string walletId = 2;
+
+    // Reference for the transaction.
     string reference = 3;
+
+    // Amount of the transaction.
     DecimalGrpcModel amount = 4;
 }
 
-message UserTransactionWalletsGrpcRequest
-{
+// Request message for user transactions.
+message UserTransactionWalletsGrpcRequest {
+    // Description of the transaction.
     string description = 1;
+
+    // ID of the user.
     string userId = 2;
+
+    // Reference for the transaction.
     string reference = 3;
+
+    // Amount of the transaction.
     DecimalGrpcModel amount = 4;
+
+    // ID of the currency.
     string currencyId = 5;
 }

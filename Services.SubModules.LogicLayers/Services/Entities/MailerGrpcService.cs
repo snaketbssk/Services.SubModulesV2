@@ -6,23 +6,28 @@ using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Provides functionality for sending messages via gRPC using the Mailer service.
+    /// Implements the IMailerGrpcService interface.
+    /// </summary>
     public class MailerGrpcService : GrpcService, IMailerGrpcService
     {
         /// <summary>
-        /// 
+        /// Logger instance for logging within the MailerGrpcService class.
         /// </summary>
         private readonly ILogger<MailerGrpcService> _logger;
 
         /// <summary>
-        /// 
+        /// Exception service for handling and logging exceptions.
         /// </summary>
         private readonly IExceptionService _exceptionService;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the MailerGrpcService class.
         /// </summary>
-        /// <param name="tokenService"></param>
-        /// <param name="logger"></param>
+        /// <param name="exceptionService">The exception service for handling exceptions.</param>
+        /// <param name="tokenService">The token service for managing authentication tokens.</param>
+        /// <param name="logger">The logger instance for logging.</param>
         public MailerGrpcService(
             IExceptionService exceptionService,
             ITokenService tokenService,
@@ -32,6 +37,13 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _logger = logger;
             _exceptionService = exceptionService;
         }
+
+        /// <summary>
+        /// Sends a message asynchronously via gRPC using the Mailer service.
+        /// </summary>
+        /// <param name="mapping">The mapping containing the message data to be sent.</param>
+        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
+        /// <returns>True if the message was sent successfully, false otherwise.</returns>
         public async Task<bool> SendMessageAsync(IMapping<MessageMailerGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -48,7 +60,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
             catch (Exception exception)
             {
-                await _exceptionService.ExecuteAsync(method: nameof(IdentityGrpcService),
+                await _exceptionService.ExecuteAsync(method: nameof(MailerGrpcService),
                                                      path: nameof(SendMessageAsync),
                                                      exception: exception,
                                                      cancellationToken);

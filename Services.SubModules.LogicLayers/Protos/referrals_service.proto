@@ -3,14 +3,20 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/types_service.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Referrals gRPC service definition.
 service ReferralsGrpc {
-	rpc CreateReferral (CreateReferralReferralsGrpcRequest) returns (google.protobuf.Empty);
+    // Creates a new referral.
+    rpc CreateReferral (CreateReferralReferralsGrpcRequest) returns (google.protobuf.Empty);
 }
 
-message CreateReferralReferralsGrpcRequest
-{
-	string idUser = 1;
-	string tokenReferral = 2;
+// Request message for creating a new referral.
+message CreateReferralReferralsGrpcRequest {
+    // ID of the user creating the referral.
+    string idUser = 1;
+
+    // Referral token.
+    string tokenReferral = 2;
 }

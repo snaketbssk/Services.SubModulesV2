@@ -8,20 +8,23 @@ using System.Text.Json;
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
     /// <summary>
-    /// 
+    /// Provides cryptographic operations such as hashing and encryption/decryption.
     /// </summary>
     public class CryptoService : ICryptoService
     {
         /// <summary>
-        /// 
+        /// The encryption key used for cryptographic operations.
         /// </summary>
         private readonly byte[] _key;
 
         /// <summary>
-        /// 
+        /// The initialization vector (IV) used for cryptographic operations.
         /// </summary>
         private readonly byte[] _iv;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CryptoService"/> class.
+        /// </summary>
         public CryptoService()
         {
             var root = CryptographyEnvironmentConfiguration<CryptographyEnvironmentRoot>.Instance.GetRoot();
@@ -29,6 +32,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _iv = Convert.FromBase64String(root.IV);
         }
 
+        /// <summary>
+        /// Computes the SHA-512 hash of a given value.
+        /// </summary>
+        /// <param name="value">The input value to be hashed.</param>
+        /// <returns>The computed hash as a hexadecimal string.</returns>
         public string ComputeHash(string value)
         {
             var bytes = Encoding.UTF8.GetBytes(value);
@@ -41,6 +49,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// Decrypts a Base64-encoded string to an object of type T using JSON deserialization.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize to.</typeparam>
+        /// <param name="value">The Base64-encoded string to decrypt.</param>
+        /// <returns>The deserialized object of type T.</returns>
         public T DecryptFromBase64<T>(string value) where T : class
         {
             var json = DecryptFromBase64(value);
@@ -48,6 +62,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Decrypts a Base64-encoded string to its original plaintext representation.
+        /// </summary>
+        /// <param name="value">The Base64-encoded string to decrypt.</param>
+        /// <returns>The decrypted plaintext string.</returns>
         public string DecryptFromBase64(string value)
         {
             var bytes = WebEncoders.Base64UrlDecode(value);
@@ -55,12 +74,23 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Decrypts a byte array to its original plaintext representation.
+        /// </summary>
+        /// <param name="value">The byte array to decrypt.</param>
+        /// <returns>The decrypted plaintext string.</returns>
         public string DecryptToBytes(byte[] value)
         {
             var result = DecryptFromBytes(value, _key, _iv);
             return result;
         }
 
+        /// <summary>
+        /// Encrypts an object of type T to a Base64-encoded string using JSON serialization.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to serialize and encrypt.</typeparam>
+        /// <param name="value">The object to be encrypted.</param>
+        /// <returns>The Base64-encoded encrypted string.</returns>
         public string EncryptToBase64<T>(T value) where T : class
         {
             var json = JsonSerializer.Serialize(value);
@@ -68,6 +98,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Encrypts a plaintext string to a Base64-encoded encrypted string.
+        /// </summary>
+        /// <param name="value">The plaintext string to encrypt.</param>
+        /// <returns>The Base64-encoded encrypted string.</returns>
         public string EncryptToBase64(string value)
         {
             var bytes = EncryptToBytes(value);
@@ -75,12 +110,24 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Encrypts a plaintext string to an array of encrypted bytes.
+        /// </summary>
+        /// <param name="value">The plaintext string to encrypt.</param>
+        /// <returns>The encrypted bytes.</returns>
         public byte[] EncryptToBytes(string value)
         {
             var result = EncryptToBytes(value, _key, _iv);
             return result;
         }
 
+        /// <summary>
+        /// Encrypts the given string value using AES encryption.
+        /// </summary>
+        /// <param name="value">The value to be encrypted.</param>
+        /// <param name="key">The encryption key.</param>
+        /// <param name="iv">The initialization vector.</param>
+        /// <returns>The encrypted bytes.</returns>
         private byte[] EncryptToBytes(string value, byte[] key, byte[] iv)
         {
             if (value == null || value.Length <= 0)
@@ -120,6 +167,13 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return encrypted;
         }
 
+        /// <summary>
+        /// Decrypts the given byte array using AES decryption.
+        /// </summary>
+        /// <param name="value">The byte array to be decrypted.</param>
+        /// <param name="key">The decryption key.</param>
+        /// <param name="iv">The initialization vector.</param>
+        /// <returns>The decrypted string.</returns>
         private string DecryptFromBytes(byte[] value, byte[] key, byte[] iv)
         {
             if (value == null || value.Length <= 0)

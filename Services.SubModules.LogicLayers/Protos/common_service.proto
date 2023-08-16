@@ -3,52 +3,89 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "Protos/types_service.proto";
 
+// Setting the C# namespace for generated code.
 option csharp_namespace = "Services.SubModules.Protos";
 
+// Common gRPC service definition.
 service CommonGrpc {
-	rpc GetCurrency (IdGrpcModel) returns (CurrencyCommonGrpcResponse);
-	rpc GetCountry (IdGrpcModel) returns (CountryCommonGrpcResponse);
-	rpc GetLanguage (IdGrpcModel) returns (LanguageCommonGrpcResponse);
-	rpc GetCurrencies (google.protobuf.Empty) returns (CurrenciesCommonGrpcResponse);
-	rpc GetCountries (google.protobuf.Empty) returns (CountriesCommonGrpcResponse);
-	rpc GetLanguages (google.protobuf.Empty) returns (LanguagesCommonGrpcResponse);
+    // Retrieves currency information by ID.
+    rpc GetCurrency (IdGrpcModel) returns (CurrencyCommonGrpcResponse);
+
+    // Retrieves country information by ID.
+    rpc GetCountry (IdGrpcModel) returns (CountryCommonGrpcResponse);
+
+    // Retrieves language information by ID.
+    rpc GetLanguage (IdGrpcModel) returns (LanguageCommonGrpcResponse);
+
+    // Retrieves a list of currencies.
+    rpc GetCurrencies (google.protobuf.Empty) returns (CurrenciesCommonGrpcResponse);
+
+    // Retrieves a list of countries.
+    rpc GetCountries (google.protobuf.Empty) returns (CountriesCommonGrpcResponse);
+
+    // Retrieves a list of languages.
+    rpc GetLanguages (google.protobuf.Empty) returns (LanguagesCommonGrpcResponse);
 }
 
-message CurrencyCommonGrpcResponse
-{
-	string id = 1;
-	string code = 2;
-	string symbol = 3;
-	int32 number = 4;
-	string name = 5;
-	bool enable = 6;
+// Response message for currency information.
+message CurrencyCommonGrpcResponse {
+    // ID of the currency.
+    string id = 1;
+
+    // Code of the currency.
+    string code = 2;
+
+    // Symbol of the currency.
+    string symbol = 3;
+
+    // Numeric code of the currency.
+    int32 number = 4;
+
+    // Name of the currency.
+    string name = 5;
+
+    // Indicates if the currency is enabled.
+    bool enable = 6;
 }
 
-message CurrenciesCommonGrpcResponse
-{
-	repeated CurrencyCommonGrpcResponse values = 1;
+// Response message for a list of currencies.
+message CurrenciesCommonGrpcResponse {
+    // List of currency response values.
+    repeated CurrencyCommonGrpcResponse values = 1;
 }
 
-message CountryCommonGrpcResponse
-{
-	string id = 1;
-	string iso2 = 2;
-	string iso3 = 3;
+// Response message for country information.
+message CountryCommonGrpcResponse {
+    // ID of the country.
+    string id = 1;
+
+    // ISO 2-letter code of the country.
+    string iso2 = 2;
+
+    // ISO 3-letter code of the country.
+    string iso3 = 3;
 }
 
-message CountriesCommonGrpcResponse
-{
-	repeated CountryCommonGrpcResponse values = 1;
+// Response message for a list of countries.
+message CountriesCommonGrpcResponse {
+    // List of country response values.
+    repeated CountryCommonGrpcResponse values = 1;
 }
 
-message LanguageCommonGrpcResponse
-{
-	string id = 1;
-	string name = 2;
-	bool enable = 3;
+// Response message for language information.
+message LanguageCommonGrpcResponse {
+    // ID of the language.
+    string id = 1;
+
+    // Name of the language.
+    string name = 2;
+
+    // Indicates if the language is enabled.
+    bool enable = 3;
 }
 
-message LanguagesCommonGrpcResponse
-{
-	repeated LanguageCommonGrpcResponse values = 1;
+// Response message for a list of languages.
+message LanguagesCommonGrpcResponse {
+    // List of language response values.
+    repeated LanguageCommonGrpcResponse values = 1;
 }

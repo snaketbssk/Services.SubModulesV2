@@ -7,12 +7,22 @@ using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Represents a service class that interacts with gRPC services for common functionalities.
+    /// </summary>
     public class CommonGrpcService : GrpcService, ICommonGrpcService
     {
         private readonly ILogger<CommonGrpcService> _logger;
         private readonly IExceptionService _exceptionService;
         private readonly ICommonCacheService _commonCacheService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommonGrpcService"/> class.
+        /// </summary>
+        /// <param name="exceptionService">Exception service instance.</param>
+        /// <param name="tokenService">Token service instance.</param>
+        /// <param name="logger">Logger instance.</param>
+        /// <param name="commonCacheService">Common cache service instance.</param>
         public CommonGrpcService(
             IExceptionService exceptionService,
             ITokenService tokenService,
@@ -25,6 +35,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _commonCacheService = commonCacheService;
         }
 
+        /// <summary>
+        /// Retrieves currency information asynchronously.
+        /// </summary>
+        /// <param name="mapping">Mapping instance for converting data.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A tuple indicating if the operation was successful and the resulting CurrencyCommonGrpcResponse.</returns>
         public async Task<(bool isSuccessful, CurrencyCommonGrpcResponse?)> GetCurrencyAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -49,6 +65,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of currencies asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A tuple indicating if the operation was successful and the resulting CurrenciesCommonGrpcResponse.</returns>
         public async Task<(bool isSuccessful, CurrenciesCommonGrpcResponse?)> GetCurrenciesAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -73,6 +94,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Retrieves country information asynchronously.
+        /// </summary>
         public async Task<(bool isSuccessful, CountryCommonGrpcResponse?)> GetCountryAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -97,6 +121,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of countries asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A tuple indicating if the operation was successful and the resulting CountriesCommonGrpcResponse.</returns>
         public async Task<(bool isSuccessful, CountriesCommonGrpcResponse?)> GetCountriesAsync(CancellationToken cancellationToken = default)
         {
             try
@@ -121,6 +150,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Retrieves language information asynchronously.
+        /// </summary>
+        /// <param name="mapping">Mapping instance for converting data.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A tuple indicating if the operation was successful and the resulting LanguageCommonGrpcResponse.</returns>
         public async Task<(bool isSuccessful, LanguageCommonGrpcResponse?)> GetLanguageAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -145,6 +180,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Retrieves a list of languages asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A tuple indicating if the operation was successful and the resulting LanguagesCommonGrpcResponse.</returns>
         public async Task<(bool isSuccessful, LanguagesCommonGrpcResponse?)> GetLanguagesAsync(CancellationToken cancellationToken = default)
         {
             try

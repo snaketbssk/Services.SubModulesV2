@@ -3,12 +3,27 @@ using Services.SubModules.LogicLayers.Models.Authentication.Entities;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Base service class providing access to HttpContext and user authentication.
+    /// </summary>
     public abstract class BaseService : IService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the BaseService class.
+        /// </summary>
+        /// <param name="httpContextAccessor">The IHttpContextAccessor used to access the HttpContext.</param>
+        protected BaseService(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         private HttpContext _httpContext;
 
+        /// <summary>
+        /// Gets the current HttpContext.
+        /// </summary>
         public HttpContext HttpContext
         {
             get
@@ -25,6 +40,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         private HttpResponse _httpResponse;
 
+        /// <summary>
+        /// Gets the current HttpResponse.
+        /// </summary>
         public HttpResponse HttpResponse
         {
             get
@@ -41,6 +59,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         private HttpRequest _httpRequest;
 
+        /// <summary>
+        /// Gets the current HttpRequest.
+        /// </summary>
         public HttpRequest HttpRequest
         {
             get
@@ -57,6 +78,9 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
         private UserAuthentication _userAuthentication;
 
+        /// <summary>
+        /// Gets the user authentication information for the current user.
+        /// </summary>
         public UserAuthentication UserAuthentication
         {
             get
@@ -69,11 +93,6 @@ namespace Services.SubModules.LogicLayers.Services.Entities
 
                 return _userAuthentication;
             }
-        }
-
-        protected BaseService(IHttpContextAccessor httpContextAccessor)
-        {
-            _httpContextAccessor = httpContextAccessor;
         }
     }
 }
