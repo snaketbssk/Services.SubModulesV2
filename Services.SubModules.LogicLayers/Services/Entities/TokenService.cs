@@ -9,14 +9,27 @@ using System.Text;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Service responsible for token generation and decoding.
+    /// Implements the <see cref="ITokenService"/> interface.
+    /// </summary>
     public class TokenService : ITokenService
     {
         private readonly ILogger<TokenService> _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TokenService"/> class.
+        /// </summary>
+        /// <param name="logger">The logger used for logging events.</param>
         public TokenService(ILogger<TokenService> logger)
         {
             _logger = logger;
         }
 
+        /// <summary>
+        /// Retrieves the symmetric security key from the configuration.
+        /// </summary>
+        /// <returns>The symmetric security key.</returns>
         private SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             var key = Encoding.UTF8.GetBytes(SecurityEnvironmentConfiguration<SecurityEnvironmentRoot>.Instance.GetRoot().TOKEN);
@@ -24,6 +37,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Generates a JWT token based on the provided claims.
+        /// </summary>
+        /// <param name="claims">The claims to include in the token.</param>
+        /// <returns>The generated JWT token as a string.</returns>
         public string GenerateToken(IEnumerable<Claim> claims)
         {
             var nowAt = DateTime.UtcNow;
@@ -46,6 +64,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Decodes a JWT token and returns the associated claims.
+        /// </summary>
+        /// <param name="token">The JWT token to decode.</param>
+        /// <returns>The decoded claims as IEnumerable of Claim.</returns>
         public IEnumerable<Claim> DecodeToken(string token)
         {
             var symmetricSecurityKey = GetSymmetricSecurityKey();
@@ -69,6 +92,11 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Maps JWT claims to custom claims.
+        /// </summary>
+        /// <param name="claims">The JWT claims to map.</param>
+        /// <returns>The mapped custom claims.</returns>
         private IEnumerable<Claim> GetClaims(IEnumerable<Claim> claims)
         {
             var result = new List<Claim>();

@@ -6,18 +6,21 @@ using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Represents a service for interacting with Telegram via gRPC.
+    /// Implements the <see cref="ITelegramGrpcService"/> interface.
+    /// </summary>
     public class TelegramGrpcService : GrpcService, ITelegramGrpcService
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ILogger<TelegramGrpcService> _logger;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly IExceptionService _exceptionService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TelegramGrpcService"/> class.
+        /// </summary>
+        /// <param name="exceptionService">The exception service for handling errors.</param>
+        /// <param name="tokenService">The token service for obtaining authentication tokens.</param>
+        /// <param name="logger">The logger for logging events.</param>
         public TelegramGrpcService(
             IExceptionService exceptionService,
             ITokenService tokenService,
@@ -28,6 +31,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
+        /// <summary>
+        /// Sends a Telegram message asynchronously via gRPC.
+        /// </summary>
+        /// <param name="mapping">The mapping of the message request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns><c>true</c> if the message was sent successfully; otherwise, <c>false</c>.</returns>
         public async Task<bool> SendMessageAsync(IMapping<MessageTelegramGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -52,6 +61,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Sends media asynchronously via gRPC.
+        /// </summary>
+        /// <param name="mapping">The mapping of the media request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns><c>true</c> if the media was sent successfully; otherwise, <c>false</c>.</returns>
         public async Task<bool> SendMediaAsync(IMapping<MediaFilesGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -76,6 +91,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Sends images asynchronously via gRPC.
+        /// </summary>
+        /// <param name="mapping">The mapping of the image request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns><c>true</c> if the images were sent successfully; otherwise, <c>false</c>.</returns>
         public async Task<bool> SendImagesAsync(IMapping<MediaImagesGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try

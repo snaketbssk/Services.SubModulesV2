@@ -97,6 +97,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// <summary>
         /// Retrieves country information asynchronously.
         /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
         public async Task<(bool isSuccessful, CountryCommonGrpcResponse?)> GetCountryAsync(IMapping<IdGrpcModel> mapping, CancellationToken cancellationToken = default)
         {
             try

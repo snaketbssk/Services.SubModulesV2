@@ -6,18 +6,21 @@ using Services.SubModules.Protos;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Service for interacting with wallet-related gRPC methods.
+    /// Implements the <see cref="IWalletsGrpcService"/> interface.
+    /// </summary>
     public class WalletsGrpcService : GrpcService, IWalletsGrpcService
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly ILogger<WalletsGrpcService> _logger;
-
-        /// <summary>
-        /// 
-        /// </summary>
         private readonly IExceptionService _exceptionService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WalletsGrpcService"/> class.
+        /// </summary>
+        /// <param name="exceptionService">The exception service for handling errors.</param>
+        /// <param name="tokenService">The token service for obtaining authentication tokens.</param>
+        /// <param name="logger">The logger for logging events.</param>
         public WalletsGrpcService(IExceptionService exceptionService,
                                   ITokenService tokenService,
                                   ILogger<WalletsGrpcService> logger)
@@ -27,6 +30,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             _exceptionService = exceptionService;
         }
 
+        /// <summary>
+        /// Credits the wallet asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;WalletTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> CreditWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -51,6 +60,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Debits the wallet asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;WalletTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> DebitWalletAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -75,6 +90,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Credits a user's wallet asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;UserTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> CreditUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -99,6 +120,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Debits a user's wallet asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;UserTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> DebitUserAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -123,6 +150,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Updates the state of a transaction asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;UpdateTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating the success status.</returns>
         public async Task<bool> UpdateStateAsync(IMapping<UpdateTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -147,6 +180,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Creates a wallet order asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;WalletTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> CreateWalletOrderAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -171,6 +210,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Creates a user order asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;UserTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a tuple containing the success status and the IdGrpcModel result.</returns>
         public async Task<(bool isSuccessful, IdGrpcModel?)> CreateUserOrderAsync(IMapping<UserTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
@@ -195,6 +240,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
         }
 
+        /// <summary>
+        /// Updates the state of an order asynchronously using gRPC.
+        /// </summary>
+        /// <param name="mapping">An instance of IMapping&lt;UpdateTransactionWalletsGrpcRequest&gt; used for mapping.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A task representing the asynchronous operation, returning a boolean indicating the success status.</returns>
         public async Task<bool> UpdateStateOrderAsync(IMapping<UpdateTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try

@@ -6,12 +6,24 @@ using UAParser;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
+    /// <summary>
+    /// Service responsible for extracting user agent information from HTTP requests.
+    /// Implements the <see cref="IUserAgentService"/> interface.
+    /// </summary>
     public class UserAgentService : BaseService, IUserAgentService
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAgentService"/> class.
+        /// </summary>
+        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
         public UserAgentService(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
         }
 
+        /// <summary>
+        /// Retrieves user agent information from the current HTTP request.
+        /// </summary>
+        /// <returns>The user agent information.</returns>
         public IUserAgentResponse GetUserAgent()
         {
             var result = new UserAgentResponse();
@@ -32,6 +44,10 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Parses the client user agent information from the HTTP request headers.
+        /// </summary>
+        /// <returns>The parsed client information.</returns>
         private ClientInfo ParseClientInfo()
         {
             var uaParser = Parser.GetDefault();
@@ -43,6 +59,10 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             return result;
         }
 
+        /// <summary>
+        /// Parses the remote IP address from the HTTP context.
+        /// </summary>
+        /// <returns>The parsed remote IP address.</returns>
         private string ParseRemoteIpAddress()
         {
             if (HttpContext?.Connection?.RemoteIpAddress is null)
