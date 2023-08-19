@@ -45,7 +45,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             var result = new AddSuccessNotificationsGrpcRequest
             {
-                IdUser = ByteString.CopyFrom(IdUser.ToByteArray()),
+                IdUser = IdUser.ToString(),
                 Title = Title,
                 Content = Content
             };

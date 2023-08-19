@@ -29,7 +29,7 @@ service NotificationsGrpc {
 // Request message for adding a success notification.
 message AddSuccessNotificationsGrpcRequest {
     // ID of the user to receive the notification.
-    bytes idUser = 1;
+    string idUser = 1;
 
     // Title of the notification.
     string title = 2;
@@ -41,7 +41,7 @@ message AddSuccessNotificationsGrpcRequest {
 // Request message for adding a warning notification.
 message AddWarningNotificationsGrpcRequest {
     // ID of the user to receive the notification.
-    bytes idUser = 1;
+    string idUser = 1;
 
     // Title of the notification.
     string title = 2;
@@ -53,7 +53,7 @@ message AddWarningNotificationsGrpcRequest {
 // Request message for adding an error notification.
 message AddErrorNotificationsGrpcRequest {
     // ID of the user to receive the notification.
-    bytes idUser = 1;
+    string idUser = 1;
 
     // Title of the notification.
     string title = 2;
