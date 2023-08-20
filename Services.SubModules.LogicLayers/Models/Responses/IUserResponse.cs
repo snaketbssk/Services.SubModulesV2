@@ -1,6 +1,5 @@
 ﻿using Services.SubModules.DataLayers.Models.Tables;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System.Collections.Generic;
 
 namespace Services.SubModules.LogicLayers.Models.Responses
 {

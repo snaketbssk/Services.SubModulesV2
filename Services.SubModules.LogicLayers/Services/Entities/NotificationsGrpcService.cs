@@ -2,6 +2,9 @@
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Models.Mappings;
 using Services.SubModules.Protos;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {
@@ -18,37 +21,46 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// </summary>
         /// <param name="exceptionService">The exception service for handling exceptions.</param>
         /// <param name="tokenService">The token service for managing authentication tokens.</param>
-        public NotificationsGrpcService(IExceptionService exceptionService,
-                                        ITokenService tokenService)
-                                        : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().NOTIFICATIONS_HOST, tokenService)
+        public NotificationsGrpcService(
+            IExceptionService exceptionService,
+            ITokenService tokenService)
+            : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().NOTIFICATIONS_HOST, tokenService)
         {
             _exceptionService = exceptionService;
         }
 
         /// <summary>
-        /// Adds a success notification asynchronously via gRPC.
+        /// Adds a user notification via gRPC.
         /// </summary>
-        /// <param name="mapping">The mapping containing the success notification data.</param>
-        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-        /// <returns>True if the notification was added successfully, false otherwise.</returns>
-        public async Task<bool> AddSuccessNotificationAsync(IMapping<AddSuccessNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        /// <param name="mapping">The mapping object to create the request.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <returns>Returns true if the notification was added successfully, otherwise false.</returns>
+        public async Task<bool> AddUserNotification(IMapping<CreateUserNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
+                // Create a gRPC client
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
+
+                // Map the request using the provided mapping
                 var request = mapping.Map();
+
+                // Get headers and deadline for the gRPC call
                 var headers = GetHeaders();
                 var deadline = GetDeadline();
-                var result = await client.AddSuccessNotificationAsync(request: request,
-                                                                      headers: headers,
-                                                                      deadline: deadline,
-                                                                      cancellationToken);
+
+                // Call the gRPC method to add a user notification
+                await client.AddUserNotificationAsync(request: request,
+                                                      headers: headers,
+                                                      deadline: deadline,
+                                                      cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
+                // Handle and log exceptions using the exception service
                 await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
-                                                     path: nameof(AddSuccessNotificationAsync),
+                                                     path: nameof(AddUserNotification),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;
@@ -56,60 +68,37 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         }
 
         /// <summary>
-        /// Adds a warning notification asynchronously via gRPC.
+        /// Adds a group notification via gRPC.
         /// </summary>
-        /// <param name="mapping">The mapping containing the warning notification data.</param>
-        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-        /// <returns>True if the notification was added successfully, false otherwise.</returns>
-
-        public async Task<bool> AddWarningNotificationAsync(IMapping<AddWarningNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
+        /// <param name="mapping">The mapping object to create the request.</param>
+        /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+        /// <returns>Returns true if the notification was added successfully, otherwise false.</returns>
+        public async Task<bool> AddGroupNotification(IMapping<CreateGroupNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
         {
             try
             {
+                // Create a gRPC client
                 var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
+
+                // Map the request using the provided mapping
                 var request = mapping.Map();
+
+                // Get headers and deadline for the gRPC call
                 var headers = GetHeaders();
                 var deadline = GetDeadline();
-                var result = await client.AddWarningNotificationAsync(request: request,
-                                                                      headers: headers,
-                                                                      deadline: deadline,
-                                                                      cancellationToken);
+
+                // Call the gRPC method to add a group notification
+                await client.AddGroupNotificationAsync(request: request,
+                                                       headers: headers,
+                                                       deadline: deadline,
+                                                       cancellationToken);
                 return true;
             }
             catch (Exception exception)
             {
+                // Handle and log exceptions using the exception service
                 await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
-                                                     path: nameof(AddWarningNotificationAsync),
-                                                     exception: exception,
-                                                     cancellationToken);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Adds an error notification asynchronously via gRPC.
-        /// </summary>
-        /// <param name="mapping">The mapping containing the error notification data.</param>
-        /// <param name="cancellationToken">Cancellation token to cancel the operation.</param>
-        /// <returns>True if the notification was added successfully, false otherwise.</returns>
-        public async Task<bool> AddErrorNotificationAsync(IMapping<AddErrorNotificationsGrpcRequest> mapping, CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                var client = new NotificationsGrpc.NotificationsGrpcClient(GrpcChannel);
-                var request = mapping.Map();
-                var headers = GetHeaders();
-                var deadline = GetDeadline();
-                var result = await client.AddErrorNotificationAsync(request: request,
-                                                                    headers: headers,
-                                                                    deadline: deadline,
-                                                                    cancellationToken);
-                return true;
-            }
-            catch (Exception exception)
-            {
-                await _exceptionService.ExecuteAsync(method: nameof(NotificationsGrpcService),
-                                                     path: nameof(AddErrorNotificationAsync),
+                                                     path: nameof(AddGroupNotification),
                                                      exception: exception,
                                                      cancellationToken);
                 return false;

@@ -1,8 +1,5 @@
 ﻿using Services.SubModules.LogicLayers.Models.Responses;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Services.SubModules.LogicLayers.Services.Entities
 {

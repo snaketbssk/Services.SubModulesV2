@@ -70,7 +70,7 @@ namespace Services.SubModules.LogicLayers.Repositories
         /// Retrieves a paginated response of entities from the repository asynchronously.
         /// </summary>
         Task<IPaginationResponse<TEntity>> ToPaginationAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
-        
+
         /// <summary>
         /// Asynchronously saves changes made in the repository's context to the database.
         /// </summary>

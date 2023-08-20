@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.SubModules.LogicLayers.Models.Responses
+﻿namespace Services.SubModules.LogicLayers.Models.Responses
 {
     /// <summary>
     /// Represents an interface for chart response models.

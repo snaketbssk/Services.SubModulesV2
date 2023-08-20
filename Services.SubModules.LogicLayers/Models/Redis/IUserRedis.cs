@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Services.SubModules.LogicLayers.Models.Redis.Entities;
+﻿using Services.SubModules.LogicLayers.Models.Redis.Entities;
 
 namespace Services.SubModules.LogicLayers.Models.Redis
 {

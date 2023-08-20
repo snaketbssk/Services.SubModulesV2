@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 
 namespace Services.SubModules.LogicLayers.Models.Responses
 {

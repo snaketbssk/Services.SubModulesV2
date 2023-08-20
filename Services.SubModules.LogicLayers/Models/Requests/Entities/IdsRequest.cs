@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.SubModules.LogicLayers.Models.Requests.Entities
+﻿namespace Services.SubModules.LogicLayers.Models.Requests.Entities
 {
     /// <summary>
     /// Represents a request for a list of identifiers.

@@ -1,6 +1,4 @@
 ﻿using MassTransit;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.MassTransits.Producers
 {

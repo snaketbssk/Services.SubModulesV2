@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Services.SubModules.LogicLayers.Services;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Middlewares.Entities
 {

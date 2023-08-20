@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Services.SubModules.LogicLayers.Models.MassTransits.Entities
+﻿namespace Services.SubModules.LogicLayers.Models.MassTransits.Entities
 {
     /// <summary>
     /// Represents the base class for MassTransit messages with a list of values.

@@ -1,8 +1,5 @@
 ﻿using MassTransit;
 using Services.SubModules.LogicLayers.MassTransits.Entities;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.MassTransits.Producers.Entities
 {

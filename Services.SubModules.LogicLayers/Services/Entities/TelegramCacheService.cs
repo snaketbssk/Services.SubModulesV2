@@ -1,6 +1,4 @@
-﻿using Services.SubModules.LogicLayers.Services.Entities;
-
-namespace Services.SubModules.LogicLayers.Services.Entities
+﻿namespace Services.SubModules.LogicLayers.Services.Entities
 {
     /// <summary>
     /// Represents a service for caching Telegram-related data.

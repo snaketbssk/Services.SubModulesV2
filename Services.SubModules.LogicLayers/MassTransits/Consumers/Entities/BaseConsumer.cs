@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.MassTransits.Consumers.Entities
 {

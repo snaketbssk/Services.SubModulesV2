@@ -2,9 +2,7 @@
 using Services.SubModules.LogicLayers.Constants;
 using Services.SubModules.LogicLayers.Models.Exceptions.Entities;
 using Services.SubModules.LogicLayers.Services;
-using System;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Services.SubModules.LogicLayers.Middlewares.Entities
 {

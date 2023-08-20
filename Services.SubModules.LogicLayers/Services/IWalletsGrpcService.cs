@@ -20,7 +20,7 @@ namespace Services.SubModules.LogicLayers.Services
         /// <param name="cancellationToken">A token to cancel the operation.</param>
         /// <returns>A task that represents the asynchronous operation. A tuple indicating success and the IdGrpcModel of the created order.</returns>
         Task<(bool isSuccessful, IdGrpcModel?)> CreateWalletOrderAsync(IMapping<WalletTransactionWalletsGrpcRequest> mapping, CancellationToken cancellationToken = default);
-        
+
         /// <summary>
         /// Credits a user's wallet with the specified amount using the provided mapping.
         /// </summary>

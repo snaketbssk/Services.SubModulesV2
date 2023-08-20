@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Services.SubModules.Configurations.Entities.Environments;
 using Services.SubModules.Configurations.Models.Roots.Entities.Environments;
 using Services.SubModules.LogicLayers.Constants;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Services.Entities

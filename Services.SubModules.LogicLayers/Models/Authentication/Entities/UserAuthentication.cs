@@ -1,9 +1,6 @@
 ﻿using Services.SubModules.LogicLayers.Attributes.Entities;
 using Services.SubModules.LogicLayers.Extensions;
 using Services.SubModules.LogicLayers.Models.Responses.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 
 namespace Services.SubModules.LogicLayers.Models.Authentication.Entities

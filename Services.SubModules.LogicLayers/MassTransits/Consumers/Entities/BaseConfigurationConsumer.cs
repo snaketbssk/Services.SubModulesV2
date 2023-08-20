@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Services.SubModules.LogicLayers.MassTransits.Entities;
-using System;
 
 namespace Services.SubModules.LogicLayers.MassTransits.Consumers.Entities
 {

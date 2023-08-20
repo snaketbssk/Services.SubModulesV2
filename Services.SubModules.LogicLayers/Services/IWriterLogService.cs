@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Services.SubModules.LogicLayers.Services
+﻿namespace Services.SubModules.LogicLayers.Services
 {
     /// <summary>
     /// Represents a service for writing log files.
