@@ -74,7 +74,11 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         /// <param name="type">Type information.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Task representing the asynchronous operation.</returns>
-        public virtual async Task BulkInsertAsync(IEnumerable<TEntity> entities, BulkConfig? bulkConfig = null, Action<decimal>? progress = null, Type? type = null, CancellationToken cancellationToken = default)
+        public virtual async Task BulkInsertAsync(IEnumerable<TEntity> entities,
+                                                  BulkConfig? bulkConfig = null,
+                                                  Action<decimal>? progress = null,
+                                                  Type? type = null,
+                                                  CancellationToken cancellationToken = default)
         {
             await _context.BulkInsertAsync(entities, bulkConfig, progress, type, cancellationToken);
         }
@@ -147,22 +151,6 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         {
             _repository.RemoveRange(entities);
         }
-
-        /// <summary>
-        /// Retrieves an entity by its ID asynchronously.
-        /// </summary>
-        /// <param name="idRequest">The request containing the ID of the entity.</param>
-        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-        /// <returns>The retrieved entity, or null if not found.</returns>
-        public abstract Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Retrieves a list of entities by their IDs asynchronously.
-        /// </summary>
-        /// <param name="idsRequest">The request containing a collection of IDs of the entities.</param>
-        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-        /// <returns>A list of retrieved entities.</returns>
-        public abstract Task<List<TEntity>> FindByIdsAsync(IEnumerable<IIdRequest> idsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if the repository contains a specific entity asynchronously.
@@ -265,10 +253,9 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         /// <param name="filterRequest">The filter criteria.</param>
         /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
         /// <returns>A paginated response of retrieved entities.</returns>
-        public virtual async Task<IPaginationResponse<TEntity>> ToPaginationAsync(
-            IPaginationRequest paginationRequest,
-            IFilterRequest<TEntity> filterRequest,
-            CancellationToken cancellationToken = default)
+        public virtual async Task<IPaginationResponse<TEntity>> ToPaginationAsync(IPaginationRequest paginationRequest,
+                                                                                  IFilterRequest<TEntity> filterRequest,
+                                                                                  CancellationToken cancellationToken = default)
         {
             var queryable = GetQueryable();
             var filterQueryable = filterRequest.Find(queryable);

@@ -37,11 +37,6 @@ namespace Services.SubModules.LogicLayers.Repositories
         TEntity Update(TEntity entity);
 
         /// <summary>
-        /// Retrieves an entity by its ID asynchronously.
-        /// </summary>
-        Task<TEntity> FindByIdAsync(IIdRequest idRequest, CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Removes an entity from the repository.
         /// </summary>
         void Remove(TEntity entity);
@@ -69,7 +64,9 @@ namespace Services.SubModules.LogicLayers.Repositories
         /// <summary>
         /// Retrieves a paginated response of entities from the repository asynchronously.
         /// </summary>
-        Task<IPaginationResponse<TEntity>> ToPaginationAsync(IPaginationRequest paginationRequest, IFilterRequest<TEntity> filterRequest, CancellationToken cancellationToken = default);
+        Task<IPaginationResponse<TEntity>> ToPaginationAsync(IPaginationRequest paginationRequest,
+                                                             IFilterRequest<TEntity> filterRequest,
+                                                             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Asynchronously saves changes made in the repository's context to the database.
@@ -91,14 +88,6 @@ namespace Services.SubModules.LogicLayers.Repositories
         void UpdateRange(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// Asynchronously retrieves a list of entities by their IDs.
-        /// </summary>
-        /// <param name="idsRequest">The request containing a collection of IDs of the entities.</param>
-        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-        /// <returns>A list of retrieved entities.</returns>
-        Task<List<TEntity>> FindByIdsAsync(IEnumerable<IIdRequest> idsRequest, CancellationToken cancellationToken = default);
-
-        /// <summary>
         /// Asynchronously retrieves the first entity that satisfies the given filter.
         /// </summary>
         /// <param name="filterRequest">The filter criteria.</param>
@@ -114,7 +103,11 @@ namespace Services.SubModules.LogicLayers.Repositories
         /// <param name="progress">An action to report the progress of the bulk insert.</param>
         /// <param name="type">The type of entity to be inserted.</param>
         /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-        Task BulkInsertAsync(IEnumerable<TEntity> entities, BulkConfig? bulkConfig = null, Action<decimal>? progress = null, Type? type = null, CancellationToken cancellationToken = default);
+        Task BulkInsertAsync(IEnumerable<TEntity> entities,
+                             BulkConfig? bulkConfig = null,
+                             Action<decimal>? progress = null,
+                             Type? type = null,
+                             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Asynchronously checks if any entity satisfies the given filter.
