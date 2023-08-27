@@ -15,7 +15,7 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
     public abstract class ContextRepository<T, TEntity> : IContextRepository<TEntity>
         where T : DbContext where TEntity : class
     {
-        private readonly T _context;
+        protected readonly T _context;
         protected readonly DbSet<TEntity> _repository;
         private bool _disposable;
 
@@ -32,36 +32,27 @@ namespace Services.SubModules.LogicLayers.Repositories.Entities
         }
 
         /// <summary>
-        /// Gets the associated DbContext instance.
-        /// </summary>
-        /// <returns>The DbContext instance.</returns>
-        internal protected T GetContext()
-        {
-            return _context;
-        }
-
-        /// <summary>
         /// Retrieves the first entity matching the provided criteria asynchronously.
         /// </summary>
-        /// <param name="sqlRequest">The SQL request parameters.</param>
+        /// <param name="request">The SQL request parameters.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The first entity or null if not found.</returns>
-        public virtual async Task<TEntity> FirstOrDefaultAsync(ISqlRequest sqlRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> FirstOrDefaultAsync(ISqlRequest request, CancellationToken cancellationToken = default)
         {
-            var result = (await ToListAsync(sqlRequest, cancellationToken)).FirstOrDefault();
+            var result = (await ToListAsync(request, cancellationToken)).FirstOrDefault();
             return result;
         }
 
         /// <summary>
         /// Retrieves a list of entities based on the provided SQL request asynchronously.
         /// </summary>
-        /// <param name="sqlRequest">The SQL request parameters.</param>
+        /// <param name="request">The SQL request parameters.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A list of entities.</returns>
-        public virtual async Task<List<TEntity>> ToListAsync(ISqlRequest sqlRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<List<TEntity>> ToListAsync(ISqlRequest request, CancellationToken cancellationToken = default)
         {
-            var parameters = sqlRequest.GetParameters();
-            var result = await _repository.FromSqlRaw(sqlRequest.Sql, parameters).ToListAsync(cancellationToken);
+            var parameters = request.GetParameters();
+            var result = await _repository.FromSqlRaw(request.Sql, parameters).ToListAsync(cancellationToken);
             return result;
         }
 
