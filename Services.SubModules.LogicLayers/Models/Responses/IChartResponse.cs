@@ -1,23 +1,21 @@
-﻿namespace Services.SubModules.LogicLayers.Models.Responses
+﻿using Services.SubModules.LogicLayers.Models.Responses.Entities;
+
+namespace Services.SubModules.LogicLayers.Models.Responses
 {
     /// <summary>
-    /// Represents an interface for chart response models.
+    /// Represents a generic interface for chart responses with categories and series data.
     /// </summary>
-    public interface IChartResponse
+    /// <typeparam name="T">The type of data in the chart series.</typeparam>
+    public interface IChartResponse<T>
     {
         /// <summary>
-        /// Gets or sets the labels for the chart.
+        /// Gets or sets the categories for the chart.
         /// </summary>
-        List<string> Labels { get; set; }
+        List<string> Categories { get; set; }
 
         /// <summary>
-        /// Gets or sets the values associated with the chart.
+        /// Gets or sets the series data for the chart.
         /// </summary>
-        List<decimal> Values { get; set; }
-
-        /// <summary>
-        /// Gets or sets the total count of items in the chart.
-        /// </summary>
-        int TotalCount { get; set; }
+        List<ItemChartResponse<T>> Series { get; set; }
     }
 }
