@@ -14,6 +14,6 @@
         /// <summary>
         /// Gets or sets the data points for the chart.
         /// </summary>
-        List<string> Data { get; set; }
+        List<decimal> Data { get; set; }
     }
 }
