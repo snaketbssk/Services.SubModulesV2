@@ -1,14 +1,15 @@
-﻿using Services.SubModules.LogicLayers.Constants;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Services.SubModules.LogicLayers.Models.Responses.Entities
+﻿namespace Services.SubModules.LogicLayers.Models.Responses.Entities
 {
     /// <summary>
     /// Represents a chart response object with categories and series data.
     /// </summary>
     /// <typeparam name="T">The type of data in the chart series.</typeparam>
-    public class ChartResponse<T> : IChartResponse<T>
+    public class ChartResponse : IChartResponse
     {
+        /// <summary>
+        /// Gets or sets the name for the chart
+        /// </summary>
+        public string Name { get; set; }
         /// <summary>
         /// Gets or sets the categories for the chart.
         /// </summary>
@@ -17,17 +18,26 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         /// <summary>
         /// Gets or sets the series data for the chart.
         /// </summary>
-        public List<ItemChartResponse<T>> Series { get; set; }
+        public List<ItemChartResponse> Series { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChartResponse{T}"/> class with categories and series data.
         /// </summary>
         /// <param name="categories">The categories for the chart.</param>
         /// <param name="series">The series data for the chart.</param>
-        public ChartResponse(List<string> categories, List<ItemChartResponse<T>> series)
+        public ChartResponse(string name, List<string> categories, params ItemChartResponse[] series)
         {
+            ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+
+            // Check if Categories is null and throw ArgumentNullException if it is.
+            ArgumentNullException.ThrowIfNull(categories, nameof(categories));
+
+            // Check if Series is null and throw ArgumentNullException if it is.
+            ArgumentNullException.ThrowIfNull(series, nameof(series));
+
+            Name = name;
             Categories = categories;
-            Series = series;
+            Series = series.ToList();
 
             Validate();
         }
@@ -37,12 +47,6 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         /// </summary>
         private void Validate()
         {
-            // Check if Categories is null and throw ArgumentNullException if it is.
-            ArgumentNullException.ThrowIfNull(Categories, nameof(Categories));
-
-            // Check if Series is null and throw ArgumentNullException if it is.
-            ArgumentNullException.ThrowIfNull(Series, nameof(Series));
-
             // Validate each category in the Categories list.
             foreach (var category in Categories)
             {

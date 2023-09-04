@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.SubModules.LogicLayers.Models.Responses
+﻿namespace Services.SubModules.LogicLayers.Models.Responses
 {
     /// <summary>
     /// Represents a response object for an item chart with a generic data type.
     /// </summary>
     /// <typeparam name="T">The type of data in the chart.</typeparam>
-    public interface IItemChartResponse<T>
+    public interface IItemChartResponse
     {
         /// <summary>
         /// Gets or sets the name of the chart.
@@ -20,6 +14,6 @@ namespace Services.SubModules.LogicLayers.Models.Responses
         /// <summary>
         /// Gets or sets the data points for the chart.
         /// </summary>
-        List<T> Data { get; set; }
+        List<string> Data { get; set; }
     }
 }
