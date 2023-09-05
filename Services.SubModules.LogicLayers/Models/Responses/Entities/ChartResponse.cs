@@ -10,6 +10,12 @@
         /// Gets or sets the name for the chart
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description for the chart
+        /// </summary>
+        public string Description { get; set; }
+
         /// <summary>
         /// Gets or sets the categories for the chart.
         /// </summary>
@@ -25,9 +31,10 @@
         /// </summary>
         /// <param name="categories">The categories for the chart.</param>
         /// <param name="series">The series data for the chart.</param>
-        public ChartResponse(string name, List<string> categories, params ItemChartResponse[] series)
+        public ChartResponse(string name, string description, List<string> categories, params ItemChartResponse[] series)
         {
             ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
+            ArgumentException.ThrowIfNullOrEmpty(description, nameof(description));
 
             // Check if Categories is null and throw ArgumentNullException if it is.
             ArgumentNullException.ThrowIfNull(categories, nameof(categories));
@@ -36,6 +43,7 @@
             ArgumentNullException.ThrowIfNull(series, nameof(series));
 
             Name = name;
+            Description = description;
             Categories = categories;
             Series = series.ToList();
 
