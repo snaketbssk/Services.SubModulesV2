@@ -15,7 +15,7 @@ service ReferralsGrpc {
 // Request message for creating a new referral.
 message CreateReferralReferralsGrpcRequest {
     // ID of the user creating the referral.
-    string idUser = 1;
+    string userId = 1;
 
     // Referral token.
     string tokenReferral = 2;

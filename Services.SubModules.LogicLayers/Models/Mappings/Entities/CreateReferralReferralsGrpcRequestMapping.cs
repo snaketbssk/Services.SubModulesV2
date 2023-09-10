@@ -10,7 +10,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         /// <summary>
         /// Gets or sets the user ID for the referral.
         /// </summary>
-        public Guid IdUser { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Gets or sets the referral token.
@@ -21,11 +21,11 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         /// Initializes a new instance of the <see cref="CreateReferralReferralsGrpcRequestMapping"/> class
         /// with the specified user ID and referral token.
         /// </summary>
-        /// <param name="idUser">The user ID for the referral.</param>
+        /// <param name="userId">The user ID for the referral.</param>
         /// <param name="tokenReferral">The referral token.</param>
-        public CreateReferralReferralsGrpcRequestMapping(Guid idUser, string tokenReferral)
+        public CreateReferralReferralsGrpcRequestMapping(Guid userId, string tokenReferral)
         {
-            IdUser = idUser;
+            UserId = userId;
             TokenReferral = tokenReferral;
         }
 
@@ -37,7 +37,7 @@ namespace Services.SubModules.LogicLayers.Models.Mappings.Entities
         {
             var result = new CreateReferralReferralsGrpcRequest
             {
-                IdUser = IdUser.ToString(),
+                UserId = UserId.ToString(),
                 TokenReferral = TokenReferral
             };
             return result;
