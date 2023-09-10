@@ -14,7 +14,7 @@
         /// <summary>
         /// Gets or sets the data points for the chart.
         /// </summary>
-        public List<string> Data { get; set; }
+        public List<decimal> Data { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemChartResponse"/> class with a name.
@@ -23,7 +23,7 @@
         public ItemChartResponse(string name)
         {
             Name = name;
-            Data = new List<string>();
+            Data = new List<decimal>();
         }
     }
 }

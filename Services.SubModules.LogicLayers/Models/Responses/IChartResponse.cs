@@ -12,6 +12,12 @@ namespace Services.SubModules.LogicLayers.Models.Responses
         /// Gets or sets the name for the chart
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description for the chart
+        /// </summary>
+        string Description { get; set; }
+
         /// <summary>
         /// Gets or sets the categories for the chart.
         /// </summary>
