@@ -39,7 +39,7 @@ namespace Services.SubModules.LogicLayers.Middlewares.Entities
         public async Task InvokeAsync(HttpContext context)
         {
             // Get the culture from the request headers
-            var culture = context.Request.Headers["X-Culture"];
+            var culture = context.Request.Headers["X-Locale"];
 
             // Set the culture in the localization service
             _localizationService.SetCulture(culture);
