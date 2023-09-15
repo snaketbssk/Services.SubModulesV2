@@ -38,6 +38,7 @@
         public const string MAILER_SERVICE = "MAILER";
         public const string STORAGE_SERVICE = "STORAGE";
         public const string TELEGRAM_SERVICE = "TELEGRAM";
+        public const string COMMUNITY_SERVICE = "COMMUNITY";
         public const string NOTIFICATIONS_SERVICE = "NOTIFICATIONS";
         public const string WALLETS_SERVICE = "WALLETS";
         public const string COMMON_SERVICE = "COMMON";
