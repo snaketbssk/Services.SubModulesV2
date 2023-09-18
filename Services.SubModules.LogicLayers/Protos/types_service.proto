@@ -9,6 +9,15 @@ message IdGrpcModel {
     string id = 1;
 }
 
+// Represents an label in gRPC model.
+message LabelGrpcModel {
+    // The label
+    string label = 1;
+
+    // The value
+    string value = 2;
+}
+
 // Represents a decimal number in gRPC model.
 message DecimalGrpcModel {
     // The units part of the decimal.

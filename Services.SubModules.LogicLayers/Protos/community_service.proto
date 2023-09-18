@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "Protos/types_service.proto";
+
+// Define the C# namespace for the generated code.
+option csharp_namespace = "Services.SubModules.Protos";
+
+// Community gRPC service definition.
+service CommunityGrpc {
+    rpc GetFriend (IdGrpcModel) returns (LabelGrpcModel);
+}
