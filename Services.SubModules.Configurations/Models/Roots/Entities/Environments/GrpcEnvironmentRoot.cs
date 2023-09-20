@@ -66,6 +66,11 @@
         public string? COMMON_HOST { get; set; }
 
         /// <summary>
+        /// Gets or sets the host address for the common service.
+        /// </summary>
+        public string? COMMUNITY_HOST { get; set; }
+
+        /// <summary>
         /// Gets or sets the host address for the referrals service.
         /// </summary>
         public string? REFERRALS_HOST { get; set; }

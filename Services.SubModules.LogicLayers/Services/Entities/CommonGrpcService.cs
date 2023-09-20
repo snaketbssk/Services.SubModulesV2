@@ -23,12 +23,12 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// <param name="tokenService">Token service instance.</param>
         /// <param name="logger">Logger instance.</param>
         /// <param name="commonCacheService">Common cache service instance.</param>
-        public CommonGrpcService(
-            IExceptionService exceptionService,
-            ITokenService tokenService,
-            ILogger<CommonGrpcService> logger,
-            ICommonCacheService commonCacheService)
-            : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().COMMON_HOST, tokenService)
+        public CommonGrpcService(IExceptionService exceptionService,
+                                 ITokenService tokenService,
+                                 ILogger<CommonGrpcService> logger,
+                                 ICommonCacheService commonCacheService)
+                                 : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().COMMON_HOST, 
+                                        tokenService)
         {
             _logger = logger;
             _exceptionService = exceptionService;

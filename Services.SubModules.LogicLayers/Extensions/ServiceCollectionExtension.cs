@@ -105,6 +105,7 @@ namespace Services.SubModules.LogicLayers.Extensions
             serviceCollection.AddScoped<IActionLoggerService, ActionLoggerService>();
             serviceCollection.AddScoped<ICommonService, CommonService>();
             serviceCollection.AddScoped<IReferralsGrpcService, ReferralsGrpcService>();
+            serviceCollection.AddScoped<ICommunityGrpcService, CommunityGrpcService>();
 
             return serviceCollection;
         }
