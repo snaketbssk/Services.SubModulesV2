@@ -48,6 +48,51 @@ namespace Services.SubModules.LogicLayers.Models.Responses.Entities
         public List<ClaimResponse>? Claims { get; set; }
 
         /// <summary>
+        /// Gets or sets the first name of the person.
+        /// </summary>
+        public string? FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the middle name of the person.
+        /// </summary>
+        public string? MiddleName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name of the person.
+        /// </summary>
+        public string? LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sur name of the person.
+        /// </summary>
+        public string? Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        public string? Patronymic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        public string? Matronymic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the preferred language of the person.
+        /// </summary>
+        public string? Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address of the person.
+        /// </summary>
+        public string? Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ZIP code of the person.
+        /// </summary>
+        public string? ZipCode { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserResponse"/> class.
         /// </summary>
         public UserResponse()

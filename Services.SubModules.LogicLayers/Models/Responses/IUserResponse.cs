@@ -47,5 +47,50 @@ namespace Services.SubModules.LogicLayers.Models.Responses
         /// Gets or sets the list of claims associated with the user.
         /// </summary>
         List<ClaimResponse>? Claims { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first name of the person.
+        /// </summary>
+        string? FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the middle name of the person.
+        /// </summary>
+        string? MiddleName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name of the person.
+        /// </summary>
+        string? LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sur name of the person.
+        /// </summary>
+        string? Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        string? Patronymic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        string? Matronymic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the preferred language of the person.
+        /// </summary>
+        string? Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address of the person.
+        /// </summary>
+        string? Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ZIP code of the person.
+        /// </summary>
+        string? ZipCode { get; set; }
     }
 }

@@ -28,6 +28,36 @@ namespace Services.SubModules.LogicLayers.Models.Redis.Entities
         public string? PhoneNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the first name of the person.
+        /// </summary>
+        public string? FirstName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the middle name of the person.
+        /// </summary>
+        public string? MiddleName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last name of the person.
+        /// </summary>
+        public string? LastName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sur name of the person.
+        /// </summary>
+        public string? Surname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        public string? Patronymic { get; set; }
+
+        /// <summary>
+        /// Gets or sets the patronymic of the person.
+        /// </summary>
+        public string? Matronymic { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the user's phone number is confirmed.
         /// </summary>
         public bool ConfirmedPhoneNumber { get; set; }
@@ -41,5 +71,20 @@ namespace Services.SubModules.LogicLayers.Models.Redis.Entities
         /// Gets or sets the list of claims associated with the user.
         /// </summary>
         public List<ClaimRedis> Claims { get; set; }
+
+        /// <summary>
+        /// Gets or sets the preferred language of the person.
+        /// </summary>
+        string? Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address of the person.
+        /// </summary>
+        string? Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ZIP code of the person.
+        /// </summary>
+        string? ZipCode { get; set; }
     }
 }
