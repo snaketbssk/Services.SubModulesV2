@@ -34,7 +34,7 @@
                 var valueSource = property.GetValue(source);
                 var valueTarget = property.GetValue(target);
 
-                if (!valueSource.Equals(valueTarget))
+                if (valueSource is null || !valueSource.Equals(valueTarget))
                 {
                     property.SetValue(target, valueSource);
                     result = true;

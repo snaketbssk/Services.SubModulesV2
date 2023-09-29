@@ -27,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                                  ITokenService tokenService,
                                  ILogger<CommonGrpcService> logger,
                                  ICommonCacheService commonCacheService)
-                                 : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().COMMON_HOST, 
+                                 : base(GrpcEnvironmentConfiguration<GrpcEnvironmentRoot>.Instance.GetRoot().COMMON_HOST,
                                         tokenService)
         {
             _logger = logger;
