@@ -16,6 +16,6 @@ namespace Services.SubModules.LogicLayers.Services
         /// <summary>
         /// Gets the cache repository for storing session-related data.
         /// </summary>
-        IManyValueRepositoryCache<string, string> Sessions { get; }
+        IManyValueRepositoryCache<string, SessionRedis> Sessions { get; }
     }
 }

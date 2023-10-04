@@ -19,6 +19,25 @@
         Task<(bool isSuccessful, TValue value)> TryGetAsync(TKey key, CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Asynchronously retrieves values associated with keys from Redis cache.
+        /// </summary>
+        /// <typeparam name="TKey">The type of keys to retrieve.</typeparam>
+        /// <typeparam name="TValue">The type of values to retrieve.</typeparam>
+        /// <param name="keys">The collection of keys to retrieve.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of retrieved values.</returns>
+        Task<(bool isSuccessful, IEnumerable<TValue> values)> TryGetAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Asynchronously retrieves keys from Redis cache based on a pattern.
+        /// </summary>
+        /// <param name="project">The project identifier.</param>
+        /// <param name="container">The container identifier.</param>
+        /// <param name="key">The key pattern to search for in Redis.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of matching keys.</returns>
+        Task<(bool isSuccessful, IEnumerable<string> values)> TryGetKeysAsync(TKey key);
+
+        /// <summary>
         /// Tries to set a cached value associated with a specific key in the cache.
         /// </summary>
         /// <param name="key">The key associated with the cached value.</param>

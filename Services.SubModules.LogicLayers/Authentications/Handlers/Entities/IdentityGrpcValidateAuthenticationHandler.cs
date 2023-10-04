@@ -53,18 +53,29 @@ namespace Services.SubModules.LogicLayers.Authentications.Handlers.Entities
         {
             var result = new List<Claim>();
             var decodeClaims = _tokenService.DecodeToken(token);
-            var idUserTable = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
 
-            ArgumentNullException.ThrowIfNull(idUserTable, nameof(idUserTable));
+            // Find the claim with type ClaimConstant.ID
+            var claimUserId = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.ID);
+            var claimSessionId = decodeClaims.FirstOrDefault(x => x.Type == ClaimConstant.SESSION_ID);
 
-            var (cacheSessionIsSuccessful, sessionValue) = await _identityCacheService.Sessions.TryGetAsync(token);
+            // Throw an exception if idUserTable is null
+            ArgumentNullException.ThrowIfNull(claimUserId, nameof(claimUserId));
+            ArgumentNullException.ThrowIfNull(claimSessionId, nameof(claimSessionId));
+
+            var userId = Guid.Parse(claimUserId.Value);
+            var sessionId = Guid.Parse(claimSessionId.Value);
+
+            // Try to get the session value from the identity cache service
+            var (cacheSessionIsSuccessful, session) = await _identityCacheService.Sessions.TryGetAsync($"{userId}:{sessionId}");
 
             if (!cacheSessionIsSuccessful)
                 throw new ArgumentException(nameof(cacheSessionIsSuccessful));
-            if (idUserTable.Value != sessionValue)
-                throw new ArgumentException(nameof(sessionValue));
 
-            var (cacheUserIsSuccessful, userValue) = await _identityCacheService.Users.TryGetAsync(idUserTable.Value);
+            // Compare the idUserTable value with the session value
+            if (userId != session.UserId)
+                throw new ArgumentException(nameof(session));
+
+            var (cacheUserIsSuccessful, userValue) = await _identityCacheService.Users.TryGetAsync(claimUserId.Value);
             if (cacheUserIsSuccessful)
             {
                 // Construct claims for a cached user

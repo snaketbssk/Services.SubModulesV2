@@ -9,37 +9,37 @@
         /// <summary>
         /// Gets or sets the remote IP address of the client.
         /// </summary>
-        string RemoteIpAddress { get; set; }
+        string? RemoteIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the operating system of the client.
         /// </summary>
-        string OS { get; set; }
+        string? OS { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the operating system of the client.
         /// </summary>
-        string VersionOS { get; set; }
+        string? VersionOS { get; set; }
 
         /// <summary>
         /// Gets or sets the browser of the client.
         /// </summary>
-        string Browser { get; set; }
+        string? Browser { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the browser of the client.
         /// </summary>
-        string VersionBrowser { get; set; }
+        string? VersionBrowser { get; set; }
 
         /// <summary>
         /// Gets or sets the device type of the client.
         /// </summary>
-        string Device { get; set; }
+        string? Device { get; set; }
 
         /// <summary>
         /// Gets or sets the brand of the device of the client.
         /// </summary>
-        string BrandDevice { get; set; }
+        string? BrandDevice { get; set; }
     }
 
 }

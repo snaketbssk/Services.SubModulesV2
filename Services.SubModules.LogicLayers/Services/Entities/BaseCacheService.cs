@@ -18,7 +18,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// </summary>
         protected virtual string GetKeyHash(string project, string container)
         {
-            var result = $"{project}-{container}";
+            var result = $"{project}:{container}";
             return result;
         }
 
@@ -27,7 +27,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// </summary>
         protected virtual string GetKeyHash<TKey>(string project, string container, TKey key)
         {
-            var result = $"{project}-{container}-{key}";
+            var result = $"{project}:{container}:{key}";
             return result;
         }
 
@@ -101,5 +101,23 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         /// </summary>
         public abstract Task<(bool isSuccessful, IEnumerable<TValue> values)> TryPaginationGetAllAsync<TKey, TValue>(string project, string container, TKey key, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Asynchronously retrieves keys from Redis cache based on a pattern.
+        /// </summary>
+        /// <param name="project">The project identifier.</param>
+        /// <param name="container">The container identifier.</param>
+        /// <param name="key">The key pattern to search for in Redis.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of matching keys.</returns>
+        public abstract Task<(bool isSuccessful, IEnumerable<string> values)> TryGetKeysAsync<TKey>(string project, string container, TKey key);
+
+        /// <summary>
+        /// Asynchronously retrieves values associated with keys from Redis cache.
+        /// </summary>
+        /// <typeparam name="TKey">The type of keys to retrieve.</typeparam>
+        /// <typeparam name="TValue">The type of values to retrieve.</typeparam>
+        /// <param name="keys">The collection of keys to retrieve.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of retrieved values.</returns>
+        public abstract Task<(bool isSuccessful, IEnumerable<TValue> values)> TryGetAsync<TKey, TValue>(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
     }
 }

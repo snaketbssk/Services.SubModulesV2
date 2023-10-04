@@ -162,6 +162,44 @@ namespace Services.SubModules.LogicLayers.Services.Entities
         }
 
         /// <summary>
+        /// Asynchronously retrieves values associated with keys from Redis cache.
+        /// </summary>
+        /// <typeparam name="TKey">The type of keys to retrieve.</typeparam>
+        /// <typeparam name="TValue">The type of values to retrieve.</typeparam>
+        /// <param name="keys">The collection of keys to retrieve.</param>
+        /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of retrieved values.</returns>
+        public override async Task<(bool isSuccessful, IEnumerable<TValue> values)> TryGetAsync<TKey, TValue>(IEnumerable<TKey> keys, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                // Validate input parameters
+                ArgumentNullException.ThrowIfNull(keys);
+
+                // Get the Redis database
+                var database = _connectionMultiplexer.GetDatabase();
+
+                // Convert keys to RedisKeys and fetch values
+                var itemKeys = keys.Select(x => new RedisKey(x.ToString())).ToArray();
+                var redisValues = await database.StringGetAsync(itemKeys);
+
+                // If no values were found, return the default result
+                if (redisValues is null || !redisValues.Any())
+                    return default;
+
+                // Deserialize Redis values to TValue and create a list
+                var values = redisValues.Select(x => JsonSerializer.Deserialize<TValue>(x.ToString())).ToList();
+
+                return (true, values);
+            }
+            catch (Exception)
+            {
+                // Handle exceptions and return a default result on error
+                return default;
+            }
+        }
+
+        /// <summary>
         /// Attempts to set a value in the Redis database using the specified key.
         /// </summary>
         /// <typeparam name="TKey">The type of the key.</typeparam>
@@ -560,6 +598,49 @@ namespace Services.SubModules.LogicLayers.Services.Entities
             }
             catch (Exception)
             {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves keys from Redis cache based on a pattern.
+        /// </summary>
+        /// <param name="project">The project identifier.</param>
+        /// <param name="container">The container identifier.</param>
+        /// <param name="key">The key pattern to search for in Redis.</param>
+        /// <returns>A tuple containing a boolean indicating success and a list of matching keys.</returns>
+        public override async Task<(bool isSuccessful, IEnumerable<string> values)> TryGetKeysAsync<TKey>(string project, string container, TKey key)
+        {
+            try
+            {
+                // Validate input parameters
+                ArgumentNullException.ThrowIfNull(project);
+                ArgumentNullException.ThrowIfNull(container);
+                ArgumentNullException.ThrowIfNull(key);
+
+                // Get the Redis database and server
+                var database = _connectionMultiplexer.GetDatabase();
+                var redisServer = database.Multiplexer.GetServer(database.Multiplexer.GetEndPoints().First());
+
+                // Create a key hash based on project, container, and pattern
+                var keyHash = GetKeyHash(project, container, key);
+
+                var values = new List<string>();
+                // Asynchronously iterate over Redis keys matching the pattern
+                await foreach (var item in redisServer.KeysAsync(pattern: keyHash))
+                {
+                    var value = item.ToString();
+                    if (string.IsNullOrWhiteSpace(value))
+                        continue;
+
+                    values.Add(value);
+                }
+
+                return (true, values);
+            }
+            catch (Exception)
+            {
+                // Handle exceptions and return a default value on error
                 return default;
             }
         }

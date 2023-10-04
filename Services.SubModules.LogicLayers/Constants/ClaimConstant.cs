@@ -10,5 +10,6 @@ namespace Services.SubModules.LogicLayers.Constants
         public const string ROLE = ClaimTypes.Role;
         public const string LANGUAGE = "language";
         public const string ACCESS_TOKEN = "access_token";
+        public const string SESSION_ID = "session_id";
     }
 }
