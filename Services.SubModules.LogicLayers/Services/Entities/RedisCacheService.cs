@@ -623,6 +623,7 @@ namespace Services.SubModules.LogicLayers.Services.Entities
                 var redisServer = database.Multiplexer.GetServer(database.Multiplexer.GetEndPoints().First());
 
                 // Create a key hash based on project, container, and pattern
+                var removeKeyHash = GetKeyHash(project, container, key);
                 var keyHash = GetKeyHash(project, container, key);
 
                 var values = new List<string>();
